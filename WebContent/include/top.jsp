@@ -141,22 +141,8 @@
                       						
                       						<li><a class="tree-toggle1 nav-header" href="${secondMenu.strPath }">${secondMenu.strName }
                       								<span class="fa-angle-right fa right-arrow text-right"></span>
-                     								</a>
-                      							
-                      							<ul class="nav nav-list tree">
-                      							
-                      								<c:forEach var="thirdMenu" items="${menu }">
-                      						
-                      									<c:if test="${thirdMenu.intLevel eq 3 && secondMenu.strCode eq thirdMenu.strPCode }">
-                      									
-                      										<li><a href="${thirdMenu.strPath }">${thirdMenu.strName }</a></li>
-                      										
-                      									</c:if>
-                      											
-                      								</c:forEach>
-                      								
-                      							</ul>
-                      						</li>
+                   								</a>
+                							</li>
                       							
                       					</c:if>
                       					
