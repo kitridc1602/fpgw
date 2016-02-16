@@ -139,7 +139,7 @@
                       				
                       					<c:if test="${secondMenu.intLevel eq 2 && firstMenu.strCode eq secondMenu.strPCode }">
                       						
-                      						<li><a class="tree-toggle1 nav-header" href="#">${secondMenu.strName }
+                      						<li><a class="tree-toggle1 nav-header" href="${secondMenu.strPath }">${secondMenu.strName }
                       								<span class="fa-angle-right fa right-arrow text-right"></span>
                      								</a>
                       							
@@ -149,7 +149,7 @@
                       						
                       									<c:if test="${thirdMenu.intLevel eq 3 && secondMenu.strCode eq thirdMenu.strPCode }">
                       									
-                      										<li><a href="#">${thirdMenu.strName }</a></li>
+                      										<li><a href="${thirdMenu.strPath }">${thirdMenu.strName }</a></li>
                       										
                       									</c:if>
                       											
