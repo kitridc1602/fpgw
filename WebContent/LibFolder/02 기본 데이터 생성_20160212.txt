@@ -1,0 +1,603 @@
+
+
+--주석 처리 단위로 실행시킬것
+
+
+--기본 사용자 설정
+DELETE FROM CODE_MANAGE;
+
+INSERT INTO CODE_MANAGE
+(
+CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+)
+SELECT
+'100', '000', '직급', '최고관리자', 1, 1
+FROM DUAL;
+
+DELETE FROM DEPART;
+
+INSERT INTO DEPART
+(
+DE_DCODE, DE_PCODE, DE_NAME, DE_SORT, DE_LEVEL, DE_USE_FLAG, DE_DEPART_INDEX
+)
+SELECT
+'000', NULL, 'KITRI', 1, 0, 1, '000001'
+FROM DUAL;
+
+DELETE FROM USER_MAIN;
+
+INSERT INTO USER_MAIN
+(
+UM_CODE,  UM_NAME,  UM_ID,  UM_PWD,  UM_DEPART_CD,  UM_POSITION_BCODE,  UM_POSITION,  UM_LEVEL
+)
+SELECT
+'00000', '최고관리자', 'kitri', 'kitri', '000', '100', '000', 10
+FROM DUAL;
+
+
+
+--CODE_MANAGE 회사정보 DATA
+
+DELETE FROM CODE_MANAGE WHERE CM_BCODE = '001';
+
+
+INSERT INTO CODE_MANAGE
+(
+CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE1, CM_SORT, CM_USE_FLAG
+)
+SELECT
+'001', '001', '회사정보', 'KITRI DC16th Team No.2', '상호', 1, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'001', '002', '회사정보', '02-9876-5432', 'FAX', 2, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'001', '003', '회사정보', '111-11-11110', '사업자번호', 3, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'001', '004', '회사정보', '서울시 구로구 구로동', '주소', 4, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'001', '005', '회사정보', '02-1234-5678', '대표전화', 5, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'001', '006', '회사정보', '02-9876-5432', 'FAX', 6, 1
+FROM DUAL
+
+;
+
+--CODE_MANAGE 직급 DATA
+DELETE FROM CODE_MANAGE WHERE CM_BCODE = '100' AND CM_SCODE > '000';
+
+
+INSERT INTO CODE_MANAGE
+(
+CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+)
+SELECT
+'100', '001', '직급', '회장', 1, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '002', '직급', '부회장', 2, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '003', '직급', '사장', 3, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '004', '직급', '부사장', 4, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '005', '직급', '상무', 5, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '006', '직급', '전무', 6, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '007', '직급', '대표이사', 7, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '008', '직급', '이사', 8, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '009', '직급', '부장', 9, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '010', '직급', '차장', 10, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '011', '직급', '팀장', 11, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '012', '직급', '과장', 12, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '013', '직급', '대리', 13, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '014', '직급', '주임', 14, 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'100', '015', '직급', '사원', 15, 1
+FROM DUAL
+
+
+;
+
+
+--MEMU DATA
+DELETE FROM MENU;
+
+INSERT INTO MENU
+(
+ME_CODE, ME_PCODE, ME_NAME, ME_LEVEL, ME_SORT, ME_USE_FLAG, ME_MENUINDEX
+)
+SELECT
+'000', NULL, 'KITRI', 0, 0, 1, '000'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'001', '000', '일정관리', 1, 1, 1, '000001'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'006', '001', '개인 일정', 2, 1, 1, '000001006'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'007', '001', '공개 일정', 2, 2, 1, '000001007'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'002', '000', '결재관리', 1, 2, 1, '000002'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'008', '002', '결재문서 작성', 2, 1, 1, '000002008'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'009', '002', '결재할 문서함', 2, 2, 1, '000002009'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'014', '009', '미결재 문서', 3, 1, 1, '000002009014'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'015', '009', '결재완료 문서', 3, 2, 1, '000002009015'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'010', '002', '개인 문서함', 2, 3, 1, '000002010'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'016', '010', '상신문서', 3, 1, 1, '000002010016'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'017', '010', '반려문서', 3, 2, 1, '000002010017'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'018', '010', '결재완료', 3, 3, 1, '000002010018'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'011', '002', '협조 문서함', 2, 4, 1, '000002011'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'019', '011', '미결재 문서', 3, 1, 1, '000002011019'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'020', '011', '결재완료 문서', 3, 2, 1, '000002011019'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'012', '002', '부서 수신함', 2, 5, 1, '000002012'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'013', '002', '참조 문서함', 2, 6, 1, '000002013'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'003', '000', '자산관리', 1, 3, 1, '000003'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'004', '000', '게시판', 1, 4, 1, '000004'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'005', '000', '부가서비스', 1, 5, 1, '000005'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'900', '000', '관리자업무', 1, 6, 1, '000900'
+FROM DUAL
+
+;	
+	
+
+
+
+
+--DEPART DATA
+DELETE FROM DEPART WHERE DE_DCODE > '000';
+
+INSERT INTO DEPART
+(
+DE_DCODE, DE_PCODE, DE_NAME, DE_SORT, DE_LEVEL, DE_USE_FLAG, DE_DEPART_INDEX
+)
+SELECT
+'001', '000', '임원실', 1, 1, 1, '000001'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'002', '000', '관리부', 2, 1, 1, '000002'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'006', '002', '자원관리팀', 1, 2, 1, '000002006'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'007', '002', '총무팀', 2, 2, 1, '000002007'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'003', '000', '개발지원부', 3, 1, 1, '000003'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'008', '003', 'Core팀', 1, 2, 1, '000003008'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'009', '003', 'Web팀', 2, 2, 1, '000003009'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'010', '003', 'Android팀', 3, 2, 1, '000003010'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'004', '000', '개발부', 4, 1, 1, '000004'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'011', '004', '개발1팀', 1, 2, 1, '000004011'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'012', '004', '개발2팀', 2, 2, 1, '000004012'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'005', '000', '교육지원부', 5, 1, 1, '000005'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'013', '005', '교육정리팀', 1, 2, 1, '000005013'
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'014', '005', '교육기록팀', 2, 2, 1, '000005013'
+FROM DUAL
+
+;
+
+
+--USER_MAIN DATA
+DELETE FROM USER_MAIN WHERE UM_CODE > '00000';
+
+INSERT INTO USER_MAIN
+(
+UM_CODE,  UM_NAME,  UM_ID,  UM_PWD,  UM_DEPART_CD,  UM_POSITION_BCODE,  UM_POSITION,  UM_LEVEL
+)
+SELECT
+'00001', '기본사용자', 'kitri01', 'kitri', '000', '100', '015', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00002', '김명섭', 'kitri02', 'kitri', '006', '100', '014', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00003', '오문정', 'kitri03', 'kitri', '008', '100', '011', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00004', '김유진', 'kitri04', 'kitri', '009', '100', '011', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00005', '안효인', 'kitri05', 'kitri', '010', '100', '011', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00006', '정진학', 'kitri06', 'kitri', '011', '100', '011', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00007', '박대성', 'kitri07', 'kitri', '012', '100', '011', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00008', '현종석', 'kitri08', 'kitri', '011', '100', '012', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00009', '김미희', 'kitri09', 'kitri', '012', '100', '012', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00010', '정동훈', 'kitri10', 'kitri', '011', '100', '013', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00011', '양돈의', 'kitri11', 'kitri', '012', '100', '013', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00012', '심응규', 'kitri12', 'kitri', '012', '100', '013', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00013', '남기백', 'kitri13', 'kitri', '011', '100', '015', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00014', '이명훈', 'kitri14', 'kitri', '012', '100', '015', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00015', '정문박', 'kitri15', 'kitri', '013', '100', '011', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00016', '이기철', 'kitri16', 'kitri', '014', '100', '011', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00017', '노현우', 'kitri17', 'kitri', '013', '100', '013', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00018', '김대환', 'kitri18', 'kitri', '014', '100', '013', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00019', '한상훈', 'kitri19', 'kitri', '013', '100', '015', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00020', '임혜원', 'kitri20', 'kitri', '014', '100', '015', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00021', '이예은', 'kitri21', 'kitri', '007', '100', '011', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00022', '김은화', 'kitri22', 'kitri', '007', '100', '013', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00023', '이주희', 'kitri23', 'kitri', '007', '100', '013', 1
+FROM DUAL
+
+	UNION ALL
+
+SELECT
+'00024', '최수진', 'kitri24', 'kitri', '007', '100', '013', 1
+FROM DUAL
+
+;
+
+--DATA JOIN SAMPLE
+SELECT 	UM.UM_CODE, UM.UM_NAME,
+ 		UM.UM_DEPART_CD, DE.DE_NAME,
+		UM.UM_POSITION, CM.CM_NAME,
+		UM.UM_GET_USER, UM_GET.UM_NAME,
+		UM.UM_EDIT_USER, UM_EDI.UM_NAME
+FROM 	USER_MAIN UM
+		LEFT OUTER JOIN DEPART DE 			ON 	(UM.UM_DEPART_CD = DE.DE_DCODE)
+		LEFT OUTER JOIN CODE_MANAGE CM 		ON	(UM.UM_POSITION_BCODE = CM.CM_BCODE)
+											AND (UM.UM_POSITION = CM.CM_SCODE)
+		LEFT OUTER JOIN USER_MAIN UM_GET	ON	(UM.UM_GET_USER = UM_GET.UM_CODE)
+		LEFT OUTER JOIN USER_MAIN UM_EDI	ON	(UM.UM_EDIT_USER = UM_EDI.UM_CODE)
+ORDER BY DE.DE_DEPART_INDEX, UM.UM_POSITION		
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

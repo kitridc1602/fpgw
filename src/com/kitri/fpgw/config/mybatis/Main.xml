@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Main">
+
+	<select id="LoginUser" parameterType="com.kitri.fpgw.model.UserDto" resultType="com.kitri.fpgw.model.UserDto">
+    	SELECT  UM_CODE STRCODE,                UM_NAME STRNAME,
+		        UM_ID STRID,                    UM_PWD STRPWD,
+		        UM_DEPART_CD STRDEPART_CD,      DE_NAME STRDEPART_NM,
+		        UM_POSITION STRPOSITION_CD,     CM_NAME STRPOSITION_NM,
+		        UM_LEVEL INTLEVEL,              UM.UM_USE_FLAG,
+		        UI_FACE_NAME STRFACE_NAME,		UI_FACE_PATH STRFACE_PATH,
+		        UI_SIGN_NAME STRSIGN_NAME,		UI_SIGN_PATH STRSIGN_PATH
+		FROM    USER_MAIN UM
+		        LEFT OUTER JOIN USER_DETAIL UD  ON  (UM.UM_CODE = UD.UD_UM_CODE)
+		        LEFT OUTER JOIN DEPART DE       ON  (UM.UM_DEPART_CD = DE.DE_DCODE)
+		        LEFT OUTER JOIN CODE_MANAGE CM  ON  (UM.UM_POSITION_BCODE = CM.CM_BCODE)
+		                                        AND (UM.UM_POSITION = CM.CM_SCODE)
+		       	LEFT OUTER JOIN USER_IMAGE UI	ON	(UM.UM_CODE = UI.UI_UM_CODE)
+		WHERE   (UM_USE_FLAG = 1)
+		AND		(UM_ID = #{strID})
+		AND     (UM_PWD = #{strPWD})
+	</select>
+	
+	<select id="MenuList" resultType="com.kitri.fpgw.model.MenuDto">
+		SELECT  ME_CODE STRCODE,      ME_NAME STRNAME,
+		        ME_PCODE STRPCODE,    ME_SORT INTSORT,
+		        ME_PATH STRPATH,      ME_LEVEL INTLEVEL
+		FROM    MENU
+		WHERE   (ME_CODE > '000')
+		AND     (ME_USE_FLAG = 1)
+		ORDER BY ME_MENUINDEX
+	</select>
+	
+	<select id="CodeListAll" parameterType="String" resultType="com.kitri.fpgw.model.CodeManageDto">
+		SELECT  CM_BCODE STRBCODE,    CM_BNAME STRBNAME,
+		        CM_SCODE STRSCODE,    CM_NAME STRNAME,
+		        CM_VALUE1 STRVALUE1,  CM_VALUE2 STRVALUE2,
+		        CM_VALUE1 STRVALUE2,
+		        CM_SORT INTSORT,      CM_USE_FLAG INTUSE_FLAG
+		FROM    CODE_MANAGE
+		ORDER BY CM_BCODE, CM_SCODE	
+	</select>
+	
+	<select id="CodeListBcode" parameterType="String" resultType="com.kitri.fpgw.model.CodeManageDto">
+		SELECT  CM_BCODE STRBCODE,    CM_BNAME STRBNAME,
+		        CM_SCODE STRSCODE,    CM_NAME STRNAME,
+		        CM_VALUE1 STRVALUE1,  CM_VALUE2 STRVALUE2,
+		        CM_VALUE1 STRVALUE2,
+		        CM_SORT INTSORT,      CM_USE_FLAG INTUSE_FLAG
+		FROM    CODE_MANAGE
+		WHERE   (CM_BCODE = #{BCode})
+		ORDER BY CM_BCODE, CM_SCODE
+	</select>
+	
+	<select id="CodeListBS" parameterType="com.kitri.fpgw.model.CodeManageDto" resultType="com.kitri.fpgw.model.CodeManageDto">
+		SELECT  CM_BCODE STRBCODE,    CM_BNAME STRBNAME,
+		        CM_SCODE STRSCODE,    CM_NAME STRNAME,
+		        CM_VALUE1 STRVALUE1,  CM_VALUE2 STRVALUE2,
+		        CM_VALUE1 STRVALUE2,
+		        CM_SORT INTSORT,      CM_USE_FLAG INTUSE_FLAG
+		FROM    CODE_MANAGE
+		WHERE   (CM_BCODE = #{strBCode})
+		AND     (CM_SCODE = #{strSCode})
+	</select>
+	
+	<select id="MainMessageList" parameterType="String" resultType="com.kitri.fpgw.model.UserDto">
+		SELECT  UM_CODE STRCODE,              UM_NAME STRNAME,
+		        UM_DEPART_CD STRDEPART_CD,    DE_NAME STRDEPART_NM,
+		        UM_POSITION STRPOSITION_CD,   CM_NAME STRPOSITION_NM,
+		        UM_TEL1 STRCO_TEL1,           UM_TEL2 STRCO_TEL2,
+		        UM_TEL3 STRCO_TEL3,           UM_INLINE STRCO_INLINE,
+		        UD_MOBILE1 STRMOBILE1,        UD_MOBILE2 STRMOBILE2,
+		        UD_MOBILE3 STRMOBILE3,
+		        UI_FACE_NAME STRFACE_NAME,    UI_FACE_PATH STRFACE_PATH,
+		        UI_SIGN_NAME STRSIGN_NAME,    UI_SIGN_PATH STRSIGN_PATH
+		FROM    USER_MAIN UM
+		        LEFT OUTER JOIN USER_DETAIL UD  ON  (UM.UM_CODE = UD.UD_UM_CODE)
+		        LEFT OUTER JOIN DEPART DE       ON  (UM.UM_DEPART_CD = DE.DE_DCODE)
+		        LEFT OUTER JOIN CODE_MANAGE CM  ON  (UM.UM_POSITION_BCODE = CM.CM_BCODE)
+		                                        AND (UM.UM_POSITION = CM.CM_SCODE)
+		        LEFT OUTER JOIN USER_IMAGE UI	ON	(UM.UM_CODE = UI.UI_UM_CODE)
+		WHERE NOT UM_CODE = #{Code}
+		ORDER BY UM.UM_NAME 	
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
