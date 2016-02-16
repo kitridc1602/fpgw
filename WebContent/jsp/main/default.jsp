@@ -20,12 +20,7 @@
                </div>
                 <div>
                 	<!-- 실제 화면 구동부분 -->
-                	
-                	<select>
-                		<c:forEach var="item" items="${sessionScope.position }">
-                			<option value="${item.strSCode }">${item.strName }</option>
-                		</c:forEach>
-                	</select>
+     
                 </div>
       		  </div>
           <!-- end: content -->
