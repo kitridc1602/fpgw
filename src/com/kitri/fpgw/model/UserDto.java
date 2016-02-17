@@ -1,5 +1,7 @@
 package com.kitri.fpgw.model;
 
+import java.util.Date;
+
 public class UserDto {
 
 	private String strCode;
@@ -48,7 +50,11 @@ public class UserDto {
 	private String strFace_Path;
 	private String strSign_Name;
 	private String strSign_Path;
-		
+	private String strGetUser;
+	private Date datGetDate;
+	private String strEditUser;
+	private Date datEditDate;
+	
 	public UserDto() {
 		
 	}
@@ -62,7 +68,7 @@ public class UserDto {
 			String strZip2, String strAddr1, String strAddr2, String strHome_Page, int intWedding_Flag,
 			String strWedding_YYYY, String strWedding_MM, String strWedding_DD, String strHobby, String strResume,
 			String strIntroduction, String strMemo, String strFace_Name, String strFace_Path, String strSign_Name,
-			String strSign_Path) {
+			String strSign_Path, String strGetUser, Date datGetDate, String strEditUser, Date datEditDate) {
 		this.strCode = strCode;
 		this.strName = strName;
 		this.strID = strID;
@@ -109,6 +115,10 @@ public class UserDto {
 		this.strFace_Path = strFace_Path;
 		this.strSign_Name = strSign_Name;
 		this.strSign_Path = strSign_Path;
+		this.strGetUser = strGetUser;
+		this.datGetDate = datGetDate;
+		this.strEditUser = strEditUser;
+		this.datEditDate = datEditDate;
 	}
 
 	public String getStrCode() {
@@ -477,6 +487,38 @@ public class UserDto {
 
 	public void setStrSign_Path(String strSign_Path) {
 		this.strSign_Path = strSign_Path;
+	}
+
+	public String getStrGetUser() {
+		return strGetUser;
+	}
+
+	public void setStrGetUser(String strGetUser) {
+		this.strGetUser = strGetUser;
+	}
+
+	public Date getDatGetDate() {
+		return datGetDate;
+	}
+
+	public void setDatGetDate(Date datGetDate) {
+		this.datGetDate = datGetDate;
+	}
+
+	public String getStrEditUser() {
+		return strEditUser;
+	}
+
+	public void setStrEditUser(String strEditUser) {
+		this.strEditUser = strEditUser;
+	}
+
+	public Date getDatEditDate() {
+		return datEditDate;
+	}
+
+	public void setDatEditDate(Date datEditDate) {
+		this.datEditDate = datEditDate;
 	}
 
 	

@@ -1,5 +1,7 @@
 package com.kitri.fpgw.model;
 
+import java.util.Date;
+
 public class MenuDto {
 
 	private String strCode;
@@ -10,14 +12,19 @@ public class MenuDto {
 	private int intSort;
 	private int intUse_Flag;
 	private String strMenuIndex;
-	
+	private String strGetUser;
+	private Date datGetDate;
+	private String strEditUser;
+	private Date datEditDate;
+
 	
 	public MenuDto() {
 		
 	}
-
+	
 	public MenuDto(String strCode, String strPCode, String strName, String strPath, int intLevel, int intSort,
-			int intUse_Flag, String strMenuIndex) {
+			int intUse_Flag, String strMenuIndex, String strGetUser, Date datGetDate, String strEditUser,
+			Date datEditDate) {
 		this.strCode = strCode;
 		this.strPCode = strPCode;
 		this.strName = strName;
@@ -26,6 +33,10 @@ public class MenuDto {
 		this.intSort = intSort;
 		this.intUse_Flag = intUse_Flag;
 		this.strMenuIndex = strMenuIndex;
+		this.strGetUser = strGetUser;
+		this.datGetDate = datGetDate;
+		this.strEditUser = strEditUser;
+		this.datEditDate = datEditDate;
 	}
 
 	public String getStrCode() {
@@ -91,5 +102,38 @@ public class MenuDto {
 	public void setStrMenuIndex(String strMenuIndex) {
 		this.strMenuIndex = strMenuIndex;
 	}
+
+	public String getStrGetUser() {
+		return strGetUser;
+	}
+
+	public void setStrGetUser(String strGetUser) {
+		this.strGetUser = strGetUser;
+	}
+
+	public Date getDatGetDate() {
+		return datGetDate;
+	}
+
+	public void setDatGetDate(Date datGetDate) {
+		this.datGetDate = datGetDate;
+	}
+
+	public String getStrEditUser() {
+		return strEditUser;
+	}
+
+	public void setStrEditUser(String strEditUser) {
+		this.strEditUser = strEditUser;
+	}
+
+	public Date getDatEditDate() {
+		return datEditDate;
+	}
+
+	public void setDatEditDate(Date datEditDate) {
+		this.datEditDate = datEditDate;
+	}
+
 	
 }
