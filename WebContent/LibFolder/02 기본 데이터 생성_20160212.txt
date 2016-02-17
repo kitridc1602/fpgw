@@ -194,6 +194,127 @@ FROM DUAL
 ;
 
 
+/*처리그룹*/
+INSERT INTO CODE_MANAGE
+(
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+)
+SELECT '200', '001', '처리그룹', '결재', 1, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '200', '002', '처리그룹', '협조', 2, 1 FROM DUAL
+
+
+
+;
+
+/*결재여부*/
+INSERT INTO CODE_MANAGE
+(
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+)
+SELECT '201', '001', '결재여부', '결재', 1, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '201', '002', '결재여부', '미결재', 2, 1 FROM DUAL
+
+
+
+;
+
+/*문서 읽기 여부*/
+INSERT INTO CODE_MANAGE
+(
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+)
+SELECT '202', '001', '문서읽기 여부', '읽음', 1, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '202', '002', '문서읽기 여부', '안읽음', 2, 1 FROM DUAL
+
+
+
+;
+
+/*공개 여부*/
+INSERT INTO CODE_MANAGE
+(
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+)
+SELECT '203', '001', '공개여부', '공개', 1, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '203', '002', '공개여부', '비공개', 2, 1 FROM DUAL
+
+
+
+;
+
+
+/*보존기간*/
+INSERT INTO CODE_MANAGE
+(
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+)
+SELECT '204', '001', '보존기간', '3개월', 1, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '002', '보존기간', '6개월', 2, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '003', '보존기간', '1년', 3, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '004', '보존기간', '2년', 4, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '005', '보존기간', '3년', 5, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '006', '보존기간', '4년', 6, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '007', '보존기간', '5년', 7, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '008', '보존기간', '6년', 8, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '009', '보존기간', '7년', 9, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '010', '보존기간', '8년', 10, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '011', '보존기간', '9년', 11, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '012', '보존기간', '10년', 12, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '204', '013', '보존기간', '무기한', 13, 1 FROM DUAL
+
+;
+
+
+
+
 --MEMU DATA
 DELETE FROM MENU;
 
