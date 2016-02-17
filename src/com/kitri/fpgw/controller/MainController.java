@@ -1,6 +1,8 @@
 package com.kitri.fpgw.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kitri.fpgw.model.CodeManageDto;
+import com.kitri.fpgw.model.LogHistoryDto;
 import com.kitri.fpgw.model.MenuDto;
 import com.kitri.fpgw.model.UserDto;
 import com.kitri.fpgw.service.MainService;
@@ -29,6 +32,10 @@ public class MainController {
 	@RequestMapping(value="/login.html")
 	public String Login(String id, String pwd, HttpSession session) throws Exception {
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
+		String ymd = sdf.format(date);
+		
 		UserDto userIn = new UserDto();
 		userIn.setStrID(id);
 		userIn.setStrPWD(pwd);
@@ -43,6 +50,15 @@ public class MainController {
 			strMovePage = "index";
 		} else {
 			
+			/*로그인 기록*/			
+			LogHistoryDto LogHistoryDto = new LogHistoryDto();
+			LogHistoryDto.setStrLog_Ymd(ymd);
+			LogHistoryDto.setStrUser_Cd(userOut.getStrCode());
+			LogHistoryDto.setStrLog_Cd("001");
+			MainService.LogCheck(LogHistoryDto);
+			
+			/*===== 세션 정리 =====*/
+			/*사용자 정보*/
 			session.setAttribute("success", "ok");
 			session.setAttribute("userInfo", userOut);
 			
@@ -71,7 +87,20 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="logout.html")
-	public String LogOut(HttpSession session){
+	public String LogOut(HttpSession session) throws Exception {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
+		String ymd = sdf.format(date);
+		
+		UserDto userIn = (UserDto) session.getAttribute("userInfo");
+		
+		/*로그아웃 기록*/			
+		LogHistoryDto LogHistoryDto = new LogHistoryDto();
+		LogHistoryDto.setStrLog_Ymd(ymd);
+		LogHistoryDto.setStrUser_Cd(userIn.getStrCode());
+		LogHistoryDto.setStrLog_Cd("002");
+		MainService.LogCheck(LogHistoryDto);
 		
 		//세션정리
 		session.removeAttribute("success");

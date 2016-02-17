@@ -93,6 +93,44 @@
 		ORDER BY UM.UM_NAME 	
 	</select>
 	
+	<update id="logCheck" parameterType="com.kitri.fpgw.model.LogHistoryDto">
+		MERGE INTO LOG_HISTORY
+		USING DUAL
+		ON (LH_LOG_YMD = '${strLog_Ymd}' AND LH_USER_CD = '${strUser_Cd}' AND LH_LOG = '${strLog_Cd}')
+		WHEN MATCHED THEN
+		<choose>
+			<when test="strLog_Cd == '001'">
+				UPDATE SET
+					LH_LOG_IP_ADDR = ''
+				WHERE 	LH_LOG_YMD = '${strLog_Ymd}'
+				AND 	LH_USER_CD = '${strUser_Cd}'
+				AND		LH_LOG = '${strLog_Cd}'
+			</when>
+			
+			<when test="strLog_Cd == '002'">
+				UPDATE SET
+					LH_LOG_TIME = SYSDATE,
+					LH_LOG_IP_ADDR = ''
+				WHERE 	LH_LOG_YMD = '${strLog_Ymd}'
+				AND 	LH_USER_CD = '${strUser_Cd}'
+				AND		LH_LOG = '${strLog_Cd}'
+			</when>
+		</choose>
+		WHEN NOT MATCHED THEN
+			INSERT 
+			(
+				LH_LOG_YMD, 	LH_USER_CD, 
+				LH_LOG, 		LH_LOG_BCODE, 
+				LH_LOG_TIME
+			)
+			VALUES
+			(
+				'${strLog_Ymd}', 	'${strUser_Cd}',
+				'${strLog_Cd}',	'051',			
+				SYSDATE							
+			)	
+	</update>
+	
 	
 	
 	

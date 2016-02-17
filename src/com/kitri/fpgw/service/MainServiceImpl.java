@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kitri.fpgw.dao.MainDao;
 import com.kitri.fpgw.model.CodeManageDto;
+import com.kitri.fpgw.model.LogHistoryDto;
 import com.kitri.fpgw.model.MenuDto;
 import com.kitri.fpgw.model.UserDto;
 
@@ -55,6 +56,14 @@ public class MainServiceImpl implements MainService {
 	public ArrayList<UserDto> MainMessageList(String Code) throws Exception {
 		
 		return MainDao.MainMessageList(Code);
+	}
+
+
+	@Override
+	public void LogCheck(LogHistoryDto LogHistoryDto) throws Exception {
+		
+		MainDao.LogCheck(LogHistoryDto);
+		
 	}
 
 	

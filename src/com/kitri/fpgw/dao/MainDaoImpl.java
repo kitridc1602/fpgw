@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kitri.fpgw.model.CodeManageDto;
+import com.kitri.fpgw.model.LogHistoryDto;
 import com.kitri.fpgw.model.MenuDto;
 import com.kitri.fpgw.model.UserDto;
 
@@ -62,6 +63,13 @@ public class MainDaoImpl implements MainDao {
 		List<UserDto> list = SqlSessionTemplate.selectList("MainMessageList", Code);
 
 		return (ArrayList<UserDto>) list;
+	}
+
+	@Override
+	public void LogCheck(LogHistoryDto LogHistoryDto) throws Exception {
+
+		System.out.println(LogHistoryDto.getStrLog_Cd());
+		SqlSessionTemplate.update("logCheck", LogHistoryDto);
 	}
 
 	
