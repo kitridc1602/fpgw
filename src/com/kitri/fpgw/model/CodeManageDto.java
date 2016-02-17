@@ -13,18 +13,18 @@ public class CodeManageDto {
 	private String strValue3;
 	private int intSort;
 	private int intUse_Flag;
-	private String strGetUser;
-	private Date datGetDate;
-	private String strEditUser;
-	private Date datEditDate;
+	private String strGet_User;
+	private Date datGet_Date;
+	private String strEdit_User;
+	private Date datEdit_Date;
 		
 	public CodeManageDto() {
 		
 	}
 	
 	public CodeManageDto(String strBCode, String strBName, String strSCode, String strName, String strValue1,
-			String strValue2, String strValue3, int intSort, int intUse_Flag, String strGetUser, Date datGetDate,
-			String strEditUser, Date datEditDate) {
+			String strValue2, String strValue3, int intSort, int intUse_Flag, String strGet_User, Date datGet_Date,
+			String strEdit_User, Date datEdit_Date) {
 		this.strBCode = strBCode;
 		this.strBName = strBName;
 		this.strSCode = strSCode;
@@ -34,10 +34,10 @@ public class CodeManageDto {
 		this.strValue3 = strValue3;
 		this.intSort = intSort;
 		this.intUse_Flag = intUse_Flag;
-		this.strGetUser = strGetUser;
-		this.datGetDate = datGetDate;
-		this.strEditUser = strEditUser;
-		this.datEditDate = datEditDate;
+		this.strGet_User = strGet_User;
+		this.datGet_Date = datGet_Date;
+		this.strEdit_User = strEdit_User;
+		this.datEdit_Date = datEdit_Date;
 	}
 
 	public String getStrBCode() {
@@ -113,39 +113,39 @@ public class CodeManageDto {
 	}
 
 	
-	public String getStrGetUser() {
-		return strGetUser;
+	public String getStrGet_User() {
+		return strGet_User;
 	}
 
 	
-	public void setStrGetUser(String strGetUser) {
-		this.strGetUser = strGetUser;
+	public void setStrGet_User(String strGet_User) {
+		this.strGet_User = strGet_User;
 	}
 
 	
-	public Date getDatGetDate() {
-		return datGetDate;
+	public Date getDatGet_Date() {
+		return datGet_Date;
 	}
 
 	
-	public void setDatGetDate(Date datGetDate) {
-		this.datGetDate = datGetDate;
+	public void setDatGet_Date(Date datGet_Date) {
+		this.datGet_Date = datGet_Date;
 	}
 
-	public String getStrEditUser() {
-		return strEditUser;
+	public String getStrEdit_User() {
+		return strEdit_User;
 	}
 
-	public void setStrEditUser(String strEditUser) {
-		this.strEditUser = strEditUser;
+	public void setStrEdit_User(String strEdit_User) {
+		this.strEdit_User = strEdit_User;
 	}
 
-	public Date getDatEditDate() {
-		return datEditDate;
+	public Date getDatEdit_Date() {
+		return datEdit_Date;
 	}
 
-	public void setDatEditDate(Date datEditDate) {
-		this.datEditDate = datEditDate;
+	public void setDatEdit_Date(Date datEdit_Date) {
+		this.datEdit_Date = datEdit_Date;
 	}
 
 	
