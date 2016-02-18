@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Schedule">
+
+	<select id="ScheduleSelect" parameterType="com.kitri.fpgw.model.ScheduleDto" resultType="com.kitri.fpgw.model.ScheduleDto">
+		SELECT 	SC_USER STRUSER, 
+				SC_YY STRYY, 					SC_MM STRDD,
+				SC_DD STRDD, 					SC_SEQ STRSEQ,
+				SC_TITLE STRTITLE, 				SC_DETAIL_COMMENT,
+				SC_START_HOUR STRSTART_HOUR, 	SC_START_MINUTE STRSTART_MINUTE,
+				SC_END_HOUR STREND_HOUR, 		SC_END_MINUTE STREND_MINUTE,
+				SC_TERM_HOUR STRTERM_HOUR, 		SC_TERM_MINUTE STRTERM_MINUTE,
+				SC_SCH_KIND STRSCH_KIND_CD, 	CM_SCH.CM_NAME STRSCH_KIND_NM,
+				SC_WORK_KIND STRSCH_KIND_CD, 	CM_WORK.CM_NAME STRWORK_KIND_NM,
+				SC_DISCLOSURE STRDISCLOSURE_CD, CM_DISCLOSURE.CM_NAME STRDISCLOSURE_NM
+		FROM 	SCHEDULE SC
+				LEFT OUTER JOIN CODE_MANAGE CM_SCH 			ON 	(SC.SC_SCH_KIND_BCODE = CM_SCH.CM_BCODE)
+															AND (SC.SC_SCH_KIND = CM_SCH.CM_SCODE)
+				LEFT OUTER JOIN CODE_MANAGE CM_WORK 		ON 	(SC.SC_WORK_KIND_BCODE = CM_WORK.CM_BCODE)
+															AND (SC.SC_WORK_KIND = CM_WORK.CM_SCODE)
+				LEFT OUTER JOIN CODE_MANAGE CM_DISCLOSURE 	ON 	(SC.SC_DISCLOSURE_BCODE = CM_DISCLOSURE.CM_BCODE)
+															AND (SC.SC_DISCLOSURE = CM_DISCLOSURE.CM_SCODE)
+		WHERE 	(SC_USER = '')
+		AND		(SC_YY = '')
+		AND		(SC_MM = '')
+		AND		(SC_DD = '')
+		AND		(SC_SEQ = )
+		ORDER BY SC_USER, SC_YY, SC_MM, SC_DD, SC_SEQ
+	
+	</select>
+	
+<!-- 	<select id="ScheduleSelectAll" parameterType="com.kitri.fpgw.model.ScheduleDto" resultType="com.kitri.fpgw.model.ScheduleDto">
+	
+	</select>
+	
+	<update id="ScheduleModify" parameterType="com.kitri.fpgw.model.ScheduleDto">
+	
+	</update>
+	
+	<delete id="ScheduleDelete" parameterType="com.kitri.fpgw.model.ScheduleDto">
+	
+	</delete> -->
+</mapper>
