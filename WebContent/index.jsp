@@ -20,7 +20,7 @@
 						<td>
 					</tr>
 					<tr>
-						<td align="right">아이디</td>
+						<td align="right">아이 디</td>
 						<td>
 							<input type="text" id="id" name="id" value="kitri01">
 						</td>
