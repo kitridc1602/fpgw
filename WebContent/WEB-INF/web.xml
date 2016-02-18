@@ -46,6 +46,16 @@
 			<include-coda>/include/bottom.jsp</include-coda>
 		</jsp-property-group>
 	</jsp-config>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/jspc/error/404.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>		
+		<location>/jspc/error/500.jsp</location>
+	</error-page>
 	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

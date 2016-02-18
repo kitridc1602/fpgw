@@ -50,9 +50,11 @@ public class UserDto {
 	private String strFace_Path;
 	private String strSign_Name;
 	private String strSign_Path;
-	private String strGet_User;
+	private String strGet_User_Cd;
+	private String strGet_User_Nm;
 	private Date datGet_Date;
-	private String strEdit_User;
+	private String strEdit_User_Cd;
+	private String strEdit_User_Nm;
 	private Date datEdit_Date;
 	
 	public UserDto() {
@@ -68,8 +70,8 @@ public class UserDto {
 			String strZip2, String strAddr1, String strAddr2, String strHome_Page, int intWedding_Flag,
 			String strWedding_YYYY, String strWedding_MM, String strWedding_DD, String strHobby, String strResume,
 			String strIntroduction, String strMemo, String strFace_Name, String strFace_Path, String strSign_Name,
-			String strSign_Path, String strGet_User, Date datGet_Date, String strEdit_User, Date datEdit_Date) {
-		super();
+			String strSign_Path, String strGet_User_Cd, String strGet_User_Nm, Date datGet_Date, String strEdit_User_Cd,
+			String strEdit_User_Nm, Date datEdit_Date) {
 		this.strCode = strCode;
 		this.strName = strName;
 		this.strID = strID;
@@ -116,9 +118,11 @@ public class UserDto {
 		this.strFace_Path = strFace_Path;
 		this.strSign_Name = strSign_Name;
 		this.strSign_Path = strSign_Path;
-		this.strGet_User = strGet_User;
+		this.strGet_User_Cd = strGet_User_Cd;
+		this.strGet_User_Nm = strGet_User_Nm;
 		this.datGet_Date = datGet_Date;
-		this.strEdit_User = strEdit_User;
+		this.strEdit_User_Cd = strEdit_User_Cd;
+		this.strEdit_User_Nm = strEdit_User_Nm;
 		this.datEdit_Date = datEdit_Date;
 	}
 
@@ -490,12 +494,20 @@ public class UserDto {
 		this.strSign_Path = strSign_Path;
 	}
 
-	public String getStrGet_User() {
-		return strGet_User;
+	public String getStrGet_User_Cd() {
+		return strGet_User_Cd;
 	}
 
-	public void setStrGet_User(String strGet_User) {
-		this.strGet_User = strGet_User;
+	public void setStrGet_User_Cd(String strGet_User_Cd) {
+		this.strGet_User_Cd = strGet_User_Cd;
+	}
+
+	public String getStrGet_User_Nm() {
+		return strGet_User_Nm;
+	}
+
+	public void setStrGet_User_Nm(String strGet_User_Nm) {
+		this.strGet_User_Nm = strGet_User_Nm;
 	}
 
 	public Date getDatGet_Date() {
@@ -506,12 +518,20 @@ public class UserDto {
 		this.datGet_Date = datGet_Date;
 	}
 
-	public String getStrEdit_User() {
-		return strEdit_User;
+	public String getStrEdit_User_Cd() {
+		return strEdit_User_Cd;
 	}
 
-	public void setStrEdit_User(String strEdit_User) {
-		this.strEdit_User = strEdit_User;
+	public void setStrEdit_User_Cd(String strEdit_User_Cd) {
+		this.strEdit_User_Cd = strEdit_User_Cd;
+	}
+
+	public String getStrEdit_User_Nm() {
+		return strEdit_User_Nm;
+	}
+
+	public void setStrEdit_User_Nm(String strEdit_User_Nm) {
+		this.strEdit_User_Nm = strEdit_User_Nm;
 	}
 
 	public Date getDatEdit_Date() {
@@ -522,4 +542,5 @@ public class UserDto {
 		this.datEdit_Date = datEdit_Date;
 	}
 
+	
 }

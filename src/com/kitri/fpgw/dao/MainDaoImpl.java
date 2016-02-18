@@ -10,7 +10,10 @@ import org.springframework.stereotype.Repository;
 import com.kitri.fpgw.model.CodeManageDto;
 import com.kitri.fpgw.model.LogHistoryDto;
 import com.kitri.fpgw.model.MenuDto;
+import com.kitri.fpgw.model.UserDetaileDto;
 import com.kitri.fpgw.model.UserDto;
+import com.kitri.fpgw.model.UserImageDto;
+import com.kitri.fpgw.model.UserMainDto;
 
 @Repository
 public class MainDaoImpl implements MainDao {
@@ -19,11 +22,23 @@ public class MainDaoImpl implements MainDao {
 	private SqlSessionTemplate SqlSessionTemplate;
 	
 	@Override
-	public UserDto LogIn(UserDto userIn) throws Exception {
+	public UserMainDto LogIn(UserMainDto userMainDto) throws Exception {
 		
-		return (UserDto) SqlSessionTemplate.selectOne("LoginUser", userIn);
+		return (UserMainDto) SqlSessionTemplate.selectOne("LoginUserMain", userMainDto);
 	}
 	
+	@Override
+	public UserDetaileDto UserDetailSelect(String strCode) throws Exception {
+		
+		return (UserDetaileDto) SqlSessionTemplate.selectOne("LoginUserDetail", strCode);
+	}
+
+	@Override
+	public UserImageDto UserImageSelect(String strCode) throws Exception {
+		
+		return (UserImageDto) SqlSessionTemplate.selectOne("LoginUserImage", strCode);
+	}
+
 	@Override
 	public ArrayList<MenuDto> MenuSelectAll() throws Exception {
 	
@@ -67,9 +82,16 @@ public class MainDaoImpl implements MainDao {
 
 	@Override
 	public void LogCheck(LogHistoryDto LogHistoryDto) throws Exception {
-
-		System.out.println(LogHistoryDto.getStrLog_Cd());
+		
 		SqlSessionTemplate.update("logCheck", LogHistoryDto);
+	}
+
+	@Override
+	public ArrayList<CodeManageDto> CodeManageBCodeGroupSelectAll() throws Exception {
+		
+		List<CodeManageDto> list = SqlSessionTemplate.selectList("CodeBCodeListAll");
+		
+		return (ArrayList<CodeManageDto>) list;
 	}
 
 	

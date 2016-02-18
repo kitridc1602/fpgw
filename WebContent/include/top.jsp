@@ -7,7 +7,7 @@
 <head>
 	
 	<meta charset="utf-8">
-	<meta name="description" content="GroupWare of KITRI DC16th EDUCATION TEAM No.2 Final Project">
+	<meta name="description" content="GroupWare System of KITRI DC16th Education Team No.2 Final Project">
 	<meta name="author" content="${sessionScope.coInfo[0].strName }">
 	<meta name="keyword" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +24,7 @@
 	<link href="${root }/css/style.css" rel="stylesheet">
 	<!-- end: Css -->
 
-	<link rel="shortcut icon" href="${root }/img/logomi.png">
+	<link rel="shortcut icon" href="${root }/img/logo.png">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -49,7 +49,7 @@
               </div>
               
               	<!-- 상단 회사명 -->
-                <a href="${root }/jsp/main/default.html" class="navbar-brand"> 
+                <a href="${root }/main/default.html" class="navbar-brand"> 
                  <b>${sessionScope.coInfo[0].strName }</b>
                 </a>
 
@@ -75,7 +75,7 @@
 	                <c:choose>
 	              		<c:when test="${sessionScope.success == 'ok' }">
 	              		
-	              			<img src="${root }${sessionScope.userInfo.strFace_Path }${sessionScope.userInfo.strFace_Name }" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+	              			<img src="${root }${sessionScope.userImageInfo.strFace_Path }${sessionScope.userImageInfo.strFace_Name }" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
 	              				
 	              		</c:when>
 	             	
@@ -90,7 +90,7 @@
                    			
                    			<c:if test="${sessionScope.success == 'ok' }">
                    				<li><a href="#"><span class="fa fa-user"></span> 내 정보 수정</a></li>
-                   				<li><a href="${root }/main/logout.html"><span class="fa fa-user"></span> 로그아웃 </a></li>
+                   				<li><a href="${root }/main/logout.html"><span class="fa fa-user"></span> 로그아웃</a></li>
                    			</c:if>
 			              	
                      		

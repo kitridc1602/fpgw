@@ -15,7 +15,7 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		p:driverClassName="oracle.jdbc.driver.OracleDriver"
-		p:url="jdbc:oracle:thin:@192.168.14.25:1521:XE"
+		p:url="jdbc:oracle:thin:@localhost:1521:XE"
 		p:username="kitri"
 		p:password="kitri"/>
 		
@@ -25,12 +25,16 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath:com/kitri/fpgw/config/mybatis/Main.xml</value>
+				<value>classpath:com/kitri/fpgw/config/mybatis/User.xml</value>
+				<value>classpath:com/kitri/fpgw/config/mybatis/Schedule.xml</value>
 			</list>
 		</property>
 		
 		<property name="typeAliases">
 			<list>
 				<value>com.kitri.fpgw.dao.MainDao</value>
+				<value>com.kitri.fpgw.dao.UserDao</value>
+				<value>com.kitri.fpgw.dao.ScheduleDao</value>
 			</list>
 		</property>
 	</bean>

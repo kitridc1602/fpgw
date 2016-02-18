@@ -2,25 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Main">
 
-	<select id="LoginUser" parameterType="com.kitri.fpgw.model.UserDto" resultType="com.kitri.fpgw.model.UserDto">
-    	SELECT  UM_CODE STRCODE,                UM_NAME STRNAME,
-		        UM_ID STRID,                    UM_PWD STRPWD,
-		        UM_DEPART_CD STRDEPART_CD,      DE_NAME STRDEPART_NM,
-		        UM_POSITION STRPOSITION_CD,     CM_NAME STRPOSITION_NM,
-		        UM_LEVEL INTLEVEL,              UM.UM_USE_FLAG,
+	<select id="LoginUserMain" parameterType="com.kitri.fpgw.model.UserMainDto" resultType="com.kitri.fpgw.model.UserMainDto">
+    	SELECT  UM.UM_CODE STRCODE,                	UM.UM_NAME STRNAME,
+		        UM.UM_ID STRID,                    	UM.UM_PWD STRPWD,
+		        UM.UM_DEPART_CD STRDEPART_CD,      	DE_NAME STRDEPART_NM,
+		        UM.UM_POSITION STRPOSITION_CD,     	CM_NAME STRPOSITION_NM,
+		        UM.UM_LEVEL INTLEVEL,              	UM.UM_USE_FLAG,
+		        UM.UM_GET_USER STRGET_USER_CD,		GET_USER.UM_NAME STRGET_USER_NM,		
+		        UM.UM_GET_DATE DATGET_DATE,
+		        UM.UM_EDIT_USER STREDIT_USER_CD,	EDIT_USER.UM_NAME STREDIT_USER_NM,
+		        UM.UM_EDIT_DATE DATGET_DATE
+		FROM    USER_MAIN UM
+		        LEFT OUTER JOIN DEPART DE       	ON  (UM.UM_DEPART_CD = DE.DE_DCODE)
+		        LEFT OUTER JOIN CODE_MANAGE CM  	ON  (UM.UM_POSITION_BCODE = CM.CM_BCODE)
+		                                        	AND (UM.UM_POSITION = CM.CM_SCODE)
+                LEFT OUTER JOIN USER_MAIN GET_USER 	ON 	(UM.UM_GET_USER = GET_USER.UM_CODE)
+                LEFT OUTER JOIN USER_MAIN EDIT_USER ON 	(UM.UM_EDIT_USER = EDIT_USER.UM_CODE)
+		WHERE   (UM.UM_USE_FLAG = 1)
+		AND		(UM.UM_ID = #{strID})
+		AND     (UM.UM_PWD = #{strPWD})
+	</select>
+	
+	<select id="LoginUserDetail" parameterType="String" resultType="com.kitri.fpgw.model.UserDetaileDto">
+    	SELECT	UD_UM_CODE STRCODE,					UD_GENDER STRGENDER,
+				UD_BIRTH_Y STRBIRTH_YYYY,			UD_BIRTH_M STRBIRTH_MM, 
+				UD_BIRTH_D STRBIRTH_DD,
+				UD_CALENDER_KIND INTCALENDER_KIND,
+				UD_TEL1 STRTEL1,					UD_TEL2 STRTEL2,
+				UD_TEL3 STRTEL3,
+				UD_MOBILE1 STRMOBILE1,				UD_MOBILE2 STRMOBILE2,
+				UD_MOBILE3 STRMOBILE3,
+				UD_ZIP1 STRZIP1,					UD_ZIP2 STRZIP2,
+				UD_ADDR1 STRADDR1,					UD_ADDR2 STRADDR2,
+				UD_HOMEPAGE STRHOMEPAGE,			UD_WEDDING_FLAG INTWEDDING_FLAG,
+				UD_WEDDING_Y STRWEDDING_YYYY,		UD_WEDDING_M STRWEDDING_MM,
+				UD_WEDDING_D STRWEDDING_DD,
+				UD_HOBBY STRHOBBY,					UD_RESUME STRRESUME,
+				UD_INTRODUCTION STRINTRODUCTION,	UD_MEMO STRMEMO,
+				UD_GET_USER STRGET_USER_CD, 		GET_USER.UM_NAME STRGET_USER_NM,
+				UD_GET_DATE DATGET_DATE,
+				UD_EDIT_USER STREDIT_USER, 			EDIT_USER.UM_NAME STREDIT_USER_NM,
+				UD_EDIT_DATE DATEDIT_DATE
+		FROM    USER_DETAIL UD
+		       	LEFT OUTER JOIN USER_MAIN GET_USER 	ON 	(UD.UD_GET_USER = GET_USER.UM_CODE)
+                LEFT OUTER JOIN USER_MAIN EDIT_USER ON 	(UD.UD_EDIT_USER = EDIT_USER.UM_CODE)
+		WHERE   (UD_UM_CODE = #{strCode})
+	</select>
+	
+	<select id="LoginUserImage" parameterType="String" resultType="com.kitri.fpgw.model.UserImageDto">
+    	SELECT  UI_UM_CODE STRCODE,
 		        UI_FACE_NAME STRFACE_NAME,		UI_FACE_PATH STRFACE_PATH,
 		        UI_SIGN_NAME STRSIGN_NAME,		UI_SIGN_PATH STRSIGN_PATH,
-		        UM_GET_USER STRGET_USER,		UM_GET_DATE DATGET_DATE,
-		        UM_EDIT_USER STRGET_USER,		UM_EDIT_DATE DATGET_DATE
-		FROM    USER_MAIN UM
-		        LEFT OUTER JOIN USER_DETAIL UD  ON  (UM.UM_CODE = UD.UD_UM_CODE)
-		        LEFT OUTER JOIN DEPART DE       ON  (UM.UM_DEPART_CD = DE.DE_DCODE)
-		        LEFT OUTER JOIN CODE_MANAGE CM  ON  (UM.UM_POSITION_BCODE = CM.CM_BCODE)
-		                                        AND (UM.UM_POSITION = CM.CM_SCODE)
-		       	LEFT OUTER JOIN USER_IMAGE UI	ON	(UM.UM_CODE = UI.UI_UM_CODE)
-		WHERE   (UM_USE_FLAG = 1)
-		AND		(UM_ID = #{strID})
-		AND     (UM_PWD = #{strPWD})
+		        UI_GET_USER STRGET_USER_CD, 	GET_USER.UM_NAME STRGET_USER_NM,
+				UI_GET_DATE DATGET_DATE
+		FROM    USER_IMAGE UI
+		        LEFT OUTER JOIN USER_MAIN GET_USER 	ON 	(UI.UI_GET_USER = GET_USER.UM_CODE)
+		WHERE   (UI_UM_CODE = #{strCode})
 	</select>
 	
 	<select id="MenuList" resultType="com.kitri.fpgw.model.MenuDto">
@@ -37,12 +74,21 @@
 		SELECT  CM_BCODE STRBCODE,    			CM_BNAME STRBNAME,
 		        CM_SCODE STRSCODE,    			CM_NAME STRNAME,
 		        CM_VALUE1 STRVALUE1,  			CM_VALUE2 STRVALUE2,
-		        CM_VALUE1 STRVALUE2,
+		        CM_VALUE3 STRVALUE3,
 	        	CM_SORT INTSORT,      			CM_USE_FLAG INTUSE_FLAG,	
 		        CM_GET_USER STRGET_USER,		CM_GET_DATE DATGET_DATE,
 		        CM_EDIT_USER STRGET_USER,		CM_EDIT_DATE DATGET_DATE
 		FROM    CODE_MANAGE
 		ORDER BY CM_BCODE, CM_SCODE	
+	</select>
+	
+	<select id="CodeBCodeListAll" resultType="com.kitri.fpgw.model.CodeManageDto">
+		SELECT  CM_BCODE STRBCODE,    			CM_BNAME STRBNAME,
+		        CM_VALUE4 STRVALUE4
+		FROM    CODE_MANAGE
+		WHERE	(CM_USE_FLAG = 1)
+		GROUP BY CM_BCODE, CM_BNAME, CM_VALUE4
+		ORDER BY CM_BCODE	
 	</select>
 	
 	<select id="CodeListBcode" parameterType="String" resultType="com.kitri.fpgw.model.CodeManageDto">

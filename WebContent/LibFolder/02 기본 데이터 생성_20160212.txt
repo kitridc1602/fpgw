@@ -81,6 +81,8 @@ FROM DUAL
 
 ;
 
+DELETE FROM CODE_MANAGE WHERE CM_BCODE = '051';
+
 --접속구분 정보
 INSERT INTO CODE_MANAGE
 (
@@ -193,7 +195,7 @@ FROM DUAL
 
 ;
 
-
+DELETE FROM CODE_MANAGE WHERE CM_BCODE = '200';
 /*처리그룹*/
 INSERT INTO CODE_MANAGE
 (
@@ -208,6 +210,9 @@ SELECT '200', '002', '처리그룹', '협조', 2, 1 FROM DUAL
 
 
 ;
+
+
+DELETE FROM CODE_MANAGE WHERE CM_BCODE = '201';
 
 /*결재여부*/
 INSERT INTO CODE_MANAGE
@@ -224,6 +229,9 @@ SELECT '201', '002', '결재여부', '미결재', 2, 1 FROM DUAL
 
 ;
 
+
+DELETE FROM CODE_MANAGE WHERE CM_BCODE = '202';
+
 /*문서 읽기 여부*/
 INSERT INTO CODE_MANAGE
 (
@@ -238,6 +246,9 @@ SELECT '202', '002', '문서읽기 여부', '안읽음', 2, 1 FROM DUAL
 
 
 ;
+
+
+DELETE FROM CODE_MANAGE WHERE CM_BCODE = '203';
 
 /*공개 여부*/
 INSERT INTO CODE_MANAGE
@@ -254,6 +265,7 @@ SELECT '203', '002', '공개여부', '비공개', 2, 1 FROM DUAL
 
 ;
 
+DELETE FROM CODE_MANAGE WHERE CM_BCODE = '204';
 
 /*보존기간*/
 INSERT INTO CODE_MANAGE
@@ -312,6 +324,133 @@ SELECT '204', '013', '보존기간', '무기한', 13, 1 FROM DUAL
 
 ;
 
+
+DELETE FROM CODE_MANAGE WHERE CM_BCODE = '301';
+
+/*일정구분*/
+INSERT INTO CODE_MANAGE
+(
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+)
+SELECT '301', '001', '일정구분', '회사일정', 1, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '301', '002', '일정구분', '부서일정', 2, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '301', '003', '일정구분', '팀일정', 3, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '301', '004', '일정구분', '개인일정', 4, 1 FROM DUAL
+
+
+;
+
+DELETE FROM CODE_MANAGE WHERE CM_BCODE = '300';
+
+/*일정종류*/
+INSERT INTO CODE_MANAGE
+(
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+)
+SELECT '300', '001', '일정종류', '기념일', 1, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '002', '일정종류', '생일', 2, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '003', '일정종류', '일반약속', 3, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '004', '일정종류', '아침식사 약속', 4, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '005', '일정종류', '점심식사 약속', 5, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '006', '일정종류', '저녁식사 약속', 6, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '007', '일정종류', '면접', 7, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '008', '일정종류', '술자리', 8, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '009', '일정종류', '결혼식', 9, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '010', '일정종류', '졸업식', 10, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '011', '일정종류', '동창회', 11, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '012', '일정종류', '전화', 12, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '013', '일정종류', '메신저', 13, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '014', '일정종류', '클럽', 14, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '015', '일정종류', '콘서트', 15, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '016', '일정종류', '공연', 16, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '017', '일정종류', '영화', 17, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '018', '일정종류', '파티', 18, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '019', '일정종류', '휴일', 19, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '020', '일정종류', '휴가', 20, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '021', '일정종류', '스포츠', 21, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '022', '일정종류', '모임', 22, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '023', '일정종류', '요급납부', 23, 1 FROM DUAL
+
+	UNION ALL
+	
+SELECT '300', '024', '일정종류', '기타', 24, 1 FROM DUAL
+
+;
 
 
 
@@ -658,6 +797,8 @@ SELECT
 FROM DUAL
 
 ;
+
+DELETE FROM USER_IMAGE WHERE UI_UM_CODE > '00000';
 
 INSERT INTO USER_IMAGE
 (
