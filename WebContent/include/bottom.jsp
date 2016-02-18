@@ -86,9 +86,7 @@
        <!-- end: Mobile -->
 
   <!-- start: Javascript <include>-->
-    <script src="${root }/js/jquery.min.js"></script>
-    <script src="${root }/js/jquery.ui.min.js"></script>
-    <script src="${root }/js/bootstrap.min.js"></script>
+
    
     
     <!-- plugins -->

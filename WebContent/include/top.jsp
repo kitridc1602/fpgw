@@ -31,7 +31,12 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
- 
+    <script src="${root }/js/jquery.min.js"></script>
+    <script src="${root }/js/jquery.ui.min.js"></script>
+    <script src="${root }/js/bootstrap.min.js"></script>
+ 	<script src="${root }/js/plugins/moment.min.js"></script>
+	<script src="${root }/js/plugins/fullcalendar.min.js"></script>
+	<script src="${root }/js/plugins/jquery.nicescroll.js"></script>
   </head>
 
  <body id="mimin" class="dashboard">
