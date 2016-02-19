@@ -83,6 +83,7 @@
       <button id="mimin-mobile-menu-opener" class="animated rubberBand btn btn-circle btn-danger">
         <span class="fa fa-bars"></span>
       </button>
+      </div>
        <!-- end: Mobile -->
 
   <!-- start: Javascript <include>-->
@@ -98,6 +99,13 @@
     <script src="${root }/js/plugins/jquery.vmap.sampledata.js"></script>
     <script src="${root }/js/plugins/chart.min.js"></script>
 
+
+	<!-- plugins date-time-picker js -->
+	<script src="${root }/js/plugins/bootstrap-material-datetimepicker.js"></script>
+    
+    <!-- plugins data tables js -->
+    <%-- <script src="${root }/js/plugins/jquery.datatables.min.js"></script>
+    <script src="${root }/js/plugins/datatables.bootstrap.min.js"></script> --%>
 
     <!-- custom -->
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3"></script>
@@ -146,6 +154,27 @@
 
       })(jQuery);
      </script>
+     
+     <script type="text/javascript">
+  	 
+  	 	/* 날짜 위젯 */
+		$(document).ready(function() {
+			$('.date').bootstrapMaterialDatePicker({
+				weekStart : 0,
+				time : false
+			});
+		});
+  	 	
+	 </script>
+	 
+	<!-- <script>
+	 
+	 	/* 테이블 데이터 검색 & 페이지 조절 */
+		$(document).ready(function() {
+			$('#datatables-example').DataTable();
+		});
+		
+	</script> -->
   
   <!-- end: Javascript -->       
 
