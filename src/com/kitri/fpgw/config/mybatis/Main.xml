@@ -105,7 +105,8 @@
 		WHERE	(CM_USE_FLAG = 1)
 		AND		(CM_VALUE4 > '')
 		GROUP BY CM_BCODE, CM_BNAME, CM_VALUE4
-		ORDER BY CM_BCODE	
+		ORDER BY CM_BCODE
+			
 	</select>
 	
 	<select id="CodeListBcode" parameterType="String" resultType="com.kitri.fpgw.model.CodeManageDto">
