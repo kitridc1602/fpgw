@@ -110,7 +110,7 @@ public class MainController {
 		Date date = new Date();
 		String ymd = sdf.format(date);
 		
-		UserDto userIn = (UserDto) session.getAttribute("userInfo");
+		UserMainDto userIn = (UserMainDto) session.getAttribute("userInfo");
 		
 		/*로그아웃 기록*/			
 		LogHistoryDto LogHistoryDto = new LogHistoryDto();
