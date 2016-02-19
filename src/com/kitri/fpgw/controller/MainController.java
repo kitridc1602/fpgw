@@ -69,12 +69,15 @@ public class MainController {
 			/*===== 세션 정리 =====*/
 			/*사용자 정보*/
 			session.setAttribute("success", "ok");
-			session.setAttribute("userInfo", userOut);
-			
+			session.setAttribute("userInfo", userOut);			
 			UserDetaileDto userDetailInfo = MainService.UserDetailSelect(userOut.getStrCode());
 			session.setAttribute("userDetailInfo", userDetailInfo);
 			UserImageDto userImageInfo = MainService.UserImageSelect(userOut.getStrCode());
 			session.setAttribute("userImageInfo", userImageInfo);
+			
+			/*전체 사용자*/
+			ArrayList<UserDto> allUser = MainService.UserListAll(userOut.getStrCode());
+			session.setAttribute("allUser", allUser);
 			
 			/*기초정보*/
 			ArrayList<CodeManageDto> BCode = MainService.CodeManageBCodeGroupSelectAll();
@@ -111,22 +114,27 @@ public class MainController {
 		String ymd = sdf.format(date);
 		
 		UserMainDto userIn = (UserMainDto) session.getAttribute("userInfo");
-		
+		System.out.println("userInfo");
+		System.out.println(ymd);
+		if(userIn.getStrCode() == null){
+			System.out.println("code null");
+		}
+		System.out.println("code : " + userIn.getStrName());
 		/*로그아웃 기록*/			
 		LogHistoryDto LogHistoryDto = new LogHistoryDto();
 		LogHistoryDto.setStrLog_Ymd(ymd);
 		LogHistoryDto.setStrUser_Cd(userIn.getStrCode());
 		LogHistoryDto.setStrLog_Cd("002");
 		MainService.LogCheck(LogHistoryDto);
-		
+		System.out.println("LogCheck");
 		//세션정리		
 		ArrayList<CodeManageDto> BCode = (ArrayList<CodeManageDto>) session.getAttribute("BCode");
 		session.removeAttribute("BCode");
-		
+		System.out.println("3");
 		int len = BCode.size();
 		
 		for(int i = 0; i < len; i++){
-			
+			System.out.println(BCode.get(i));
 			CodeManageDto bcodeDto = BCode.get(i);
 			session.removeAttribute(bcodeDto.getStrValue4());
 		}

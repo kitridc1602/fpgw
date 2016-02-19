@@ -94,5 +94,13 @@ public class MainDaoImpl implements MainDao {
 		return (ArrayList<CodeManageDto>) list;
 	}
 
+	@Override
+	public ArrayList<UserDto> UserListAll(String strCode) throws Exception {
+
+		List<UserDto> list = SqlSessionTemplate.selectList("UserListAll", strCode);
+		
+		return (ArrayList<UserDto>) list;
+	}
+
 	
 }

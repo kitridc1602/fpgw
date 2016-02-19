@@ -90,6 +90,13 @@ public class MainServiceImpl implements MainService {
 		return MainDao.CodeManageBCodeGroupSelectAll();
 	}
 
+
+	@Override
+	public ArrayList<UserDto> UserListAll(String strCode) throws Exception {
+		
+		return MainDao.UserListAll(strCode);
+	}
+
 	
 	
 	
