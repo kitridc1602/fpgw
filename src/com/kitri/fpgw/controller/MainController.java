@@ -41,8 +41,6 @@ public class MainController {
 	@RequestMapping(value="/login.html")
 	public String Login(String id, String pwd, HttpSession session) throws Exception {
 		
-		System.out.println("in");
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Date date = new Date();
 		String ymd = sdf.format(date);

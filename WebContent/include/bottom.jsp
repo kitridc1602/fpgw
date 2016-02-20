@@ -292,6 +292,8 @@
 
     <!-- custom -->
      <script src="${root }/js/main.js"></script>
+     <!-- 캘린더 한글 지원 -->
+	<script src="${root }/js/lang/ko.js"></script>
      <script type="text/javascript">
       (function(jQuery){
 
@@ -336,15 +338,18 @@
       	 };
  
         // start: Calendar =========
+        	
+			
          $('.dashboard .calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: 'month,agendaWeek'
             },
             defaultDate: '2015-02-12',
+            lang: 'ko',
             businessHours: true, // display business hours
-            editable: true,
+            editable: false,
             events: [
                 {
                     title: 'Business Lunch',
