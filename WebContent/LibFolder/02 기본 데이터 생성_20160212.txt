@@ -46,7 +46,7 @@ INSERT INTO CODE_MANAGE
 CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE1, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
 SELECT
-'001', '001', '회사정보', '한국기술정보연구원(KITRI)', '상호', 'coInfo', 1, 1
+'001', '001', '회사정보', '한국정보기술연구원[KITRI]', '상호', 'coInfo', 1, 1
 FROM DUAL
 
 	UNION ALL
