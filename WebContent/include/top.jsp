@@ -43,6 +43,9 @@
  	<script src="${root }/js/plugins/moment.min.js"></script>
 	<script src="${root }/js/plugins/fullcalendar.min.js"></script>
 	<script src="${root }/js/plugins/jquery.nicescroll.js"></script>
+	<!-- 구글 위치정보 서비스 API -->
+	<script src="http://maps.googleapis.com/maps/api/js"></script>
+	
   </head>
 
  <body id="mimin" class="dashboard">
@@ -65,7 +68,7 @@
                 <c:choose>
               		<c:when test="${sessionScope.success == 'ok' }">
               		
-              			<li class="user-name"><span>${sessionScope.userInfo.strCode } ${sessionScope.userInfo.strName } ${sessionScope.userInfo.strPosition_Nm }</span></li>
+              			<li class="user-name"><span>${sessionScope.userInfo.strName } ${sessionScope.userInfo.strPosition_Nm }</span></li>
               				
               		</c:when>
              	
@@ -77,6 +80,7 @@
               	</c:choose>
               	
               	<!-- 사용자 아이콘 내부의 기능 -->
+              		
                   <li class="dropdown avatar-dropdown">
                    <c:choose>
 	              		<c:when test="${sessionScope.success == 'ok' }">

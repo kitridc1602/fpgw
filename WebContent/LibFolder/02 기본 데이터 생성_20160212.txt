@@ -36,47 +36,47 @@ FROM DUAL;
 
 
 
---CODE_MANAGE 회사정보 DATA
+--CODE_MANAGE 회사정보 DATA(coInfo)
 
 DELETE FROM CODE_MANAGE WHERE CM_BCODE = '001';
 
 
 INSERT INTO CODE_MANAGE
 (
-CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE1, CM_SORT, CM_USE_FLAG
+CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE1, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
 SELECT
-'001', '001', '회사정보', 'KITRI DC16th Team No.2', '상호', 1, 1
+'001', '001', '회사정보', 'KITRI DC16th Team No.2', '상호', 'coInfo', 1, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'001', '002', '회사정보', '02-9876-5432', 'FAX', 2, 1
+'001', '002', '회사정보', '02-9876-5432', 'FAX', 'coInfo', 2, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'001', '003', '회사정보', '111-11-11110', '사업자번호', 3, 1
+'001', '003', '회사정보', '111-11-11110', '사업자번호', 'coInfo', 3, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'001', '004', '회사정보', '서울시 구로구 구로동', '주소', 4, 1
+'001', '004', '회사정보', '서울시 구로구 구로동', '주소', 'coInfo', 4, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'001', '005', '회사정보', '02-1234-5678', '대표전화', 5, 1
+'001', '005', '회사정보', '02-1234-5678', '대표전화', 'coInfo', 5, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'001', '006', '회사정보', '02-9876-5432', 'FAX', 6, 1
+'001', '006', '회사정보', '02-9876-5432', 'FAX', 'coInfo', 6, 1
 FROM DUAL
 
 ;
@@ -86,13 +86,13 @@ DELETE FROM CODE_MANAGE WHERE CM_BCODE = '051';
 --접속구분 정보
 INSERT INTO CODE_MANAGE
 (
-	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
-SELECT '051', '001', '접속구분', '로그인', 1, 1 FROM DUAL
+SELECT '051', '001', '접속구분', '로그인', 'logCheck', 1, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '051', '002', '접속구분', '로그아웃', 2, 1 FROM DUAL
+SELECT '051', '002', '접속구분', '로그아웃', 'logCheck', 2, 1 FROM DUAL
 
 ;
 
@@ -102,94 +102,94 @@ DELETE FROM CODE_MANAGE WHERE CM_BCODE = '100' AND CM_SCODE > '000';
 
 INSERT INTO CODE_MANAGE
 (
-CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
 SELECT
-'100', '001', '직급', '회장', 1, 1
+'100', '001', '직급', '회장', 'positon', 1, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '002', '직급', '부회장', 2, 1
+'100', '002', '직급', '부회장', 'positon', 2, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '003', '직급', '사장', 3, 1
+'100', '003', '직급', '사장', 'positon', 3, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '004', '직급', '부사장', 4, 1
+'100', '004', '직급', '부사장', 'positon', 4, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '005', '직급', '상무', 5, 1
+'100', '005', '직급', '상무', 'positon', 5, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '006', '직급', '전무', 6, 1
+'100', '006', '직급', '전무', 'positon', 6, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '007', '직급', '대표이사', 7, 1
+'100', '007', '직급', '대표이사', 'positon', 7, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '008', '직급', '이사', 8, 1
+'100', '008', '직급', '이사', 'positon', 8, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '009', '직급', '부장', 9, 1
+'100', '009', '직급', '부장', 'positon', 9, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '010', '직급', '차장', 10, 1
+'100', '010', '직급', '차장', 'positon', 10, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '011', '직급', '팀장', 11, 1
+'100', '011', '직급', '팀장', 'positon', 11, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '012', '직급', '과장', 12, 1
+'100', '012', '직급', '과장', 'positon', 12, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '013', '직급', '대리', 13, 1
+'100', '013', '직급', '대리', 'positon', 13, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '014', '직급', '주임', 14, 1
+'100', '014', '직급', '주임', 'positon', 14, 1
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'100', '015', '직급', '사원', 15, 1
+'100', '015', '직급', '사원', 'positon', 15, 1
 FROM DUAL
 
 
@@ -199,13 +199,13 @@ DELETE FROM CODE_MANAGE WHERE CM_BCODE = '200';
 /*처리그룹*/
 INSERT INTO CODE_MANAGE
 (
-	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
-SELECT '200', '001', '처리그룹', '결재', 1, 1 FROM DUAL
+SELECT '200', '001', '처리그룹', '결재', 'apprGroup', 1, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '200', '002', '처리그룹', '협조', 2, 1 FROM DUAL
+SELECT '200', '002', '처리그룹', '협조', 'apprGroup', 2, 1 FROM DUAL
 
 
 
@@ -217,13 +217,13 @@ DELETE FROM CODE_MANAGE WHERE CM_BCODE = '201';
 /*결재여부*/
 INSERT INTO CODE_MANAGE
 (
-	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
-SELECT '201', '001', '결재여부', '결재', 1, 1 FROM DUAL
+SELECT '201', '001', '결재여부', '결재', 'apprFlag', 1, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '201', '002', '결재여부', '미결재', 2, 1 FROM DUAL
+SELECT '201', '002', '결재여부', '미결재', 'apprFlag', 2, 1 FROM DUAL
 
 
 
@@ -235,13 +235,13 @@ DELETE FROM CODE_MANAGE WHERE CM_BCODE = '202';
 /*문서 읽기 여부*/
 INSERT INTO CODE_MANAGE
 (
-	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
-SELECT '202', '001', '문서읽기 여부', '읽음', 1, 1 FROM DUAL
+SELECT '202', '001', '문서읽기 여부', '읽음', 'readFlag', 1, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '202', '002', '문서읽기 여부', '안읽음', 2, 1 FROM DUAL
+SELECT '202', '002', '문서읽기 여부', '안읽음', 'readFlag', 2, 1 FROM DUAL
 
 
 
@@ -253,13 +253,13 @@ DELETE FROM CODE_MANAGE WHERE CM_BCODE = '203';
 /*공개 여부*/
 INSERT INTO CODE_MANAGE
 (
-	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
-SELECT '203', '001', '공개여부', '공개', 1, 1 FROM DUAL
+SELECT '203', '001', '공개여부', '공개', 'disclosure', 1, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '203', '002', '공개여부', '비공개', 2, 1 FROM DUAL
+SELECT '203', '002', '공개여부', '비공개', 'disclosure', 2, 1 FROM DUAL
 
 
 
@@ -270,81 +270,81 @@ DELETE FROM CODE_MANAGE WHERE CM_BCODE = '204';
 /*보존기간*/
 INSERT INTO CODE_MANAGE
 (
-	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
-SELECT '204', '001', '보존기간', '3개월', 1, 1 FROM DUAL
+SELECT '204', '001', '보존기간', '3개월', 'recordKeep', 1, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '002', '보존기간', '6개월', 2, 1 FROM DUAL
+SELECT '204', '002', '보존기간', '6개월', 'recordKeep', 2, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '003', '보존기간', '1년', 3, 1 FROM DUAL
+SELECT '204', '003', '보존기간', '1년', 'recordKeep', 3, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '004', '보존기간', '2년', 4, 1 FROM DUAL
+SELECT '204', '004', '보존기간', '2년', 'recordKeep', 4, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '005', '보존기간', '3년', 5, 1 FROM DUAL
+SELECT '204', '005', '보존기간', '3년', 'recordKeep', 5, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '006', '보존기간', '4년', 6, 1 FROM DUAL
+SELECT '204', '006', '보존기간', '4년', 'recordKeep', 6, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '007', '보존기간', '5년', 7, 1 FROM DUAL
+SELECT '204', '007', '보존기간', '5년', 'recordKeep', 7, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '008', '보존기간', '6년', 8, 1 FROM DUAL
+SELECT '204', '008', '보존기간', '6년', 'recordKeep', 8, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '009', '보존기간', '7년', 9, 1 FROM DUAL
+SELECT '204', '009', '보존기간', '7년', 'recordKeep', 'recordKeep', 9, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '010', '보존기간', '8년', 10, 1 FROM DUAL
+SELECT '204', '010', '보존기간', '8년', 'recordKeep', 10, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '011', '보존기간', '9년', 11, 1 FROM DUAL
+SELECT '204', '011', '보존기간', '9년', 'recordKeep', 11, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '012', '보존기간', '10년', 12, 1 FROM DUAL
+SELECT '204', '012', '보존기간', '10년', 'recordKeep', 12, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '013', '보존기간', '무기한', 13, 1 FROM DUAL
+SELECT '204', '013', '보존기간', '무기한', 'recordKeep', 13, 1 FROM DUAL
 
 ;
 
 
 DELETE FROM CODE_MANAGE WHERE CM_BCODE = '301';
 
-/*일정구분*/
+/*업무구분*/
 INSERT INTO CODE_MANAGE
 (
-	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
-SELECT '301', '001', '일정구분', '회사일정', 1, 1 FROM DUAL
+SELECT '301', '001', '일정구분', '회사일정', 'workKind', 1, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '301', '002', '일정구분', '부서일정', 2, 1 FROM DUAL
+SELECT '301', '002', '일정구분', '부서일정', 'workKind', 2, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '301', '003', '일정구분', '팀일정', 3, 1 FROM DUAL
+SELECT '301', '003', '일정구분', '팀일정', 'workKind', 3, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '301', '004', '일정구분', '개인일정', 4, 1 FROM DUAL
+SELECT '301', '004', '일정구분', '개인일정', 'workKind', 4, 1 FROM DUAL
 
 
 ;
@@ -354,101 +354,101 @@ DELETE FROM CODE_MANAGE WHERE CM_BCODE = '300';
 /*일정종류*/
 INSERT INTO CODE_MANAGE
 (
-	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_SORT, CM_USE_FLAG
+	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
-SELECT '300', '001', '일정종류', '기념일', 1, 1 FROM DUAL
+SELECT '300', '001', '일정종류', '기념일', 'schKind', 1, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '002', '일정종류', '생일', 2, 1 FROM DUAL
+SELECT '300', '002', '일정종류', '생일', 'schKind', 2, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '003', '일정종류', '일반약속', 3, 1 FROM DUAL
+SELECT '300', '003', '일정종류', '일반약속', 'schKind', 3, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '004', '일정종류', '아침식사 약속', 4, 1 FROM DUAL
+SELECT '300', '004', '일정종류', '아침식사 약속', 'schKind', 4, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '005', '일정종류', '점심식사 약속', 5, 1 FROM DUAL
+SELECT '300', '005', '일정종류', '점심식사 약속', 'schKind', 5, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '006', '일정종류', '저녁식사 약속', 6, 1 FROM DUAL
+SELECT '300', '006', '일정종류', '저녁식사 약속', 'schKind', 6, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '007', '일정종류', '면접', 7, 1 FROM DUAL
+SELECT '300', '007', '일정종류', '면접', 'schKind', 7, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '008', '일정종류', '술자리', 8, 1 FROM DUAL
+SELECT '300', '008', '일정종류', '술자리', 'schKind', 8, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '009', '일정종류', '결혼식', 9, 1 FROM DUAL
+SELECT '300', '009', '일정종류', '결혼식', 'schKind', 9, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '010', '일정종류', '졸업식', 10, 1 FROM DUAL
+SELECT '300', '010', '일정종류', '졸업식', 'schKind', 10, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '011', '일정종류', '동창회', 11, 1 FROM DUAL
+SELECT '300', '011', '일정종류', '동창회', 'schKind', 11, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '012', '일정종류', '전화', 12, 1 FROM DUAL
+SELECT '300', '012', '일정종류', '전화', 'schKind', 12, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '013', '일정종류', '메신저', 13, 1 FROM DUAL
+SELECT '300', '013', '일정종류', '메신저', 'schKind', 13, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '014', '일정종류', '클럽', 14, 1 FROM DUAL
+SELECT '300', '014', '일정종류', '클럽', 'schKind', 14, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '015', '일정종류', '콘서트', 15, 1 FROM DUAL
+SELECT '300', '015', '일정종류', '콘서트', 'schKind', 15, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '016', '일정종류', '공연', 16, 1 FROM DUAL
+SELECT '300', '016', '일정종류', '공연', 'schKind', 16, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '017', '일정종류', '영화', 17, 1 FROM DUAL
+SELECT '300', '017', '일정종류', '영화', 'schKind', 17, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '018', '일정종류', '파티', 18, 1 FROM DUAL
+SELECT '300', '018', '일정종류', '파티', 'schKind', 18, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '019', '일정종류', '휴일', 19, 1 FROM DUAL
+SELECT '300', '019', '일정종류', '휴일', 'schKind', 19, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '020', '일정종류', '휴가', 20, 1 FROM DUAL
+SELECT '300', '020', '일정종류', '휴가', 'schKind', 20, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '021', '일정종류', '스포츠', 21, 1 FROM DUAL
+SELECT '300', '021', '일정종류', '스포츠', 'schKind', 21, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '022', '일정종류', '모임', 22, 1 FROM DUAL
+SELECT '300', '022', '일정종류', '모임', 'schKind', 22, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '023', '일정종류', '요급납부', 23, 1 FROM DUAL
+SELECT '300', '023', '일정종류', '요급납부', 'schKind', 23, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '300', '024', '일정종류', '기타', 24, 1 FROM DUAL
+SELECT '300', '024', '일정종류', '기타', 'schKind', 24, 1 FROM DUAL
 
 ;
 
@@ -802,10 +802,11 @@ DELETE FROM USER_IMAGE WHERE UI_UM_CODE > '00000';
 
 INSERT INTO USER_IMAGE
 (
-UI_UM_CODE
+UI_UM_CODE, UI_FACE_NAME, UI_FACE_PATH
 )
-SELECT UM_CODE 
+SELECT UM_CODE, 'U' || UM_CODE || '.jpg', '/img/user/' 
 FROM USER_MAIN
+WHERE (UM_CODE > '00000')
 
 ;
 
@@ -825,6 +826,8 @@ ORDER BY DE.DE_DEPART_INDEX, UM.UM_POSITION
 ;
 
 
+
+SELECT  * FROM CODE_MANAGE
 
 
 

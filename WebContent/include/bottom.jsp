@@ -43,7 +43,7 @@
                 <!-- Chatbox -->
                 <div class="col-md-12 chatbox">
                   <div class="col-md-12">
-                    <!-- <a href="#" class="close-chat">X</a><h4>Akihiko Avaron</h4> -->
+                    <a href="#" class="close-chat">X</a><h4>Akihiko Avaron</h4>
                   </div>
                   <div class="chat-area">
                     <div class="chat-area-content">
@@ -57,13 +57,13 @@
                               </div>
                             </div>
                             <div class="col-md-3 col-xs-3 avatar">
-                              <img src="asset/img/avatar.jpg" class=" img-responsive " alt="user name">
+                              <img src="${root }/img/avatar.jpg" class=" img-responsive " alt="user name">
                             </div>
                           </div>
 
                           <div class="row msg_container receive">
                             <div class="col-md-3 col-xs-3 avatar">
-                              <img src="asset/img/avatar.jpg" class=" img-responsive " alt="user name">
+                              <img src="${root }/img/avatar.jpg" class=" img-responsive " alt="user name">
                             </div>
                             <div class="col-md-9 col-xs-9 bubble">
                               <div class="messages msg_receive">
@@ -303,11 +303,11 @@
          		 geocoder.geocode({'latLng': latlng}, function(results, status){  
           			
          			 if( status == google.maps.GeocoderStatus.OK ) {
-         				 
-         				 if(results[6]){
+         				             				 
+         				 if(results[2]){
          					 
          					 var $addr = $("#addr");
-         					 $addr.html('<span class="fa  fa-map-marker"></span>' + results[6].formatted_address.replace('대한민국', ''));
+         					 $addr.html('<span class="fa  fa-map-marker"></span>' + results[2].formatted_address.replace('대한민국', ''));
          				 }
          			 } else {
          				 
