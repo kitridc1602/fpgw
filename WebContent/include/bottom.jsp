@@ -12,6 +12,16 @@
                   			<span class="fa fa-comment-o fa-2x"></span>
                  		</a>
                 	</li>
+                	<li>
+	                 <a data-toggle="tab" href="#right-menu-notif">
+	                  <span class="fa fa-bell-o fa-2x"></span>
+	                 </a>
+	                </li>
+	                <li>
+	                  <a data-toggle="tab" href="#right-menu-config">
+	                   <span class="fa fa-cog fa-2x"></span>
+	                  </a>
+	                 </li>
               	</ul>
 
               <div class="tab-content">
@@ -43,7 +53,7 @@
                 <!-- Chatbox -->
                 <div class="col-md-12 chatbox">
                   <div class="col-md-12">
-                    <a href="#" class="close-chat">X</a><h4>Akihiko Avaron</h4>
+                    <a href="#" class="close-chat">X</a><h4></h4>
                   </div>
                   <div class="chat-area">
                     <div class="chat-area-content">
