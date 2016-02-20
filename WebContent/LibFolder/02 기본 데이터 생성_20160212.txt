@@ -46,7 +46,7 @@ INSERT INTO CODE_MANAGE
 CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE1, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
 SELECT
-'001', '001', '회사정보', 'KITRI DC16th Team No.2', '상호', 'coInfo', 1, 1
+'001', '001', '회사정보', '한국기술정보연구원(KITRI)', '상호', 'coInfo', 1, 1
 FROM DUAL
 
 	UNION ALL
@@ -79,6 +79,11 @@ SELECT
 '001', '006', '회사정보', '02-9876-5432', 'FAX', 'coInfo', 6, 1
 FROM DUAL
 
+	UNION ALL
+
+SELECT
+'001', '007', '회사정보', 'DC16th Team No.2 GroupWare Project', '부제목', 'coInfo', 7, 1
+FROM DUAL
 ;
 
 DELETE FROM CODE_MANAGE WHERE CM_BCODE = '051';
