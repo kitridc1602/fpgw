@@ -98,7 +98,7 @@
 	              	</c:choose>
                    <ul class="dropdown-menu user-dropdown">
                      <c:if test="${sessionScope.success == 'ok' }">
-                   				<li><a href="${root }/user/select.html"><span class="fa fa-user"></span> 내 정보 수정</a></li>
+                   				<li><a href="${root }/user/select.html?code=${sessionScope.userImageInfo.strCode }"><span class="fa fa-user"></span> 내 정보 수정</a></li>
                    				<li><a href="${root }/main/logout.html"><span class="fa fa-user"></span> 로그아웃</a></li>
                    			</c:if>
                      <!-- <li role="separator" class="divider"></li>
