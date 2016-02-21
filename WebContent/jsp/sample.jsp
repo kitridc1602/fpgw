@@ -29,7 +29,7 @@
                   </div>                    
                 </div>
                 
-                <div class="panel-heading bg-white border-none">
+                <div class="panel-heading bg-white border-none" style="margin-bottom: 20px;">
                    	<h4><span class="icon-notebook icons"></span> 메뉴명을 입력해야함.</h4>
                 </div>
 
