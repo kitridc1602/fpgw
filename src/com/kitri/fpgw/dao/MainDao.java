@@ -22,4 +22,5 @@ public interface MainDao {
 	public ArrayList<UserDto> MainMessageList(String Code) throws Exception;
 	public void LogCheck(LogHistoryDto LogHistoryDto) throws Exception;
 	public ArrayList<CodeManageDto> CodeManageBCodeGroupSelectAll() throws Exception;
+	public ArrayList<UserDto> UserListAll(String strCode) throws Exception;
 }

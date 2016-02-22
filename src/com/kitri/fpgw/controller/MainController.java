@@ -40,7 +40,7 @@ public class MainController {
 	
 	@RequestMapping(value="/login.html")
 	public String Login(String id, String pwd, HttpSession session) throws Exception {
-		
+				
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Date date = new Date();
 		String ymd = sdf.format(date);
@@ -69,12 +69,15 @@ public class MainController {
 			/*===== 세션 정리 =====*/
 			/*사용자 정보*/
 			session.setAttribute("success", "ok");
-			session.setAttribute("userInfo", userOut);
-			
+			session.setAttribute("userInfo", userOut);			
 			UserDetaileDto userDetailInfo = MainService.UserDetailSelect(userOut.getStrCode());
 			session.setAttribute("userDetailInfo", userDetailInfo);
 			UserImageDto userImageInfo = MainService.UserImageSelect(userOut.getStrCode());
 			session.setAttribute("userImageInfo", userImageInfo);
+			
+			/*전체 사용자*/
+			ArrayList<UserDto> allUser = MainService.UserListAll(userOut.getStrCode());
+			session.setAttribute("allUser", allUser);
 			
 			/*기초정보*/
 			ArrayList<CodeManageDto> BCode = MainService.CodeManageBCodeGroupSelectAll();
@@ -111,22 +114,22 @@ public class MainController {
 		String ymd = sdf.format(date);
 		
 		UserMainDto userIn = (UserMainDto) session.getAttribute("userInfo");
-		
+
 		/*로그아웃 기록*/			
 		LogHistoryDto LogHistoryDto = new LogHistoryDto();
 		LogHistoryDto.setStrLog_Ymd(ymd);
 		LogHistoryDto.setStrUser_Cd(userIn.getStrCode());
 		LogHistoryDto.setStrLog_Cd("002");
 		MainService.LogCheck(LogHistoryDto);
-		
+
 		//세션정리		
 		ArrayList<CodeManageDto> BCode = (ArrayList<CodeManageDto>) session.getAttribute("BCode");
 		session.removeAttribute("BCode");
-		
+
 		int len = BCode.size();
 		
 		for(int i = 0; i < len; i++){
-			
+
 			CodeManageDto bcodeDto = BCode.get(i);
 			session.removeAttribute(bcodeDto.getStrValue4());
 		}

@@ -10,12 +10,18 @@ import com.kitri.fpgw.model.UserDto;
 @RequestMapping(value="/user")
 public class UserController {
 
+	@RequestMapping(value="/privateselect.html")
+	public String UserPrivateSelect(){
+		
+		return "jsp/user/userprivateupdate";
+	}
+	
 	@RequestMapping(value="/select.html")
 	public ModelAndView UserSelect(String code){
 		
 		ModelAndView mav = new ModelAndView();
 		
-		
+		mav.setViewName("jsp/user/userinput2");
 		return mav;
 	}
 	

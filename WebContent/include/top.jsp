@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
@@ -44,30 +43,30 @@
  	<script src="${root }/js/plugins/moment.min.js"></script>
 	<script src="${root }/js/plugins/fullcalendar.min.js"></script>
 	<script src="${root }/js/plugins/jquery.nicescroll.js"></script>
+	<!-- 구글 위치정보 서비스 API -->
+	<script src="http://maps.googleapis.com/maps/api/js"></script>
+	
+	
   </head>
 
  <body id="mimin" class="dashboard">
-      <!-- start: Header <include>-->
+      <!-- start: Header -->
         <nav class="navbar navbar-default header navbar-fixed-top">
-        
-         <div class="col-md-12 nav-wrapper">
+          <div class="col-md-12 nav-wrapper">
             <div class="navbar-header" style="width:100%;">
-            
-            	<!-- 왼쪽 메뉴 관련 기능 -->
               <div class="opener-left-menu is-open">
+              		<!-- 메뉴 펼치는 아이콘 --> 
                 <span class="top"></span>
                 <span class="middle"></span>
                 <span class="bottom"></span>
               </div>
-              
-              	<!-- 상단 회사명 -->
+                <!-- 상단 회사명 -->
                 <a href="${root }/main/default.html" class="navbar-brand"> 
                  <b>${sessionScope.coInfo[0].strName }</b>
                 </a>
-
-              <ul class="nav navbar-nav navbar-right user-nav">
               
-              	<c:choose>
+              <ul class="nav navbar-nav navbar-right user-nav">
+                <c:choose>
               		<c:when test="${sessionScope.success == 'ok' }">
               		
               			<li class="user-name"><span>${sessionScope.userInfo.strName } ${sessionScope.userInfo.strPosition_Nm }</span></li>
@@ -80,11 +79,11 @@
              			
              		</c:otherwise>
               	</c:choose>
-              
               	
               	<!-- 사용자 아이콘 내부의 기능 -->
-                <li class="dropdown avatar-dropdown">
-	                <c:choose>
+              		
+                  <li class="dropdown avatar-dropdown">
+                   <c:choose>
 	              		<c:when test="${sessionScope.success == 'ok' }">
 	              		
 	              			<img src="${root }${sessionScope.userImageInfo.strFace_Path }${sessionScope.userImageInfo.strFace_Name }" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
@@ -97,39 +96,32 @@
 	             			
 	             		</c:otherwise>
 	              	</c:choose>
-                	
-                   		<ul class="dropdown-menu user-dropdown">
-                   			
-                   			<c:if test="${sessionScope.success == 'ok' }">
-                   				<li><a href="#"><span class="fa fa-user"></span> 내 정보 수정</a></li>
+                   <ul class="dropdown-menu user-dropdown">
+                     <c:if test="${sessionScope.success == 'ok' }">
+                   				<li><a href="${root }/user/privateselect.html"><span class="fa fa-user"></span> 내 정보 수정</a></li>
                    				<li><a href="${root }/main/logout.html"><span class="fa fa-user"></span> 로그아웃</a></li>
                    			</c:if>
-			              	
-                     		
-                     		<!-- <li role="separator" class="divider"></li>
-                     		<li class="more">
-                      			<ul>
-                        			<li><a href=""><span class="fa fa-cogs"></span></a></li>
-                        			<li><a href=""><span class="fa fa-lock"></span></a></li>
-                        			<li><a href=""><span class="fa fa-power-off "></span></a></li>
-                      			</ul>
-                    		</li> -->
-                  		</ul>
+                     <!-- <li role="separator" class="divider"></li>
+                     <li class="more">
+                      <ul>
+                        <li><a href=""><span class="fa fa-cogs"></span></a></li>
+                        <li><a href=""><span class="fa fa-lock"></span></a></li>
+                        <li><a href=""><span class="fa fa-power-off "></span></a></li>
+                      </ul>
+                    </li> -->
+                  </ul>
                 </li>
-                <!-- 채팅 관련 오른쪽 메튜창 -->
                 <li ><a href="#" class="opener-right-menu"><span class="fa fa-coffee"></span></a></li>
               </ul>
             </div>
           </div>
-			
         </nav>
-      <!-- end: Header <include>-->
+      <!-- end: Header -->
 
       <div class="container-fluid mimin-wrapper">
   
-          <!-- start:Left Menu <include>-->
+          <!-- start:Left Menu -->
             <div id="left-menu">
-           	
               <div class="sub-left-menu scroll">
                 <ul class="nav nav-list">
                     <li><div class="left-bg"></div></li>
@@ -137,7 +129,6 @@
                       <h1 class="animated fadeInLeft">00:00</h1>
                       <p class="animated fadeInRight">Day</p>
                     </li>
-                    
                     <c:forEach var="firstMenu" items="${menu}">
                     
                     	<c:if test="${firstMenu.intLevel eq 1 }">
@@ -151,7 +142,7 @@
                       				
                       					<c:if test="${secondMenu.intLevel eq 2 && firstMenu.strCode eq secondMenu.strPCode }">
                       						
-                      						<li><a class="tree-toggle1 nav-header" href="${secondMenu.strPath }">${secondMenu.strName }
+                      						<li><a class="tree-toggle1 nav-header" href="${root }${secondMenu.strPath }">${secondMenu.strName }
                       								<span class="fa-angle-right fa right-arrow text-right"></span>
                    								</a>
                 							</li>
@@ -167,9 +158,7 @@
                     </c:forEach>
                   </ul>
                 </div>
-
-           		
             </div>
-          <!-- end: Left Menu <include>-->
-
+          <!-- end: Left Menu -->
+</div>
 </html>
