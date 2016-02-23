@@ -28,6 +28,7 @@
 				<value>classpath:com/kitri/fpgw/config/mybatis/User.xml</value>
 				<value>classpath:com/kitri/fpgw/config/mybatis/Schedule.xml</value>
 				<value>classpath:com/kitri/fpgw/config/mybatis/Board.xml</value>
+				<value>classpath:com/kitri/fpgw/config/mybatis/Rant.xml</value>
 			</list>
 		</property>
 		
@@ -37,6 +38,7 @@
 				<value>com.kitri.fpgw.dao.UserDao</value>
 				<value>com.kitri.fpgw.dao.ScheduleDao</value>
 				<value>com.kitri.fpgw.dao.BoardDao</value>
+				<value>com.kitri.fpgw.dao.RantDao</value>
 			</list>
 		</property>
 	</bean>
