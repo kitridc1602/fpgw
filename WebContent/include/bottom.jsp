@@ -287,8 +287,8 @@
 	<script src="${root }/js/plugins/bootstrap-material-datetimepicker.js"></script>
     
     <!-- plugins data tables js -->
-    <%-- <script src="${root }/js/plugins/jquery.datatables.min.js"></script>
-    <script src="${root }/js/plugins/datatables.bootstrap.min.js"></script> --%>
+    <script src="${root }/js/plugins/jquery.datatables.min.js"></script>
+    <script src="${root }/js/plugins/datatables.bootstrap.min.js"></script>
 
     <!-- custom -->
      <script src="${root }/js/main.js"></script>
@@ -422,14 +422,14 @@
   	 	
 	 </script>
 	 
-	<!-- <script>
+	<script>
 	 
 	 	/* 테이블 데이터 검색 & 페이지 조절 */
 		$(document).ready(function() {
 			$('#datatables-example').DataTable();
 		});
 		
-	</script> -->
+	</script>
   <!-- end: Javascript -->
   </body>
 </html>

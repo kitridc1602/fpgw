@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath }" />
-<c:set var="count" value="1"></c:set>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,8 +52,9 @@
 								</thead>
 								<tbody>									
 									<c:forEach var="comList" items="${list}">
-										<tr>
-											<c:if test="${comList.strBCode eq 740 && comList.intUse_Flag eq 1}">
+										
+										<c:if test="${comList.strBCode eq 740 && comList.intUse_Flag eq 1}">
+											<tr>
 												<td>${comList.intSort}</td>
 												<td>123</td>
 												<td>${comList.strBName}</td>
@@ -63,8 +63,9 @@
 												<td>${comList.strValue2}</td>
 												<td>${comList.strValue3}</td>
 												<td>yang</td>
-											</c:if>										
-										</tr>
+											</tr>
+										</c:if>										
+										
 									</c:forEach>									
 								</tbody>
 							</table>
@@ -77,17 +78,6 @@
 	</div>
 </div>
 
- <!-- plugins data tables js -->
-<%--     <script type="text/javascript" src="${root }js/plugins/jquery.datatables.min.js"></script>
-	<script type="text/javascript" src="${root }/js/plugins/datatables.bootstrap.min.js"></script>
-	 <script>
-	 
-	 	/* 테이블 데이터 검색 & 페이지 조절 */
-		$(document).ready(function() {
-			$('#example').DataTable();
-		});
-		
-	</script> --%>
 <!-- end: content -->
 
 </html>

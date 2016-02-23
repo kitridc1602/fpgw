@@ -25,7 +25,7 @@
 		this.element = element;
 		this.$element = $(element);
 
-		this.params = { date : true, time : true, format : 'YYYY-MM-DD', minDate : null, maxDate : null, currentDate : null, lang : 'en', weekStart : 0, shortTime : false, 'cancelText' : 'Cancel', 'okText' : 'OK','animation' : false};
+		this.params = { date : true, time : true, format : 'YYYYMMDD', minDate : null, maxDate : null, currentDate : null, lang : 'en', weekStart : 0, shortTime : false, 'cancelText' : 'Cancel', 'okText' : 'OK','animation' : false};
 		this.params = $.fn.extend(this.params, options);
 
 		this.name = "dtp_" + this.setName();
