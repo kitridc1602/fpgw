@@ -60,7 +60,7 @@
 		WHERE   (UI_UM_CODE = #{strCode})
 	</select>
 
-	<select id="UserListAll" parameterType="String" resultType="com.kitri.fpgw.model.UserDto">
+	<select id="UserListAllName" parameterType="String" resultType="com.kitri.fpgw.model.UserDto">
 		SELECT 	UM_CODE STRCODE, 				UM_NAME STRNAME,
 				UM_POSITION STRPOSITION_CD, 	CM.CM_NAME STRPOSITION_NM,
 				UM_DEPART_CD STRDEPART_CD, 		DE.DE_NAME STRDEPART_NM,
@@ -74,6 +74,22 @@
 		WHERE 	(UM_CODE > '00001')
 		AND		(UM_CODE != #{strCode})
 		ORDER BY UM_NAME, UM_CODE	
+	</select>
+	
+	<select id="UserListAllSort" parameterType="String" resultType="com.kitri.fpgw.model.UserDto">
+		SELECT 	UM_CODE STRCODE, 				UM_NAME STRNAME,
+				UM_POSITION STRPOSITION_CD, 	CM.CM_NAME STRPOSITION_NM,
+				UM_DEPART_CD STRDEPART_CD, 		DE.DE_NAME STRDEPART_NM,
+				UI_FACE_NAME STRFACE_NAME, 		UI.UI_FACE_PATH STRFACE_PATH,
+				UI_SIGN_NAME STRSIGN_NAME, 		UI.UI_SIGN_PATH STRSIGN_PATH
+		FROM 	USER_MAIN UM
+				LEFT OUTER JOIN USER_IMAGE UI 	ON 	(UM.UM_CODE = UI.UI_UM_CODE)
+				LEFT OUTER JOIN DEPART DE 		ON 	(UM.UM_DEPART_CD = DE.DE_DCODE)
+				LEFT OUTER JOIN CODE_MANAGE CM 	ON 	(UM.UM_POSITION_BCODE = CM.CM_BCODE)
+												AND (UM.UM_POSITION = CM.CM_SCODE) 
+		WHERE 	(UM_CODE > '00001')
+		AND		(UM_CODE != #{strCode})
+		ORDER BY CM.CM_SORT, UM_POSITION, UM_NAME, UM_CODE	
 	</select>
 	
 	<select id="MenuList" resultType="com.kitri.fpgw.model.MenuDto">
@@ -155,6 +171,18 @@
 		        LEFT OUTER JOIN USER_IMAGE UI	ON	(UM.UM_CODE = UI.UI_UM_CODE)
 		WHERE NOT UM_CODE = #{Code}
 		ORDER BY UM.UM_NAME 	
+	</select>
+	
+	<select id="DepartListAll" resultType="com.kitri.fpgw.model.DepartDto">
+		SELECT 	DE1.DE_PCODE STRPCODE, 			DE2.DE_NAME STRPNAME,
+				DE1.DE_DCODE STRCODE, 			DE1.DE_NAME STRNAME,
+				DE1.DE_SORT INTSORT, 			DE1.DE_LEVEL INTLEVEL,
+				DE1.DE_USE_FLAG INTUSE_FLAG, 	DE1.DE_DEPART_INDEX STRDEPART_INDEX
+		FROM 	DEPART DE1
+				LEFT OUTER JOIN DEPART DE2 ON (DE1.DE_PCODE = DE2.DE_DCODE)
+		WHERE 	(DE1.DE_DCODE > '000')
+		AND 	(DE1.DE_USE_FLAG = 1)
+		ORDER BY DE1.DE_DEPART_INDEX	
 	</select>
 	
 	<update id="logCheck" parameterType="com.kitri.fpgw.model.LogHistoryDto">
