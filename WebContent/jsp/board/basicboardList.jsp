@@ -10,9 +10,7 @@
 		<div class="panel-body">
 			<div class="col-md-6 col-sm-12">
 				<h3 class="animated fadeInLeft">${sessionScope.coInfo[6].strName }</h3>
-				<p class="animated fadeInDown">
-					<span class="fa  fa-map-marker"></span> 메뉴카테고리 들어갈 자리
-				</p>
+				<p class="animated fadeInDown"><span class="fa  fa-map-marker"></span> ${workKind }</p>
 
 
 			</div>
@@ -38,7 +36,7 @@
 	<div class="panel-heading bg-white border-none"
 		style="margin-bottom: 20px;">
 		<h4>
-			<span class="icon-notebook icons"></span> 공지사항
+			<span class="icon-notebook icons"></span> ${subworkkind }
 		</h4>
 	</div>
 
@@ -86,7 +84,7 @@
 						class="table table-striped table-bordered" width="100%"
 						cellspacing="0">
 						<thead>
-							<tr>
+							<tr>										
 								<th><input type="checkbox" class="icheck" name="checkbox1" /></th>
 								<th style="text-align: center;">글번호</th>
 								<th style="text-align: center;">제목</th>
@@ -96,15 +94,18 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+						
+							<c:forEach var="basicList" items="${list}">
+							<tr>								
 								<td><input width="5%" type="checkbox" class="icheck" name="checkbox1" style="text-align: center;"/></td></td>
-								<td width="10%" style="text-align: center;"><h6>1</h6></td>
-								<td width="50%" style="text-align: center;"><h6>회시장소안내</h6></td>
-								<td width="10%" style="text-align: center;"><h6>김미희</h6></td>
-								<td width="15%" style="text-align: center;"><h6>2016.02.11</h6></td>
-								<td width="10%" style="text-align: center;"><h6>3</h6></td>
-
+								<td width="10%" style="text-align: center;"><h6>${basicList.intNum }</h6></td>
+								<td width="50%" style="text-align: center;"><h6>${basicList.strTitle }</h6></td>
+								<td width="10%" style="text-align: center;"><h6>${basicList.strName }</h6></td>
+								<td width="15%" style="text-align: center;"><h6>${basicList.datGet_Date }</h6></td>
+								<td width="10%" style="text-align: center;"><h6>${basicList.intHit }</h6></td>								
 							</tr>
+							</c:forEach>	
+						
 						</tbody>
 					</table>
 					<div class="col-md-12" style="padding-top: 20px;">
