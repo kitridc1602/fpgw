@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Appr">
+
+	<select id="settlementnocnt" resultType="int">
+		<!-- 내가 결제할 문서인데 미결제인문서(무작위) 개수 -->
+		select count(*)
+		from appr_user
+		where (au_approve_user='00000')
+		and (au_approve_group='001')
+		and (au_approve_flag='002')
+
+
+	</select>
+
+	<select id="settlementokcnt" resultType="int">
+		<!-- 내가 결제할 문서인데 결제인문서(무작위) 개수 -->
+		select count(*)
+		from appr_user
+		where (au_approve_user='00000')
+		and (au_approve_group='001')
+		and (au_approve_flag='001')
+
+	</select>
+
+	<select id="settlementingcnt" resultType="int">
+		<!-- 상신문서중 반려가아닌 미결제인 문서(상신중) 개수 -->
+		select count(distinct au_am_seq)
+		from appr_user
+		where au_get_user='00000'
+		and au_approve_flag='002'
+	</select>
+
+	<select id="nosettlementcnt" resultType="int">
+		<!-- 내가 결재올린 문서중 반려된 문서 개수 -->
+		select count(distinct au_am_seq)
+		from APPR_USER
+		where au_get_user='00000'
+		and au_approve_flag='003'
+
+
+	</select>
+
+	<select id="oksettlementcnt" resultType="int">
+		<!-- 내가 결재 올린 문서중 결재 완료된 문서 개수 -->
+		select count(distinct au_am_seq)
+		from APPR_USER
+		where au_get_user='00000'
+		and au_approve_flag='001'
+	</select>
+
+	<select id="settlementnolistAll" resultType="com.kitri.fpgw.model.ApprDto">
+		<!-- 내가 미결제한 문서 리스트(메인) -->
+		select distinct am_docu_no strAm_Docu_No,
+		am_seq strAm_Seq ,
+		am_draft_y strAm_Draft_Y,
+		am_draft_m strAm_Draft_M,
+		am_draft_d strAm_Draft_D,
+		dl_name strDl_Name,
+		am_title strAm_Title
+
+		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
+		
+		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
+		where au_approve_user='00000'
+		and au_approve_flag='002'
+		order by strAm_Draft_Y desc,
+		strAm_Draft_M desc,
+		strAm_Draft_D desc,
+		strAm_Seq asc
+
+	</select>
+
+	<select id="settlementinglistAll" resultType="com.kitri.fpgw.model.ApprDto">
+
+		<!-- 상신문서중 미결제된 문서리스트 -->
+		select distinct am_docu_no strAm_Docu_No,
+		am_seq strAm_Seq ,
+		am_draft_y strAm_Draft_Y,
+		am_draft_m strAm_Draft_M,
+		am_draft_d strAm_Draft_D,
+		dl_name strDl_Name,
+		am_title strAm_Title,
+		cm_name strCm_Name
+		
+		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
+		inner join code_manage cm on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
+
+		where au_get_user='00000'
+		and au_approve_flag='002'
+
+		order by strAm_Draft_Y desc,
+		strAm_Draft_M desc,
+		strAm_Draft_D desc,
+		strAm_Seq asc
+
+
+	</select>
+
+
+	<select id="settlementnolistAll2" resultType="com.kitri.fpgw.model.ApprDto">
+
+		<!-- 내가 미결제한 문서리스트 상세페이지 -->
+		select distinct am_docu_no strAm_Docu_No,
+		am_seq strAm_Seq ,
+		am_draft_y strAm_Draft_Y,
+		am_draft_m strAm_Draft_M,
+		am_draft_d strAm_Draft_D,
+		dl_name strDl_Name,
+		am_title strAm_Title,
+		am_draft_user
+		strAm_Draft_User,
+		cm_name strCm_Name
+		
+		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
+		inner join code_manage cm on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
+
+		where au_approve_user='00000'
+		and au_approve_flag='002'
+
+		order by strAm_Draft_Y desc,
+		strAm_Draft_M desc,
+		strAm_Draft_D desc,
+		strAm_Seq asc
+
+
+	</select>
+
+	<select id="settlementoklistAll" resultType="com.kitri.fpgw.model.ApprDto">
+		<!-- 내가 결재 완료한 상세페이지 리스트 -->
+			
+		select distinct am_docu_no strAm_Docu_No,
+		am_seq strAm_Seq ,
+		am_draft_y strAm_Draft_Y,
+		am_draft_m strAm_Draft_M,
+		am_draft_d strAm_Draft_D,
+		dl_name strDl_Name,
+		am_title strAm_Title,
+		
+		cm_name strCm_Name
+		
+		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
+		inner join code_manage cm on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
+
+		where au_approve_user='00000'
+		and au_approve_flag='001'
+
+		order by strAm_Draft_Y desc,
+		strAm_Draft_M desc,
+		strAm_Draft_D desc,
+		strAm_Seq asc
+	
+	</select>
+	
+	<select id="oksettlementlistAll" resultType="com.kitri.fpgw.model.ApprDto">
+	
+	select distinct am_docu_no strAm_Docu_No,
+		am_seq strAm_Seq ,
+		am_draft_y strAm_Draft_Y,
+		am_draft_m strAm_Draft_M,
+		am_draft_d strAm_Draft_D,
+		dl_name strDl_Name,
+		am_title strAm_Title,
+		
+		cm_name strCm_Name
+		
+		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
+		inner join code_manage cm on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
+
+		where au_get_user='00000'
+		and au_approve_flag='001'
+
+		order by strAm_Draft_Y desc,
+		strAm_Draft_M desc,
+		strAm_Draft_D desc,
+		strAm_Seq asc
+	
+	
+	
+	</select>
+	
+	
+		<select id="nosettlementlistAll" resultType="com.kitri.fpgw.model.ApprDto">
+	
+	select distinct am_docu_no strAm_Docu_No,
+		am_seq strAm_Seq ,
+		am_draft_y strAm_Draft_Y,
+		am_draft_m strAm_Draft_M,
+		am_draft_d strAm_Draft_D,
+		dl_name strDl_Name,
+		am_title strAm_Title,
+		
+		cm_name strCm_Name
+		
+		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
+		inner join code_manage cm on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
+
+		where au_get_user='00000'
+		and au_approve_flag='003'
+
+		order by strAm_Draft_Y desc,
+		strAm_Draft_M desc,
+		strAm_Draft_D desc,
+		strAm_Seq asc
+	
+	
+	
+	</select>
+
+	
+
+
+
+
+
+
+
+</mapper>

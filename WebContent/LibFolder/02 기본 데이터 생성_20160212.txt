@@ -309,7 +309,7 @@ SELECT '204', '008', '보존기간', '6년', 'recordKeep', 8, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '204', '009', '보존기간', '7년', 'recordKeep', 'recordKeep', 9, 1 FROM DUAL
+SELECT '204', '009', '보존기간', '7년', 'recordKeep', 9, 1 FROM DUAL
 
 	UNION ALL
 	

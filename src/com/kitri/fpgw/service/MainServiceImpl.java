@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kitri.fpgw.dao.MainDao;
 import com.kitri.fpgw.model.CodeManageDto;
+import com.kitri.fpgw.model.DepartDto;
 import com.kitri.fpgw.model.LogHistoryDto;
 import com.kitri.fpgw.model.MenuDto;
 import com.kitri.fpgw.model.UserDetaileDto;
@@ -92,9 +93,16 @@ public class MainServiceImpl implements MainService {
 
 
 	@Override
-	public ArrayList<UserDto> UserListAll(String strCode) throws Exception {
+	public ArrayList<UserDto> UserListAll(String strCode, int intKind) throws Exception {
 		
-		return MainDao.UserListAll(strCode);
+		return MainDao.UserListAll(strCode, intKind);
+	}
+
+
+	@Override
+	public ArrayList<DepartDto> DepartListAll() throws Exception {
+
+		return MainDao.DepartListAll();
 	}
 
 	
