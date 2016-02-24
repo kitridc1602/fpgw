@@ -108,7 +108,7 @@
 	                			<div class="panel-heading bg-white border-none">
 	                            	<h4><span class="icons icon-volume-2"></span> 공지사항</h4>
 	                            </div>
-	                            <table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
+	                            <table id="" class="table table-striped table-bordered" width="100%" cellspacing="0">
                       				<thead>
                         				<tr>
                           					<th width="20px" style="text-align: center;">No.</th>
