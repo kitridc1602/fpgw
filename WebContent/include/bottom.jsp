@@ -445,10 +445,10 @@
 	            postcode2 : 구 우편번호 뒤 3자리 -> 400
 	             */
 	             
-             	document.getElementById("zip1").value = data.postcode1
-	            document.getElementById("zip2").value = data.postcode2;
-             	document.getElementById("addr1").value = data.address;
-	            document.getElementById("addr2").focus();
+             	document.getElementById("strZip1").value = data.postcode1
+	            document.getElementById("strZip2").value = data.postcode2;
+             	document.getElementById("strAddr1").value = data.address;
+	            document.getElementById("strAddr2").focus();
 	        }
 	    }).open();
 	}
