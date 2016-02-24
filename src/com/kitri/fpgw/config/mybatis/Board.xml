@@ -4,7 +4,8 @@
 
 	<select id="SelectBoardList" parameterType="com.kitri.fpgw.model.BoardMainDto" resultType="com.kitri.fpgw.model.BoardMainDto" >
 		
-		SELECT	BM_TITLE STRTITLE, 
+		SELECT	ROWNUM INTNUM, BM_SEQ,
+				BM_TITLE STRTITLE, 
 	  		  	UM.UM_NAME STRNAME, 
 	   		  	BM_GET_DATE DATGET_DATE,
 	   			NVL(CNT.BV_CNT, 0) INTHIT

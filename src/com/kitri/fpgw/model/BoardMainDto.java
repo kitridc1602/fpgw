@@ -5,6 +5,7 @@ import java.util.Date;
 public class BoardMainDto {
 	
 	private int intSeq; //글번호
+	private int intNum; //해당게시판글번호 rownum
 	private int intPseq; // 부모글번호
 	private String strGroup; //게시판 그룹
 	private String strGroupCode; //게시판 그룹 코드
@@ -40,7 +41,7 @@ public class BoardMainDto {
 	
 	public BoardMainDto(){}
 
-	public BoardMainDto(int intSeq, int intPseq, String strGroup, String strGroupCode, String strKind,
+	public BoardMainDto(int intSeq, int intNum, int intPseq, String strGroup, String strGroupCode, String strKind,
 			String strKindCode, String strTitle, String strDetailComment, String strWriterCode, String strEditerCode,
 			String strViewerCode, String strFilerCode, String strName, String strId, String strComment,
 			String strCommenterCode, String strFaceName, Date datComment_Date, Date datGet_Date, Date datEdit_Date,
@@ -48,6 +49,7 @@ public class BoardMainDto {
 			String strBf_OriginalName, String strBf_SaveName, String strBf_Path, int intHit, String strSearch) {
 		super();
 		this.intSeq = intSeq;
+		this.intNum = intNum;
 		this.intPseq = intPseq;
 		this.strGroup = strGroup;
 		this.strGroupCode = strGroupCode;
@@ -85,6 +87,14 @@ public class BoardMainDto {
 
 	public void setIntSeq(int intSeq) {
 		this.intSeq = intSeq;
+	}
+
+	public int getIntNum() {
+		return intNum;
+	}
+
+	public void setIntNum(int intNum) {
+		this.intNum = intNum;
 	}
 
 	public int getIntPseq() {
@@ -318,8 +328,7 @@ public class BoardMainDto {
 	public void setStrSearch(String strSearch) {
 		this.strSearch = strSearch;
 	}
-	
-	
-	
 
+	
 }
+	
