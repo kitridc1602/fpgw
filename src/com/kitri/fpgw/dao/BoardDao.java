@@ -7,8 +7,8 @@ import com.kitri.fpgw.model.BoardMainDto;
 
 public interface BoardDao {
 	
-	//메인게시글리스트
-	public ArrayList<BoardMainDto> SelectBoardList() throws Exception;
+	//기본게시글목록
+	public ArrayList<BoardMainDto> SelectBoardList(BoardMainDto boardMainDto) throws Exception; 
 	//게시글 검색
 	public ArrayList<BoardMainDto> SelectSearchList () throws Exception;
 	//메인 게시글쓰기

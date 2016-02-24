@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Board">
+
+	<select id="SelectBoardList" parameterType="com.kitri.fpgw.model.BoardMainDto" resultType="com.kitri.fpgw.model.BoardMainDto" >
+		
+		SELECT	BM_TITLE STRTITLE, 
+	  		  	UM.UM_NAME STRNAME, 
+	   		  	BM_GET_DATE DATGET_DATE,
+	   			NVL(CNT.BV_CNT, 0) INTHIT
+  		FROM 	BOARD_MAIN BM
+       			LEFT OUTER JOIN USER_MAIN UM 		ON (BM.BM_GET_USER = UM.UM_CODE)
+	   			LEFT OUTER JOIN BOARD_VIEW BV 		ON (BM.BM_SEQ = BV.BV_BM_SEQ)
+				LEFT OUTER JOIN
+								(
+									SELECT 		BV_BM_SEQ, COUNT(*) BV_CNT
+									FROM 		BOARD_VIEW
+									GROUP BY 	BV_BM_SEQ
+								) 
+												CNT ON (BM.BM_SEQ = CNT.BV_BM_SEQ)
+ 		WHERE			BM.BM_GROUP = '001'
+ 				AND 	BM.BM_KIND_BCODE='401'
+ 				AND 	BM.BM_KIND='004'
+ 				 				
+<!--  		WHERE			BM.BM_GROUP = #{strGroup}
+ 				AND 	BM.BM_KIND = #{strKind} ; 	 -->							
+	</select>
 </mapper>
