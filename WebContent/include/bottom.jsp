@@ -272,6 +272,140 @@
       </button>
        <!-- end: Mobile -->
 
+<div class="modal fade" id="organization">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">조직도</h4>
+			</div>
+			<div class="modal-body">
+				<div id="sidetreecontrol">
+				<h4><a href="?#">KITRI</a></h4>
+				</div>
+				<ul id="organizationtree" class="nav nav-list">
+                	 <c:forEach var="firstDepart" items="${DepartList}">
+                    
+                    	<c:if test="${firstDepart.intLevel eq 1 }">
+                    		<li class="ripple">
+                      			<a class="tree-toggle nav-header"><span class="icon-folder-alt"></span> ${firstDepart.strName }</a>
+                      			<ul class="nav nav-list tree">
+                      				<c:forEach var="secondDepart" items="${DepartList }">
+                      				
+                      					<c:if test="${secondDepart.intLevel eq 2 && firstDepart.strCode eq secondDepart.strPCode }">
+                      						
+                      						<li class="ripple"><a class="sub-tree-toggle nav-header"><span class="fa fa-folder"></span> ${secondDepart.strName }</a>
+                   								<ul class="nav nav-list sub-tree">
+                   									<c:forEach var="userList" items="${DepartUserList }">
+                   										<c:if test="${secondDepart.strCode eq userList.strDepart_Cd }">
+                   											<li id="selectuser" value="${userList.strCode }">
+                   												<a class="" onclick="selectOrganization('${userList.strCode }', '${userList.strPosition_Nm }&nbsp;${userList.strName }')"><span class="icon-user"></span> ${userList.strPosition_Nm } ${userList.strName }</a>
+          													</li>
+                   										</c:if>
+                   									</c:forEach>
+                   								</ul>
+                							</li>
+                      							
+                      					</c:if>
+                      					
+                      				</c:forEach>
+                          			
+                      			</ul>
+                    		</li>	
+                    	</c:if>
+                    
+                    </c:forEach>   
+                </ul>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" id="selectusercode" name="selectusercode">
+				<label id="selectusername"></label>
+				<button type="button" class="btn btn-default" data-dismiss="modal">종료</button>
+				<button type="button" id="selectorganizationbutton" class="btn btn-primary" data-dismiss="modal" onclick="selectExport('selectusercode', 'selectusername')">선택</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="depart">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">부서선택</h4>
+			</div>
+			<div class="modal-body">
+				<div id="sidetreecontrol">
+				<h4><a href="?#">KITRI</a></h4>
+				</div>
+				<ul id="organizationtree" class="nav nav-list">
+                	 <c:forEach var="firstDepart" items="${DepartList}">
+                    
+                    	<c:if test="${firstDepart.intLevel eq 1 }">
+                    		<li class="ripple">
+                      			<a class="tree-toggle nav-header"><span class="icon-folder-alt"></span> ${firstDepart.strName }</a>
+                      			<ul class="nav nav-list tree">
+                      				<c:forEach var="secondDepart" items="${DepartList }">
+                      				
+                      					<c:if test="${secondDepart.intLevel eq 2 && firstDepart.strCode eq secondDepart.strPCode }">
+                      						
+                      						<li id="selectdepart" value="${secondDepart.strCode }">
+                      							<a onclick="selectDepart('${secondDepart.strCode }', '${secondDepart.strName }')">
+                      								<span class="fa fa-folder"></span> ${secondDepart.strName }
+                   								</a>
+                							</li>
+                      					</c:if>
+                      				</c:forEach>
+                      			</ul>
+                    		</li>	
+                    	</c:if>
+                    </c:forEach>   
+                </ul>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" id="selectdepartcode" name="selectdepartcode">
+				<label id="selectdepartname"></label>
+				<button type="button" class="btn btn-default" data-dismiss="modal">종료</button>
+				<button type="button" id="selectdepartbutton" class="btn btn-primary" data-dismiss="modal" onclick="selectExport('selectdepartcode', 'selectdepartname')">선택</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+<!--end : organization modal -->
+
+<!-- 부서, 조직도 선택시 해당값 처리 Script --> 
+<script type="text/javascript">
+
+	var varObjectCode = "";
+	var varObjectName = "";
+	
+	function selectImport(strCode, strName) {
+				
+		varObjectCode = strCode;
+		varObjectName = strName;
+	}
+	
+	function selectOrganization(strCode, strName){
+		
+		document.getElementById("selectusercode").value = strCode;
+		document.getElementById("selectusername").innerHTML = strName;
+	}
+	
+	function selectDepart(strCode, strName){
+		
+		document.getElementById("selectdepartcode").value = strCode;
+		document.getElementById("selectdepartname").innerHTML = strName;
+	}
+
+	function selectExport(varCode, varName) {
+				
+		document.getElementById(varObjectCode).value = document.getElementById(varCode).value;
+		document.getElementById(varObjectName).innerHTML = document.getElementById(varName).innerHTML;
+	}
+
+</script>
+
     <!-- start: Javascript -->
     <!-- plugins -->
     <script src="${root }/js/plugins/moment.min.js"></script>
@@ -287,10 +421,40 @@
 	<script src="${root }/js/plugins/bootstrap-material-datetimepicker.js"></script>
     
     <!-- plugins data tables js -->
-    <%-- <script src="${root }/js/plugins/jquery.datatables.min.js"></script>
-    <script src="${root }/js/plugins/datatables.bootstrap.min.js"></script> --%>
+    <script src="${root }/js/plugins/jquery.datatables.min.js"></script>
+    <script src="${root }/js/plugins/datatables.bootstrap.min.js"></script>
 
     <!-- custom -->
+    
+<!-- 주소 검색 -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+	function addrSearch(){
+		new daum.Postcode({
+	        oncomplete: function(data) {
+	            /* 
+	        	zonecode : 우편번호(5자리) -> 13494
+	            address : 기본주소 -> 경기도 성남시 분당구 판교역로 235
+	            roadAddress : 도로명주소 -> 경기도 성남시 분당구 판교역로 235
+	            jibunAddress : 지번주소 -> 경기도 성남시 분당구 삼평동 681
+	            sido : 도/시 이름 -> 경기
+	            sigungu : 시/군/구 이름
+	            bname : 법정동/법정리 -> 삼평동
+	            postcode : 구 우편번호 -> 463-400
+	            postcode1 : 구 우편번호 앞 3자리 -> 463
+	            postcode2 : 구 우편번호 뒤 3자리 -> 400
+	             */
+	             
+             	document.getElementById("zip1").value = data.postcode1
+	            document.getElementById("zip2").value = data.postcode2;
+             	document.getElementById("addr1").value = data.address;
+	            document.getElementById("addr2").focus();
+	        }
+	    }).open();
+	}
+    
+</script>
+
      <script src="${root }/js/main.js"></script>
      <!-- 캘린더 한글 지원 -->
 	<script src="${root }/js/lang/ko.js"></script>
@@ -422,14 +586,14 @@
   	 	
 	 </script>
 	 
-	<!-- <script>
+	<script>
 	 
 	 	/* 테이블 데이터 검색 & 페이지 조절 */
 		$(document).ready(function() {
 			$('#datatables-example').DataTable();
 		});
 		
-	</script> -->
+	</script>
   <!-- end: Javascript -->
   </body>
 </html>

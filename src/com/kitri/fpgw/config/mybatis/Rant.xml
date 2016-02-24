@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Rant">
+	
+	<select id="selectApproUser" resultType="String">
+		SELECT UM_CODE FROM USER_MAIN
+		WHERE (UM_LEVEL = 2)	
+	</select>
+	
+	<select id="CodeManageSelect" resultType="com.kitri.fpgw.model.RantMainDto">
+		SELECT 	RM_YMD STRRMYMD, 
+				RM_START_TIME STRRMSTARTTIME, RM_END_TIME STRRMENDTIME, 
+				CM.CM_NAME STRCMNAME, 
+				RM_REQUEST_USER STRRMREQUSERCD, UM.UM_NAME STRRMREQUSERNM, 
+				UM.UM_POSITION STRUMPOSITIONCD, CM_PO.CM_NAME STRUMPOSITIONNM 
+		FROM 	RANT_MAIN RM
+				LEFT OUTER JOIN CODE_MANAGE CM 		ON 	RM.RM_RANT_BCODE = CM.CM_BCODE
+													AND RM.RM_RANT_PROD = CM.CM_SCODE
+				LEFT OUTER JOIN USER_MAIN UM 		ON 	RM.RM_REQUEST_USER = UM.UM_CODE
+				LEFT OUTER JOIN CODE_MANAGE CM_PO 	ON 	(UM.UM_POSITION_BCODE = CM_PO.CM_BCODE)
+													AND (UM.UM_POSITION = CM_PO.CM_SCODE)
+		ORDER BY RM.RM_GET_DATE
+	</select>
+	
+	
+	<insert id="insertReserve" parameterType="com.kitri.fpgw.model.RantMainDto">
+	
+		INSERT INTO RANT_MAIN(
+								RM_YMD,				RM_START_TIME,
+								RM_END_TIME,		RM_RANT_PROD,
+								RM_RANT_BCODE,		RM_REQUEST_USER,	
+								RM_APPROVAL_USER,	RM_REQUEST_MEMO,
+								RM_MEMO	
+							)		
+		VALUES(
+			#{strRMYmd},				#{strRMStartTime},
+			#{strRMEndTime},			#{strRMRantProd},
+			#{strRMRantBcode},			#{strRMReqUserCD},
+			#{strRMApproUser},			#{strRMReqMemo},
+			#{strRMMemo}
+		)
+	</insert>
+
+	
+</mapper>

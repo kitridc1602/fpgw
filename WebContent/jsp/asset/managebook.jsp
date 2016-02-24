@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath }" />
-<c:set var="count" value="1"></c:set>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,8 +53,9 @@
 								</thead>
 								<tbody>									
 									<c:forEach var="comList" items="${list}">
-										<tr>
-											<c:if test="${comList.strBCode eq 750 && comList.intUse_Flag eq 1}">
+										
+										<c:if test="${comList.strBCode eq 750 && comList.intUse_Flag eq 1}">
+											<tr>
 												<td>${comList.intSort}</td>
 												<td></td>
 												<td>${comList.strBName}</td>
@@ -64,8 +64,9 @@
 												<td>${comList.strValue2}</td>
 												<td>${comList.strValue3}</td>
 												<td></td>
-											</c:if>										
-										</tr>
+											</tr>
+										</c:if>										
+										
 									</c:forEach>									
 								</tbody>
 							</table>
