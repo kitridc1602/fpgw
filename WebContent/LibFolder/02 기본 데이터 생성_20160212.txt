@@ -570,6 +570,11 @@ SELECT
 '900', '000', '包府磊诀公', 1, 6, 1, '000900'
 FROM DUAL
 
+	UNION ALL
+
+SELECT
+'901', '900', '荤侩磊包府', '/user/selectall.html', 2, 1, 1, '000900901'
+FROM DUAL
 ;	
 	
 
