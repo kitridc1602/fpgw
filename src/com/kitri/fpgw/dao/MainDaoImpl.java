@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kitri.fpgw.model.CodeManageDto;
+import com.kitri.fpgw.model.DepartDto;
 import com.kitri.fpgw.model.LogHistoryDto;
 import com.kitri.fpgw.model.MenuDto;
 import com.kitri.fpgw.model.UserDetaileDto;
@@ -95,11 +96,30 @@ public class MainDaoImpl implements MainDao {
 	}
 
 	@Override
-	public ArrayList<UserDto> UserListAll(String strCode) throws Exception {
+	public ArrayList<UserDto> UserListAll(String strCode, int intKind) throws Exception {
 
-		List<UserDto> list = SqlSessionTemplate.selectList("UserListAll", strCode);
+		List<UserDto> list = null;
+		
+		switch (intKind) {
+		case 0:
+			list = SqlSessionTemplate.selectList("UserListAllName", strCode); 
+			break;
+
+		case 1:
+			list = SqlSessionTemplate.selectList("UserListAllSort", strCode);
+			break;
+		}
+		 
 		
 		return (ArrayList<UserDto>) list;
+	}
+
+	@Override
+	public ArrayList<DepartDto> DepartListAll() throws Exception {
+
+		List<DepartDto> list = SqlSessionTemplate.selectList("DepartListAll");
+		
+		return (ArrayList<DepartDto>) list;
 	}
 
 	
