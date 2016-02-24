@@ -3,11 +3,13 @@ package com.kitri.fpgw.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.kitri.fpgw.dao.BoardDao;
 import com.kitri.fpgw.model.BoardCommentDto;
 import com.kitri.fpgw.model.BoardMainDto;
 
+@Service
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
