@@ -2,10 +2,12 @@ package com.kitri.fpgw.service;
 
 import java.util.ArrayList;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kitri.fpgw.dao.RantDao;
+import com.kitri.fpgw.model.RantDetailDto;
 import com.kitri.fpgw.model.RantMainDto;
 
 @Service
@@ -30,6 +32,19 @@ public class RantServiceImpl implements RantService {
 	public ArrayList<RantMainDto> CodeManageSelect() {
 		// TODO Auto-generated method stub			
 		return RantDao.CodeManageSelect();
+	}
+
+	@Override
+	public void insertReserveDetail(RantDetailDto rantDetailDto) throws Exception {
+		// TODO Auto-generated method stub
+		RantDao.insertReserveDetail(rantDetailDto);
+	}
+
+	@Override
+	public ArrayList<RantMainDto> selectTimeCheck(RantMainDto rantMainDto ) {
+		// TODO Auto-generated method stub
+		
+		return RantDao.selectTimeCheck(rantMainDto);
 	}
 
 }

@@ -57,13 +57,13 @@
 										<c:if test="${comList.strBCode eq 750 && comList.intUse_Flag eq 1}">
 											<tr>
 												<td>${comList.intSort}</td>
-												<td></td>
+												<td>${comList.datGet_Date}</td>
 												<td>${comList.strBName}</td>
 												<td>${comList.strName}</td>
 												<td>${comList.strValue1}</td>
 												<td>${comList.strValue2}</td>
 												<td>${comList.strValue3}</td>
-												<td></td>
+												<td>${comList.strGet_User_Cd}</td>
 											</tr>
 										</c:if>										
 										

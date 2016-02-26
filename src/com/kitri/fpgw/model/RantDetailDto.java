@@ -19,6 +19,28 @@ public class RantDetailDto {
 	public RantDetailDto(){
 		
 	}
+	
+	public RantDetailDto(String strRDRK, String strRDRKBcode){
+		this.strRDRK = strRDRK;
+		this.strRDRKBcode = strRDRKBcode;
+	}
+	
+	
+
+	public RantDetailDto(String strRDYmd, String strRDGetUser, String strRDStartTime, String strRDEndTime,
+			String strRDRantProd, String strRDChkUser, String strRDRKBcode, String strRDRK,
+			String strRDMemo) {
+
+		this.strRDYmd = strRDYmd;
+		this.strRDGetUser = strRDGetUser;
+		this.strRDStartTime = strRDStartTime;
+		this.strRDEndTime = strRDEndTime;
+		this.strRDRantProd = strRDRantProd;
+		this.strRDChkUser = strRDChkUser;
+		this.strRDRKBcode = strRDRKBcode;
+		this.strRDRK = strRDRK;
+		this.strRDMemo = strRDMemo;
+	}
 
 	public RantDetailDto(String strRDYmd, String strRDGetUser, Date datRDGetDate, String strRDStartTime,
 			String strRDEndTime, String strRDRantProd, int strRDSeq, String strRDChkUser, String strRDRKBcode,

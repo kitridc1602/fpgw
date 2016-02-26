@@ -3,7 +3,7 @@ package com.kitri.fpgw.model;
 import java.util.Date;
 
 public class RantMainDto {
-	
+
 	private String strRMYmd;			//일자		20160218
 	private String strRMGetUser;		//등록자
 	private Date datRMGetDate;			//등록시간
@@ -23,12 +23,45 @@ public class RantMainDto {
 	private String strUMPositionNM;
 	private String strRMReqUserNM;
 	
+	private String strCMNameRK;
+	
+	private RantDetailDto rantDetailDto;	//예약 진행 코드 불러옴
+	
+	private String strStartValue;
+	private String strEndValue;
+	
+	
 	public RantMainDto() {
 		
 	}
 	
+	
+	
+	public RantMainDto(String strRMYmd, String strRMRantProd, String strRMRantBcode) {
+
+		this.strRMYmd = strRMYmd;
+		this.strRMRantProd = strRMRantProd;
+		this.strRMRantBcode = strRMRantBcode;
+	}
+
+
+
+	public RantMainDto(String strRMYmd, String strRMStartTime, String strRMEndTime, String strRMRantProd,
+			String strRMRantBcode, String strStartValue, String strEndValue) {
+
+		this.strRMYmd = strRMYmd;
+		this.strRMStartTime = strRMStartTime;
+		this.strRMEndTime = strRMEndTime;
+		this.strRMRantProd = strRMRantProd;
+		this.strRMRantBcode = strRMRantBcode;
+		this.strStartValue = strStartValue;
+		this.strEndValue = strEndValue;
+	}
+
+
+
 	public RantMainDto(String strRMYmd, String strRMStartTime, String strRMEndTime, String strCMName, String strRMReqUserNM,
-			String strRMReqUserCD, String strUMPositionCD, String strUMPositionNM){
+			String strRMReqUserCD, String strUMPositionCD, String strUMPositionNM, String strCMNameRK, String strRMReqMemo, RantDetailDto rantDetailDto){
 		
 		this.strRMYmd = strRMYmd;
 		this.strRMStartTime = strRMStartTime;
@@ -38,6 +71,9 @@ public class RantMainDto {
 		this.strRMReqUserCD = strRMReqUserCD;
 		this.strUMPositionCD = strUMPositionCD;
 		this.strUMPositionNM = strUMPositionNM;
+		this.strCMNameRK = strCMNameRK;
+		this.strRMReqMemo = strRMReqMemo;
+		this.rantDetailDto = rantDetailDto;
 	}
 	
 	public RantMainDto(String strRMYmd, String strRMGetUser, Date datRMGetDate, String strRMEditUser,
@@ -196,6 +232,40 @@ public class RantMainDto {
 	public void setStrRMReqUserNM(String strRMReqUserNM) {
 		this.strRMReqUserNM = strRMReqUserNM;
 	}
+
+	public String getStrCMNameRK() {
+		return strCMNameRK;
+	}
+
+	public void setStrCMNameRK(String strCMNameRK) {
+		this.strCMNameRK = strCMNameRK;
+	}
+
+	public void setStrRMReqUserCD(String strRMReqUserCD) {
+		this.strRMReqUserCD = strRMReqUserCD;
+	}
+
+	public RantDetailDto getRantDetailDto() {
+		return rantDetailDto;
+	}
+
+	public void setRantDetailDto(RantDetailDto rantDetailDto) {
+		this.rantDetailDto = rantDetailDto;
+	}
 	
+	public String getStrStartValue() {
+		return strStartValue;
+	}
+
+	public void setStrStartValue(String strStartValue) {
+		this.strStartValue = strStartValue;
+	}
 	
+	public String getStrEndValue() {
+		return strEndValue;
+	}
+
+	public void setStrEndValue(String strEndValue) {
+		this.strEndValue = strEndValue;
+	}
 }

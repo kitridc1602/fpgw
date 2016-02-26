@@ -8,18 +8,44 @@
 	</select>
 	
 	<select id="CodeManageSelect" resultType="com.kitri.fpgw.model.RantMainDto">
+
 		SELECT 	RM_YMD STRRMYMD, 
 				RM_START_TIME STRRMSTARTTIME, RM_END_TIME STRRMENDTIME, 
 				CM.CM_NAME STRCMNAME, 
 				RM_REQUEST_USER STRRMREQUSERCD, UM.UM_NAME STRRMREQUSERNM, 
-				UM.UM_POSITION STRUMPOSITIONCD, CM_PO.CM_NAME STRUMPOSITIONNM 
+				UM.UM_POSITION STRUMPOSITIONCD, CM_PO.CM_NAME STRUMPOSITIONNM,
+				RD.RD_RANT_KIND_BCODE STRRDRKBCODE, RD.RD_RANT_KIND STRRDRK,
+				CM_KI.CM_NAME STRCMNAMERK, RM.RM_REQUEST_MEMO STRRMREQMEMO
+				
 		FROM 	RANT_MAIN RM
 				LEFT OUTER JOIN CODE_MANAGE CM 		ON 	RM.RM_RANT_BCODE = CM.CM_BCODE
 													AND RM.RM_RANT_PROD = CM.CM_SCODE
 				LEFT OUTER JOIN USER_MAIN UM 		ON 	RM.RM_REQUEST_USER = UM.UM_CODE
 				LEFT OUTER JOIN CODE_MANAGE CM_PO 	ON 	(UM.UM_POSITION_BCODE = CM_PO.CM_BCODE)
 													AND (UM.UM_POSITION = CM_PO.CM_SCODE)
+				LEFT OUTER JOIN RANT_DETAIL RD		ON  RM.RM_YMD = RD.RD_RM_YMD
+													AND RM.RM_START_TIME = RD.RD_RM_START_TIME
+													AND RM.RM_END_TIME = RD.RD_RM_END_TIME
+													AND RM.RM_RANT_PROD = RD.RD_RM_RANT_PROD
+				LEFT OUTER JOIN CODE_MANAGE CM_KI   ON  RD.RD_RANT_KIND_BCODE = CM_KI.CM_BCODE
+													AND RD.RD_RANT_KIND = CM_KI.CM_SCODE  										
 		ORDER BY RM.RM_GET_DATE
+	</select>
+	
+	
+	<select id="selectTimeCheck" parameterType="com.kitri.fpgw.model.RantMainDto" resultType="com.kitri.fpgw.model.RantMainDto">
+		
+		SELECT RM_YMD STRRMYMD, 			RM_RANT_BCODE STRRMRANTBCODE, 
+			   RM_RANT_PROD STRRMRANTPROD,  RM_START_TIME STRRMSTARTTIME, 
+			   RM_END_TIME STRRMENDTIME,	CM_ST.CM_VALUE1 STRSTARTVALUE,
+			   CM_ED.CM_VALUE1 STRENDVALUE
+		FROM CODE_MANAGE CM_ST
+			   JOIN RANT_MAIN RM ON CM_ST.CM_NAME = RM.RM_START_TIME
+			   JOIN CODE_MANAGE CM_ED ON CM_ED.CM_NAME = RM.RM_END_TIME
+			   WHERE (RM.RM_YMD = #{strRMYmd}) 
+			   AND (RM.RM_RANT_BCODE = #{strRMRantBcode}) 
+			   AND (RM.RM_RANT_PROD = #{strRMRantProd})
+	
 	</select>
 	
 	
@@ -41,5 +67,24 @@
 		)
 	</insert>
 
+	<insert id="insertRantDetail" parameterType="com.kitri.fpgw.model.RantDetailDto">
+		
+		INSERT INTO RANT_DETAIL(										
+									RD_RM_YMD,			RD_RM_START_TIME,
+									RD_RM_END_TIME,		RD_RM_RANT_PROD,
+									RD_SEQ,
+									RD_CHECK_USER,		RD_RANT_KIND_BCODE,
+									RD_RANT_KIND,		RD_MEMO,
+									RD_GET_USER_CD			
+								)
+		VALUES(				
+				#{strRDYmd},			#{strRDStartTime},
+				#{strRDEndTime},		#{strRDRantProd},
+				(SELECT DECODE(MAX(RD_SEQ), NULL, 1, MAX(RD_SEQ)+1) FROM RANT_DETAIL),
+				#{strRDChkUser},		#{strRDRKBcode},	
+				#{strRDRK},				#{strRDMemo},	
+				#{strRDGetUser}	
+		)
 	
+	</insert>
 </mapper>

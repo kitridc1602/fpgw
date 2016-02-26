@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath }" />
-<<c:set var="strRMApproUser" value="${approUser}"></c:set>
+<c:set var="strRMApproUser" value="${approUser}"></c:set>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,15 +83,111 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 				});
 		});
 }
-	
 
+//예약된 시간 체크 ajax
+function timecheck(data, bcode){
+	var output = '';
+	var jsonlen = data.tclist.length;
+	var arrSt = new Array();
+	var arrEd = new Array();
+	for(i=0;i<jsonlen;i++){
+		arrSt[i] = data.tclist[i].strRMStartTime;
+		arrEd[i] = data.tclist[i].strRMEndTime;
+	}
+	var arrStlen = arrSt.length;
+	var arrEdlen = arrEd.length;
+	if(bcode == '710'){
+		if(arrStlen == 0 && arrEdlen == 0){
+			for(i=8;i<=18;i++){
+				output += '<input id="roomTimeId" type="checkbox" value="'+i+'"';
+				output += '">';
+				output += (i)+':00 ~ '+(i+1)+':00<br>';
+			}
+		}else if (arrStlen > 0 && arrEdlen > 0 && arrStlen == arrEdlen){
+			for(i=8;i<=18;i++){	
+				output += '<input id="roomTimeId" type="checkbox" value="'+i+'" ';			
+					for(j=0;j<arrStlen;j++){			
+						if(arrEd[j] > i && arrSt[j] <= i){				
+							output += ' disabled="disabled"';				
+						}						
+					}
+					
+				output += '> '+i+':00 ~ '+(i+1)+':00<br>';			
+			}
+		}
+		$('#roomtc').css('display', '');
+		$('#roomtc').empty();
+		$('#roomtc').append(output);
+	}else if(bcode == '720'){
+		if(arrStlen == 0 && arrEdlen == 0){
+			for(i=8;i<=18;i++){
+				output += '<input id="carTimeId" type="checkbox" value="'+i+'"';
+				output += '">';
+				output += (i)+':00 ~ '+(i+1)+':00<br>';
+			}
+		}else if (arrStlen > 0 && arrEdlen > 0 && arrStlen == arrEdlen){
+			for(i=8;i<=18;i++){	
+				output += '<input id="carTimeId" type="checkbox" value="'+i+'" ';			
+					for(j=0;j<arrStlen;j++){			
+						if(arrEd[j] > i && arrSt[j] <= i){				
+							output += ' disabled="disabled"';				
+						}						
+					}
+					
+				output += '> '+i+':00 ~ '+(i+1)+':00<br>';			
+			}
+		}
+		$('#cartc').css('display', '');
+		$('#cartc').empty();
+		$('#cartc').append(output);		
+	}else if(bcode == '730'){
+		if(arrStlen == 0 && arrEdlen == 0){
+			for(i=8;i<=18;i++){
+				output += '<input id="equipTimeId" type="checkbox" value="'+i+'"';
+				output += '">';
+				output += (i)+':00 ~ '+(i+1)+':00<br>';
+			}
+		}else if (arrStlen > 0 && arrEdlen > 0 && arrStlen == arrEdlen){
+			for(i=8;i<=18;i++){	
+				output += '<input id="equipTimeId" type="checkbox" value="'+i+'" ';			
+					for(j=0;j<arrStlen;j++){			
+						if(arrEd[j] > i && arrSt[j] <= i){				
+							output += ' disabled="disabled"';				
+						}						
+					}
+					
+				output += '> '+i+':00 ~ '+(i+1)+':00<br>';			
+			}
+		}
+		$('#equiptc').css('display', '');
+		$('#equiptc').empty();
+		$('#equiptc').append(output);
+	}
+}
 
 	$(document).ready(function(){
 		
 		//사용정보->회의실
 		$('#roomName').text($('#roomSelect option:selected').attr('roomName'));		
 		$('#roomSelect').change(function(){
-			$('#roomName').text($('#roomSelect option:selected').attr('roomName'));			
+			$('#roomName').text($('#roomSelect option:selected').attr('roomName'));
+			var output = '';
+			var date = $('#roomDateText').val(); 
+			var prod = $('#roomSelect option:selected').val();
+			var bcode = '710';
+			$.ajax({
+				type : 'POST',
+				url : '${root}/asset/timecheck.html',
+				data : {'strRMYmd' : date, 'strRMRantBcode': bcode, 'strRMRantProd' : prod},
+				dataType : 'json',
+				success : function(data){					
+					timecheck(data, bcode);
+					
+				},
+				error : function(e){
+					alert('에러발생!!');
+				}
+			});
 		});
 		
 		//사용정보->회의실사용날짜
@@ -101,7 +197,7 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 		});
 			
 		//사용정보->회의실사용시간
-		$('input[id="roomTimeId"]').on('click', function(){
+ 		$(document).on('click', '#roomTimeId', function(){	
 			var valueArr = new Array();
 			var list = $('input[id="roomTimeId"]');
 			for(var i=0;i<list.length;i++){
@@ -118,13 +214,32 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 			roomTime = str + (n === 0 ? ' ' : '(' + n + ' 시간)');
 			$('#roomTime').text(str + (n === 0 ? ' ' : '(' + n + ' 시간)'));
 			$('#roomStartTime').val(Number(valueArr[0]));
-			$('#roomEndTime').val(Number(valueArr[0])+n);			
-		});	
+			$('#roomEndTime').val(Number(valueArr[0])+n);		
+		});
+		
+		
 		
 		//사용정보->차량
 		$('#carName').text($('#carSelect option:selected').attr('carName'));		
 		$('#carSelect').change(function(){
-			$('#carName').text($('#carSelect option:selected').attr('carName'));			
+			$('#carName').text($('#carSelect option:selected').attr('carName'));
+			var output = '';
+			var date = $('#carDateText').val(); 
+			var prod = $('#carSelect option:selected').val();
+			var bcode = '720';
+			$.ajax({
+				type : 'POST',
+				url : '${root}/asset/timecheck.html',
+				data : {'strRMYmd' : date, 'strRMRantBcode': bcode, 'strRMRantProd' : prod},
+				dataType : 'json',
+				success : function(data){					
+					timecheck(data, bcode);
+					
+				},
+				error : function(e){
+					alert('에러발생!!');
+				}
+			});
 		});
 		
 		//사용정보->차량사용날짜
@@ -134,7 +249,7 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 		});
 		
 		//사용정보->차량사용시간
-		$('input[id="carTimeId"]').on('click', function(){
+		$(document).on('click', '#carTimeId', function(){
 			var valueArr = new Array();
 			var list = $('input[id="carTimeId"]');
 			for(var i=0;i<list.length;i++){
@@ -157,7 +272,24 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 		//사용정보->장비
 		$('#equipName').text($('#equipSelect option:selected').attr('equipName'));		
 		$('#equipSelect').change(function(){
-			$('#equipName').text($('#equipSelect option:selected').attr('equipName'));			
+			$('#equipName').text($('#equipSelect option:selected').attr('equipName'));	
+			var output = '';
+			var date = $('#equipDateText').val(); 
+			var prod = $('#equipSelect option:selected').val();
+			var bcode = '730';
+			$.ajax({
+				type : 'POST',
+				url : '${root}/asset/timecheck.html',
+				data : {'strRMYmd' : date, 'strRMRantBcode': bcode, 'strRMRantProd' : prod},
+				dataType : 'json',
+				success : function(data){					
+					timecheck(data, bcode);
+					
+				},
+				error : function(e){
+					alert('에러발생!!');
+				}
+			});
 		});
 		
 		//사용정보->장비사용날짜
@@ -166,8 +298,8 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 			$('#equipDate').text($('#equipDateText').val());
 		});
 		
-		//사용정보->차량사용시간
-		$('input[id="equipTimeId"]').on('click', function(){
+		//사용정보->장비사용시간
+		$(document).on('click', '#equipTimeId', function(){
 			var valueArr = new Array();
 			var list = $('input[id="equipTimeId"]');
 			for(var i=0;i<list.length;i++){
@@ -189,14 +321,6 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 	});
 	
 	
-	
-	
-
-	
-	
-
-
-
 </script>
 
 <!-- start: content -->
@@ -266,7 +390,7 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 													<div><label>예약회의실선택</label></div>
 													<div class="col-sm-12 padding-0">
 														<input type="hidden" id="strRMRantBcode" name="strRMRantBcode" value="710">
-														<select id="roomSelect" name="strRMRantProd" class="form-control" >
+														<select id="roomSelect" name="strRMRantProd" class="form-control">
 																	<option value="" roomName="">--- Default Select ---</option>
 															<c:forEach var="confList" items="${list}">
 																<c:if test="${confList.strBCode eq 710 && confList.intUse_Flag eq 1}">
@@ -280,12 +404,7 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 											<div class="col-md-4">
 												<div class="col-md-4">
 													<div><label>사용시간</label></div>
-													<div class="col-sm-12 padding-0">
-															<c:forEach var="timeList" items="${list}">
-																<c:if test="${timeList.strBCode eq 700 && timeList.intUse_Flag eq 1}">																														
-																	<input id="roomTimeId" type="checkbox" value="${timeList.strName}">${timeList.strValue1}&nbsp;~&nbsp;${timeList.strValue2}<br>
-																</c:if>
-															</c:forEach>
+													<div id="roomtc" class="col-sm-12 padding-0">												
 																	
 													</div>
 												</div>
@@ -348,13 +467,8 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 											<div class="col-md-4">
 												<div class="col-md-4">
 													<div><label>사용시간</label></div>
-													<div class="col-sm-12 padding-0">
-															<c:forEach var="timeList" items="${list}">
-																<c:if test="${timeList.strBCode eq 700 && timeList.intUse_Flag eq 1}">																														
-																	<input id="carTimeId" type="checkbox" value="${timeList.strName}">${timeList.strValue1}&nbsp;~&nbsp;${timeList.strValue2}<br>
-																</c:if>
-															</c:forEach>
-																	
+													<div id="cartc" class="col-sm-12 padding-0">
+															
 													</div>
 												</div>
 											</div>
@@ -416,13 +530,8 @@ if($('#tabs-demo6-1').click || $('#tabs-demo6-2').click || $('#tabs-demo6-3').cl
 											<div class="col-md-4">
 												<div class="col-md-4">
 													<div><label>사용시간</label></div>
-													<div class="col-sm-12 padding-0">
-															<c:forEach var="timeList" items="${list}">
-																<c:if test="${timeList.strBCode eq 700 && timeList.intUse_Flag eq 1}">																														
-																	<input id="equipTimeId" type="checkbox" value="${timeList.strName}">${timeList.strValue1}&nbsp;~&nbsp;${timeList.strValue2}<br>
-																</c:if>
-															</c:forEach>
-																	
+													<div id="equiptc" class="col-sm-12 padding-0">
+																																
 													</div>
 												</div>
 											</div>

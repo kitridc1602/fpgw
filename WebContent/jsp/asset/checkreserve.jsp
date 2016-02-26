@@ -11,7 +11,7 @@
 			<div class="col-md-6 col-sm-12">
 				<h3 class="animated fadeInLeft">${sessionScope.coInfo[6].strName }</h3>
 				<p class="animated fadeInDown">
-					<span class="fa  fa-map-marker"></span> 자산관리>>예약현황
+					<span class="fa  fa-map-marker"></span> 자산관리>>예약신청확인
 				</p>
 
 
@@ -38,7 +38,7 @@
 	<div class="panel-heading bg-white border-none"
 		style="margin-bottom: 20px;">
 		<h4>
-			<span class="icon-notebook icons"></span> 예약현황
+			<span class="icon-notebook icons"></span> 예약신청확인
 		</h4>
 	</div>
 
@@ -58,20 +58,26 @@
 									<th>예약품목</th>
 									<th>신청자</th>
 									<th>진행상황</th>
-									<th>비고</th>
+									<th>상세내용확인</th>
 								</tr>
 							</thead>
 							<tbody>									
-								<c:forEach var="checkList" items="${list}">	
+								<c:forEach var="checkList" items="${list}" varStatus="status">										
 										<tr>	
-											<td></td>
+											<td>${status.count}</td>
 											<td>${checkList.strRMYmd}</td>
 											<td>${checkList.strRMStartTime}:00</td>
 											<td>${checkList.strRMEndTime}:00</td>
-											<td>${checkList.strCMName}</td>
+											<td><a href="#" data-toggle="tooltip" data-placement="right" title="${checkList.strRMReqMemo}">${checkList.strCMName}</a></td>
 											<td>${checkList.strRMReqUserNM}&nbsp;${checkList.strUMPositionNM}</td>
-											<td></td>
-											<td></td>
+											<td>${checkList.strCMNameRK}</td>
+											<td>
+												
+				                          			<span><input type="submit" class="btn btn-3d" value="승인"/></span>
+				                          			<span><input type="reset" class="btn btn-3d" value="반려"/></span>
+				                          			<span><input type="reset" class="btn btn-3d" value="상세"/></span>
+			                          			
+											</td>
 										</tr>
 																	
 								</c:forEach>									
