@@ -101,22 +101,6 @@ SELECT '051', '002', '접속구분', '로그아웃', 'logCheck', 2, 1 FROM DUAL
 
 ;
 
-
-DELETE FROM CODE_MANAGE WHERE CM_BCODE = '052';
-
---사용구분 정보
-INSERT INTO CODE_MANAGE
-(
-	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
-)
-SELECT '052', '001', '사용구분', '사용', 'useFlag', 1, 1 FROM DUAL
-
-	UNION ALL
-	
-SELECT '052', '002', '사용구분', '미사용', 'useFlag', 2, 1 FROM DUAL
-
-;
-
 --CODE_MANAGE 직급 DATA
 DELETE FROM CODE_MANAGE WHERE CM_BCODE = '100' AND CM_SCODE > '000';
 
@@ -353,20 +337,11 @@ INSERT INTO CODE_MANAGE
 (
 	CM_BCODE, CM_SCODE, CM_BNAME, CM_NAME, CM_VALUE4, CM_SORT, CM_USE_FLAG
 )
-SELECT '301', '001', '일정구분', '회사일정', 'workKind', 1, 1 FROM DUAL
+SELECT '301', '001', '일정구분', '일일', 'workKind', 1, 1 FROM DUAL
 
 	UNION ALL
 	
-SELECT '301', '002', '일정구분', '부서일정', 'workKind', 2, 1 FROM DUAL
-
-	UNION ALL
-	
-SELECT '301', '003', '일정구분', '팀일정', 'workKind', 3, 1 FROM DUAL
-
-	UNION ALL
-	
-SELECT '301', '004', '일정구분', '개인일정', 'workKind', 4, 1 FROM DUAL
-
+SELECT '301', '002', '일정구분', '시간', 'workKind', 2, 1 FROM DUAL
 
 ;
 
@@ -480,94 +455,94 @@ DELETE FROM MENU;
 
 INSERT INTO MENU
 (
-ME_CODE, ME_PCODE, ME_NAME, ME_LEVEL, ME_SORT, ME_USE_FLAG, ME_MENUINDEX
+ME_CODE, ME_PCODE, ME_NAME, ME_PATH, ME_LEVEL, ME_SORT, ME_USE_FLAG, ME_MENUINDEX
 )
 SELECT
-'000', NULL, 'KITRI', 0, 0, 1, '000'
+'000', NULL, 'KITRI', '', 0, 0, 1, '000'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'001', '000', '일정관리', 1, 1, 1, '000001'
+'001', '000', '일정관리', '', 1, 1, 1, '000001'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'006', '001', '개인 일정', 2, 1, 1, '000001006'
+'006', '001', '개인 일정', '', 2, 1, 1, '000001006'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'007', '001', '공개 일정', 2, 2, 1, '000001007'
+'007', '001', '공개 일정', '', 2, 2, 1, '000001007'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'002', '000', '결재관리', 1, 2, 1, '000002'
+'002', '000', '결재관리', '', 1, 2, 1, '000002'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'008', '002', '결재문서 작성', 2, 1, 1, '000002008'
+'008', '002', '결재문서 작성', '', 2, 1, 1, '000002008'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'009', '002', '결재할 문서함', 2, 2, 1, '000002009'
+'009', '002', '결재할 문서함', '', 2, 2, 1, '000002009'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'010', '002', '개인 문서함', 2, 3, 1, '000002010'
+'010', '002', '개인 문서함', '', 2, 3, 1, '000002010'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'011', '002', '협조 문서함', 2, 4, 1, '000002011'
+'011', '002', '협조 문서함', '', 2, 4, 1, '000002011'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'012', '002', '부서 수신함', 2, 5, 1, '000002012'
+'012', '002', '부서 수신함', '', 2, 5, 1, '000002012'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'013', '002', '참조 문서함', 2, 6, 1, '000002013'
+'013', '002', '참조 문서함', '', 2, 6, 1, '000002013'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'003', '000', '자산관리', 1, 3, 1, '000003'
+'003', '000', '자산관리', '', 1, 3, 1, '000003'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'004', '000', '게시판', 1, 4, 1, '000004'
+'004', '000', '게시판', '', 1, 4, 1, '000004'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'005', '000', '부가서비스', 1, 5, 1, '000005'
+'005', '000', '부가서비스', '', 1, 5, 1, '000005'
 FROM DUAL
 
 	UNION ALL
 
 SELECT
-'900', '000', '관리자업무', 1, 6, 1, '000900'
+'900', '000', '관리자업무', '', 1, 6, 1, '000900'
 FROM DUAL
 
 	UNION ALL
@@ -575,6 +550,7 @@ FROM DUAL
 SELECT
 '901', '900', '사용자관리', '/user/selectall.html', 2, 1, 1, '000900901'
 FROM DUAL
+
 ;	
 	
 
