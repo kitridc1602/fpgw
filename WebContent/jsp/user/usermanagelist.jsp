@@ -9,7 +9,7 @@
                   <div class="panel-body">
                       <div class="col-md-6 col-sm-12">
                         <h3 class="animated fadeInLeft">${sessionScope.coInfo[6].strName }</h3>
-                        <p class="animated fadeInDown"><span class="fa  fa-map-marker"></span> 메뉴카테고리 들어갈 자리</p>
+                        <p class="animated fadeInDown"><span class="fa  fa-map-marker"></span> 관리자업무 >> 사용자관리</p>
 
                         
                     </div>
@@ -41,8 +41,8 @@
 								<tbody>
 									<tr>
 										<td style="text-align: right;">
-											<input type="button" class=" btn btn-3d" id="userview" name="userview" value="조회">
-											<input type="button" class=" btn btn-3d" id="useinsert" name="userinsert" value="신규등록">			
+											<input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="userview" name="userview" value="조회" onclick="location.href='${root}/user/selectall.html'">
+											<input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="useinsert" name="userinsert" value="신규등록" onclick="location.href='${root}/user/select.html'">			
 										</td>
 									</tr>
 							
@@ -74,18 +74,20 @@
 					                        </tr>
 	                      				</thead>
 	                      				<tbody>
-	                      					<tr>
-	                      						<td width="80px" style="text-align: center;"><h6>00001</h6></td>
-	                      						<td width="90px"><h6>기초관리자</h6></td>
-	                      						<td width="90px"><h6>기초관리자</h6></td>
-	                      						<td width="150px"><h6>아름다운우리나라</h6></td>
-	                      						<td width="150px"><h6>000-0000-0000(00000)</h6></td>
-	                      						<td width="120px"><h6>000-0000-0000</h6></td>
-	                      						<td><h6>kitri20</h6></td>
-	                      						<td width="90px"><h6>9999.99.99</td>
-	                      						<td width="90px"><input type="button" class=" btn btn-3d" id="useredit" name="useredit" value="수정"></td>
-	                      						<td width="90px"><input type="button" class=" btn btn-3d" id="userdelete" name="userdelete" value="삭제"></td>
-	                      					</tr>
+	                      					<c:forEach var="user" items="${userDto }">
+		                      					<tr>
+		                      						<td width="80px" style="text-align: center;"><h6>${user.strCode }</h6></td>
+		                      						<td width="90px"><h6>${user.strName }</h6></td>
+		                      						<td width="90px"><h6>${user.strPosition_Nm }</h6></td>
+		                      						<td width="150px"><h6>${user.strDepart_Nm }</h6></td>
+		                      						<td width="150px"><h6>${user.strCo_Tel1 }-${user.strCo_Tel2 }-${user.strCo_Tel3 }(${user.strCo_Tel_InLine })</h6></td>
+		                      						<td width="120px"><h6>${user.strMobile1 }-${user.strMobile2 }-${user.strMobile3 }</h6></td>
+		                      						<td><h6>${user.strID }</h6></td>
+		                      						<td width="90px"><h6>${user.strHire_YYYY }.${user.strHire_MM }.${user.strHire_DD }</h6></td>
+		                      						<td width="90px"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="useredit" name="useredit" value="수정" onclick="location.href='${root }/user/select.html?strCode=${user.strCode }'"></td>
+		                      						<td width="90px"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="userdelete" name="userdelete" value="삭제" onclick="location.href='${root }/user/delete.html?strCode=${user.strCode }'"></td>
+		                      					</tr>
+	                      					</c:forEach>
 	                      				</tbody>
 	                   				</table>
 		                		</div>

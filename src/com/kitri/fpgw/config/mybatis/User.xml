@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="User">
 
+	
 	<select id="userSelect" parameterType="String" resultType="com.kitri.fpgw.model.UserDto">
 		SELECT 	UM_CODE STRCODE, 					UM_NAME STRNAME,
 				UM_ID STRID, 						UM_PWD STRPWD,
@@ -70,25 +71,84 @@
 				LEFT OUTER JOIN CODE_MANAGE CM 		ON 	(UM.UM_POSITION_BCODE = CM.CM_BCODE)
 													AND (UM.UM_POSITION = CM.CM_SCODE)
 		WHERE	(UM_CODE > '00000')
+		AND		(UM_USE_FLAG = 1)
 		ORDER BY UM_CODE   	
 	</select>
 	
-	<insert id="userInsert" parameterType="com.kitri.fpgw.model.UserDto">
-	
+	<insert id="userModifyTempInsert" parameterType="com.kitri.fpgw.model.UserModifyDto">
+		INSERT INTO   TEMP_USER
+		  (
+		    TU_WORK_ID,   TU_WORK_USER, 
+		    TU_CODE,      TU_NAME,            TU_ID,            TU_PWD,
+		    TU_DEPART_CD, TU_POSITION_BCODE,  TU_POSITION,      TU_LEVEL,
+	    	TU_CO_TEL1,   TU_CO_TEL2,         TU_CO_TEL3,       TU_INLINE,
+		    TU_HIRE_Y,    TU_HIRE_M,          TU_HIRE_D,        TU_VACATION_CNT,    TU_USE_FLAG,
+		    TU_GENDER,    TU_BIRTH_Y,         TU_BIRTH_M,       TU_BIRTH_D,         TU_CALENDER_KIND,
+		    TU_TEL1,      TU_TEL2,            TU_TEL3,
+		    TU_MOBILE1,   TU_MOBILE2,         TU_MOBILE3,
+		    TU_ZIP1,      TU_ZIP2,            TU_ADDR1,         TU_ADDR2,
+		    TU_HOMEPAGE,  TU_WEDDING_FLAG,    TU_WEDDING_Y,     TU_WEDDING_M,       TU_WEDDING_D,
+		    TU_HOBBY,     TU_RESUME,          TU_INTRODUCTION,  TU_MEMO,
+		    TU_FACE_NAME, TU_FACE_PATH,       TU_SIGN_NAME,     TU_SIGN_PATH
+		  )
+	  VALUES
+		  (
+		  	#{strWorkID}, 		#{strWork_User},
+		  	#{UM_Code}, 		#{UM_Name}, 			#{UM_ID}, 			#{UM_Pwd},
+		  	#{UM_Depart_Cd}, 	#{UM_Position_Bcode}, 	#{UM_Position}, 	#{UM_Level},
+		  	#{UM_Tel1}, 		#{UM_Tel2}, 			#{UM_Tel3}, 		#{UM_Inline},
+		  	#{UM_Hire_Y}, 		#{UM_Hire_M}, 			#{UM_Hire_D}, 		#{UM_Vacation_Cnt}, 	#{UM_Use_Flag},
+		  	#{UD_Genger}, 		#{UD_Birth_Y}, 			#{UD_Birth_M}, 		#{UD_Birth_D}, 			#{UD_Calender_Kind},
+		  	#{UD_Tel1}, 		#{UD_Tel2}, 			#{UD_Tel3},
+		  	#{UD_Mobile1}, 		#{UD_Mobile2}, 			#{UD_Mobile3},
+		  	#{UD_Zip1}, 		#{UD_Zip2}, 			#{UD_Addr1}, 		#{UD_Addr2},
+		  	#{UD_Homepage}, 	#{UD_Wedding_flag}, 	#{UD_Wedding_Y}, 	#{UD_Wedding_M}, 		#{UD_Wedding_D},
+		  	#{UD_Hobby}, 		#{UD_Resume}, 			#{UD_Introduction}, #{UD_Memo},
+		  	#{UI_Face_Name}, 	#{UI_Face_Path}, 		#{UI_Sign_Name}, 	#{UI_Sign_Path}
+		  )		
 	</insert>
 	
-	<update id="userModify" parameterType="com.kitri.fpgw.model.UserDto">
+	<insert id="userInsert" parameterType="com.kitri.fpgw.model.UserModifyDto" statementType="CALLABLE">
+		{
+			CALL PROC_USER_INSERT(#{strWork_ID, mode=IN, jdbcType=VARCHAR, javaType=String}, 
+									#{strWork_User, mode=IN, jdbcType=VARCHAR, javaType=String}, 
+									#{strReturn_Code, mode=OUT, jdbcType=VARCHAR, javaType=String})
+		}
+	</insert>
 	
+	<update id="userModify" parameterType="com.kitri.fpgw.model.ProcedureParameterKeyDto" statementType="CALLABLE">
+		{
+			CALL PROC_USER_UPDATE(#{strWork_ID}, #{strWork_User})
+		}
 	</update>
+	
 	
 	<delete id="userDelete" parameterType="String">
 		UPDATE USER_MAIN
 		SET
 			UM_USE_FLAG = 0
-		WHERE (UM_CODE = '${strCode}')	
+		WHERE (UM_CODE = #{strCode})	
 	</delete>
 	
+	<select id="userImageSelect" parameterType="String" resultType="com.kitri.fpgw.model.UserImageDto">
+		SELECT  UI_UM_CODE STRCODE,
+		        UI_FACE_NAME STRFACE_NAME,  UI_FACE_PATH STRFACE_PATH,
+		        UI_SIGN_NAME STRSIGN_NAME,  UI_SIGN_PATH STRSIGN_PATH
+		FROM    USER_IMAGE
+		WHERE   (UI_UM_CODE = #{strCode})	
+	</select>
 	
+	<update id="userImageModify" parameterType="com.kitri.fpgw.model.UserImageDto">
+		UPDATE USER_IMAGE
+		SET
+		    UI_FACE_NAME = #{strFace_Name},
+		    UI_FACE_PATH = #{strFace_Path},
+		    <!-- UI_SIGN_NAME = #{strSign_Name},
+		    UI_SIGN_PATH = #{strSign_Path}, -->
+		    UI_GET_USER = #{strGet_User_Cd},
+		    UI_GET_DATE = SYSDATE
+		WHERE (UI_UM_CODE = #{strCode})
+	</update>
 	
 	
 	

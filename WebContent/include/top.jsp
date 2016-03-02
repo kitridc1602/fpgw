@@ -20,7 +20,6 @@
       <link rel="stylesheet" type="text/css" href="${root }/css/plugins/simple-line-icons.css"/>
       <link rel="stylesheet" type="text/css" href="${root }/css/plugins/animate.min.css"/>
       <link rel="stylesheet" type="text/css" href="${root }/css/plugins/fullcalendar.min.css"/>
-      <link rel="stylesheet" type="text/css" href="${root }/css/plugins/summernote.min.css"/>
       
       <!-- plugins date-time-picker css -->
 	  <link rel="stylesheet" type="text/css" href="${root }/css/plugins/bootstrap-material-datetimepicker.css" />
@@ -99,7 +98,7 @@
 	              	</c:choose>
                    <ul class="dropdown-menu user-dropdown">
                      <c:if test="${sessionScope.success == 'ok' }">
-                   				<li><a href="${root }/user/privateselect.html"><span class="fa fa-user"></span> 내 정보 수정</a></li>
+                   				<li><a href="${root }/user/select.html?strCode=${sessionScope.userInfo.strCode }"><span class="fa fa-user"></span> 내 정보 수정</a></li>
                    				<li><a href="${root }/main/logout.html"><span class="fa fa-user"></span> 로그아웃</a></li>
                    			</c:if>
                      <!-- <li role="separator" class="divider"></li>

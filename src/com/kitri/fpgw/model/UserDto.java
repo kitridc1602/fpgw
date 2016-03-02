@@ -542,5 +542,8 @@ public class UserDto {
 		this.datEdit_Date = datEdit_Date;
 	}
 
-	
+	public int ParameterSize(){
+		
+		return 52;
+	}
 }
