@@ -2,76 +2,119 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Appr">
 
-	<select id="settlementnocnt" resultType="int">
-		<!-- 내가 결제할 문서인데 미결제인문서(무작위) 개수 -->
+	<select id="settlementnocnt" parameterType="String"  resultType="int">
+		<!-- 내가 결제할 문서인데 미결제인문서(앞사람이 결제한) 개수 -->
 		select count(*)
+		from appr_user au
+		inner join
+		( select au_am_no, au_am_seq, au_approve_group, au_seq
 		from appr_user
-		where (au_approve_user='00000')
-		and (au_approve_group='001')
-		and (au_approve_flag='002')
+		where au_approve_group = '001'
+		and au_approve_flag = '001'
+		) prev_au on (au.au_am_no = prev_au.au_am_no)
+		and (au.au_am_seq = prev_au.au_am_seq)
+		and (au.au_approve_group = prev_au.au_approve_group)
+		and (au.au_seq = (prev_au.au_seq + 1))
+		
+		where au.au_approve_user = #{code}
+		and au.au_approve_flag = '002'
 
 
 	</select>
 
-	<select id="settlementokcnt" resultType="int">
-		<!-- 내가 결제할 문서인데 결제인문서(무작위) 개수 -->
-		select count(*)
+	<select id="settlementokcnt" parameterType="String"  resultType="int">
+		<!-- 내가 결제할 문서인데 결제한문서 개수 -->
+		select count(distinct (au_am_no||au_am_seq))
 		from appr_user
-		where (au_approve_user='00000')
+		where (au_approve_user=#{code})
 		and (au_approve_group='001')
 		and (au_approve_flag='001')
 
 	</select>
 
-	<select id="settlementingcnt" resultType="int">
-		<!-- 상신문서중 반려가아닌 미결제인 문서(상신중) 개수 -->
-		select count(distinct au_am_seq)
+	<select id="settlementingcnt" parameterType="String"  resultType="int">
+		<!-- 상신문서중 미결제인 문서(상신중) 개수 -->
+		select count(distinct (au_am_no||au_am_seq))
 		from appr_user
-		where au_get_user='00000'
+		where au_get_user=#{code}
+		and au_approve_group='001'
 		and au_approve_flag='002'
+		and au_seq='4'
+
+
 	</select>
 
-	<select id="nosettlementcnt" resultType="int">
+	<select id="nosettlementcnt" parameterType="String" resultType="int">
 		<!-- 내가 결재올린 문서중 반려된 문서 개수 -->
-		select count(distinct au_am_seq)
+		select count(distinct (au_am_no||au_am_seq))
 		from APPR_USER
-		where au_get_user='00000'
+		where au_get_user=#{code}
+		and au_approve_group='001'
 		and au_approve_flag='003'
 
 
+
 	</select>
 
-	<select id="oksettlementcnt" resultType="int">
+	<select id="oksettlementcnt" parameterType="String" resultType="int">
 		<!-- 내가 결재 올린 문서중 결재 완료된 문서 개수 -->
-		select count(distinct au_am_seq)
+		select count(distinct (au_am_no||au_am_seq))
 		from APPR_USER
-		where au_get_user='00000'
+		where au_get_user=#{code}
+		and au_approve_group='001'
 		and au_approve_flag='001'
+		and au_seq=4
 	</select>
 
-	<select id="settlementnolistAll" resultType="com.kitri.fpgw.model.ApprDto">
-		<!-- 내가 미결제한 문서 리스트(메인) -->
-		select distinct am_docu_no strAm_Docu_No,
-		am_seq strAm_Seq ,
+	<select id="settlementnolistAll" parameterType="String" resultType="com.kitri.fpgw.model.ApprDto">
+		<!-- 내가 미결제한 문서 리스트(메인과 상세페이지) -->
+		select au.au_am_no strAm_Docu_No,
+		au.au_am_seq strAm_Seq,
 		am_draft_y strAm_Draft_Y,
 		am_draft_m strAm_Draft_M,
 		am_draft_d strAm_Draft_D,
 		dl_name strDl_Name,
-		am_title strAm_Title
-
-		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
+		am_title  strAm_Title,
+		um.um_name strAm_Draft_User,
+		cm_name strCm_Name
 		
-		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
-		where au_approve_user='00000'
-		and au_approve_flag='002'
+		
+		from appr_user au
+		inner join
+		( select au_am_no, au_am_seq, au_approve_group, au_seq
+		from appr_user
+		where au_approve_group = '001'
+		and au_approve_flag = '001'
+		) prev_au on (au.au_am_no = prev_au.au_am_no)
+		and (au.au_am_seq = prev_au.au_am_seq)
+		and (au.au_approve_group = prev_au.au_approve_group)
+		and (au.au_seq = (prev_au.au_seq + 1))
+		inner join appr_main am 
+		on am.am_seq=au.au_seq 
+		and am.am_docu_no=au.au_am_no 
+		inner join docu_list dl
+		on am.am_docu_no=dl.dl_docu_cd
+		inner join user_main um
+		on um.um_code=am.am_get_user
+		inner join code_manage cm 
+		on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		
+		where au.au_approve_user = #{code}
+		and au.au_approve_group='001'
+		and au.au_approve_flag = '002'
+		
 		order by strAm_Draft_Y desc,
 		strAm_Draft_M desc,
-		strAm_Draft_D desc,
-		strAm_Seq asc
+		strAm_Draft_D desc
+		
+		
+	
+
 
 	</select>
 
-	<select id="settlementinglistAll" resultType="com.kitri.fpgw.model.ApprDto">
+	<select id="settlementinglistAll" parameterType="String" resultType="com.kitri.fpgw.model.ApprDto">
 
 		<!-- 상신문서중 미결제된 문서리스트 -->
 		select distinct am_docu_no strAm_Docu_No,
@@ -83,143 +126,218 @@
 		am_title strAm_Title,
 		cm_name strCm_Name
 		
-		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
-		inner join code_manage cm on au.au_approve_flag_bcode=cm.cm_bcode and
-		au.au_approve_flag=cm.cm_scode
-		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
 
-		where au_get_user='00000'
+		from appr_main am inner join 
+		(select *
+		from appr_user
+		where
+		au_get_user=#{code}
+		and au_approve_group='001'
 		and au_approve_flag='002'
-
-		order by strAm_Draft_Y desc,
-		strAm_Draft_M desc,
-		strAm_Draft_D desc,
-		strAm_Seq asc
-
-
-	</select>
-
-
-	<select id="settlementnolistAll2" resultType="com.kitri.fpgw.model.ApprDto">
-
-		<!-- 내가 미결제한 문서리스트 상세페이지 -->
-		select distinct am_docu_no strAm_Docu_No,
-		am_seq strAm_Seq ,
-		am_draft_y strAm_Draft_Y,
-		am_draft_m strAm_Draft_M,
-		am_draft_d strAm_Draft_D,
-		dl_name strDl_Name,
-		am_title strAm_Title,
-		am_draft_user
-		strAm_Draft_User,
-		cm_name strCm_Name
+		and au_seq='4') 
+		au on am.am_seq=au.au_am_seq
+		and am.am_docu_no=au.au_am_no
+		inner join code_manage cm 
+		on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on
+		am.am_docu_no=dl.dl_docu_cd
 		
-		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
-		inner join code_manage cm on au.au_approve_flag_bcode=cm.cm_bcode and
-		au.au_approve_flag=cm.cm_scode
-		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
-
-		where au_approve_user='00000'
-		and au_approve_flag='002'
-
 		order by strAm_Draft_Y desc,
 		strAm_Draft_M desc,
-		strAm_Draft_D desc,
-		strAm_Seq asc
+		strAm_Draft_D desc
 
 
-	</select>
+		</select>
 
-	<select id="settlementoklistAll" resultType="com.kitri.fpgw.model.ApprDto">
+
+	
+
+	<select id="settlementoklistAll" parameterType="String" resultType="com.kitri.fpgw.model.ApprDto">
 		<!-- 내가 결재 완료한 상세페이지 리스트 -->
-			
+
 		select distinct am_docu_no strAm_Docu_No,
 		am_seq strAm_Seq ,
-		am_draft_y strAm_Draft_Y,
+		am_draft_y
+		strAm_Draft_Y,
 		am_draft_m strAm_Draft_M,
 		am_draft_d strAm_Draft_D,
 		dl_name strDl_Name,
 		am_title strAm_Title,
-		
 		cm_name strCm_Name
-		
-		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
-		inner join code_manage cm on au.au_approve_flag_bcode=cm.cm_bcode and
-		au.au_approve_flag=cm.cm_scode
-		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
 
-		where au_approve_user='00000'
+		from appr_main am 
+		inner join appr_user au 
+		on am.am_seq=au.au_am_seq
+		and am.am_docu_no=au.au_am_no
+		inner join code_manage cm 
+		on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on
+		am.am_docu_no=dl.dl_docu_cd
+
+		where au_approve_user=#{code}
 		and au_approve_flag='001'
+		and au_approve_group='001'
 
 		order by strAm_Draft_Y desc,
 		strAm_Draft_M desc,
-		strAm_Draft_D desc,
-		strAm_Seq asc
-	
+		strAm_Draft_D desc
+
+
 	</select>
-	
-	<select id="oksettlementlistAll" resultType="com.kitri.fpgw.model.ApprDto">
-	
-	select distinct am_docu_no strAm_Docu_No,
+
+	<select id="oksettlementlistAll" parameterType="String" resultType="com.kitri.fpgw.model.ApprDto">
+		<!-- 내가올린 문서중에 결재 완료된 문서 상세리스트 -->
+			select distinct am_docu_no strAm_Docu_No,
 		am_seq strAm_Seq ,
-		am_draft_y strAm_Draft_Y,
+		am_draft_y
+		strAm_Draft_Y,
 		am_draft_m strAm_Draft_M,
 		am_draft_d strAm_Draft_D,
 		dl_name strDl_Name,
 		am_title strAm_Title,
-		
 		cm_name strCm_Name
-		
-		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
-		inner join code_manage cm on au.au_approve_flag_bcode=cm.cm_bcode and
-		au.au_approve_flag=cm.cm_scode
-		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
 
-		where au_get_user='00000'
+		from appr_main am 
+		inner join appr_user au 
+		on am.am_seq=au.au_am_seq
+		and am.am_docu_no=au.au_am_no
+		inner join code_manage cm 
+		on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on
+		am.am_docu_no=dl.dl_docu_cd
+
+		where au_get_user=#{code}
 		and au_approve_flag='001'
+		and au_approve_group='001'
+		and au_seq=4
 
-		order by strAm_Draft_Y desc,
+		order by
+		strAm_Draft_Y desc,
 		strAm_Draft_M desc,
-		strAm_Draft_D desc,
-		strAm_Seq asc
-	
-	
-	
+		strAm_Draft_D desc
+		
+
+
 	</select>
-	
-	
-		<select id="nosettlementlistAll" resultType="com.kitri.fpgw.model.ApprDto">
-	
-	select distinct am_docu_no strAm_Docu_No,
+
+
+	<select id="nosettlementlistAll" parameterType="String" resultType="com.kitri.fpgw.model.ApprDto">
+		<!-- 내가 올린 문서중에 반려완료된 문서 리스트 -->
+		select distinct am_docu_no strAm_Docu_No,
 		am_seq strAm_Seq ,
-		am_draft_y strAm_Draft_Y,
+		am_draft_y
+		strAm_Draft_Y,
 		am_draft_m strAm_Draft_M,
 		am_draft_d strAm_Draft_D,
 		dl_name strDl_Name,
 		am_title strAm_Title,
-		
 		cm_name strCm_Name
-		
-		from appr_main am inner join appr_user au on am.am_seq=au.au_am_seq
-		inner join code_manage cm on au.au_approve_flag_bcode=cm.cm_bcode and
-		au.au_approve_flag=cm.cm_scode
-		inner join docu_list dl on am.am_docu_no=dl.dl_docu_cd
 
-		where au_get_user='00000'
+		from appr_main am 
+		inner join appr_user au 
+		on am.am_seq=au.au_am_seq
+		and au.au_am_no=am.am_docu_no
+		inner join code_manage cm 
+		on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on
+		am.am_docu_no=dl.dl_docu_cd
+
+		where au_get_user=#{code}
 		and au_approve_flag='003'
+		and au_approve_group='001'
 
 		order by strAm_Draft_Y desc,
 		strAm_Draft_M desc,
-		strAm_Draft_D desc,
-		strAm_Seq asc
-	
-	
-	
+		strAm_Draft_D desc
+
+
 	</select>
 
-	
+	<select id="cooperationoklistAll" parameterType="String" resultType="com.kitri.fpgw.model.ApprDto">
+		<!-- 나한테 온 협조문서 결제한 리스트 (협조는 반려없음) -->
+		select distinct am_docu_no strAm_Docu_No,
+		am_seq strAm_Seq ,
+		am_draft_y
+		strAm_Draft_Y,
+		am_draft_m strAm_Draft_M,
+		am_draft_d strAm_Draft_D,
+		dl_name strDl_Name,
+		am_title strAm_Title,
+		cm_name strCm_Name
+
+		from appr_main am 
+		inner join appr_user au 
+		on am.am_seq=au.au_am_seq
+		and am.am_docu_no=au.au_am_no
+		inner join code_manage cm 
+		on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on
+		am.am_docu_no=dl.dl_docu_cd
+
+		where au_approve_user=#{code}
+		and au_approve_flag='001'
+		and au_approve_group='002'
+
+		order by strAm_Draft_Y desc,
+		strAm_Draft_M desc,
+		strAm_Draft_D desc
 
 
+
+
+	</select>
+
+	<select id="cooperationnolistAll" parameterType="String" resultType="com.kitri.fpgw.model.ApprDto">
+		<!-- 나한테온 협조문서 미결제 리스트(협조는 반려없음) -->
+		select distinct am_docu_no strAm_Docu_No,
+		am_seq strAm_Seq ,
+		am_draft_y
+		strAm_Draft_Y,
+		am_draft_m strAm_Draft_M,
+		am_draft_d strAm_Draft_D,
+		dl_name strDl_Name,
+		am_title strAm_Title,
+		cm_name strCm_Name
+
+		from appr_main am 
+		inner join appr_user au 
+		on am.am_seq=au.au_am_seq
+		and am.am_docu_no=au.au_am_no
+		inner join code_manage cm 
+		on au.au_approve_flag_bcode=cm.cm_bcode and
+		au.au_approve_flag=cm.cm_scode
+		inner join docu_list dl on
+		am.am_docu_no=dl.dl_docu_cd
+
+		where au_approve_user=#{code}
+		and au_approve_flag='002'
+		and au_approve_group='002'
+
+		order by strAm_Draft_Y desc,
+		strAm_Draft_M desc,
+		strAm_Draft_D desc
+
+
+	</select>
+
+	<select id="insertgian" parameterType="String" resultType="com.kitri.fpgw.model.ApprDto">
+select um.um_name strAm_Draft_User,
+		dp.de_name strDe_Name
+from user_main um inner join depart dp
+on um.um_depart_cd=dp.de_dcode
+where um_code=#{code}
+
+</select>
+
+<select id="samplegian" parameterType="com.kitri.fpgw.model.ApprDto" resultType="com.kitri.fpgw.model.ApprDto">
+
+
+</select>
 
 
 

@@ -24,40 +24,36 @@
 	</div>
 	<div>
 		<!-- 실제 화면 구동부분 -->
+		
 		<table>
 			<tr>
-				<td colspan="2">
+				<td>
 					<p style="width: 239px">개인 문서함 ▶ 상신문서</p>
 				</td>
-				<td><select name="Select1">
-						<option>검색조건</option>
-						<option>기안자</option>
-						<option>문서번호</option>
-						<option>제목</option>
-						<option>문서종류</option>
-				</select> <input name="Text1" type="text" /> <input name="Button1"
-					type="button" value="검색" /></td>
-			</tr>
+		
 		</table>
-		<table border="2" style="width: 1006px">
-			<tr>
-				
-				<td style="width: 78px">문서번호</td>
-				<td style="width: 99px">기안날짜</td>
-				<td style="width: 108px">문서종류</td>
-				<td style="width: 291px">문서명</td>
-				<td style="width: 90px">상태</td>
+		<!-- <table border="2" style="width: 1006px"> -->
+		<table id="datatables-example" class="table table-striped table-bordered">
+			<thead>
+			<tr>				
+				<th style="width: 78px">기안날짜</th>
+				<th style="width: 99px">문서번호</th>
+				<th style="width: 108px">문서종류</th>
+				<th style="width: 291px">문서명</th>
+				<th style="width: 90px">상태</th>
 			</tr>
+			</thead>
+			<tbody>
 			<c:forEach var="cc" items="${list}">
-				<tr>
-					
-					<td style="width: 78px">>${cc.strAm_Docu_No}-${cc.strAm_Seq}</td>
-					<td style="width: 99px">${cc.strAm_Draft_Y}/${cc.strAm_Draft_M}/${cc.strAm_Draft_D}</td>
+				<tr>					
+					<td style="width: 78px">${cc.strAm_Draft_Y}/${cc.strAm_Draft_M}/${cc.strAm_Draft_D}</td>
+					<td style="width: 99px">${cc.strAm_Docu_No}-${cc.strAm_Seq}</td>
 					<td style="width: 108px">${cc.strDl_Name}</td>
 					<td style="width: 291px"><a href="#" onclick="a()">${cc.strAm_Title}</a></td>
 					<td style="width: 90px">${cc.strCm_Name}</td>
 				</tr>
 			</c:forEach>
+			</tbody>
 		</table>
 	</div>
 </div>

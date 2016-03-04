@@ -6,26 +6,32 @@ import com.kitri.fpgw.model.ApprDto;
 
 public interface ApprDao {
 
-	public int settlementnocnt();
-	
-	public int settlementokcnt();
-	
-	public int settlementingcnt();
-	
-	public int nosettlementcnt();
-	
-	public int oksettlementcnt();
-	
-	public ArrayList<ApprDto> settlementnolistAll() throws Exception;
+	public int settlementnocnt(String code);
 
-	public ArrayList<ApprDto> settlementinglistAll() throws Exception;
-	
-	public ArrayList<ApprDto> settlementnolistAll2() throws Exception;
+	public int settlementokcnt(String code);
 
-	public ArrayList<ApprDto> settlementoklistAll() throws Exception;
+	public int settlementingcnt(String code);
+
+	public int nosettlementcnt(String code);
+
+	public int oksettlementcnt(String code);
+
+	public ArrayList<ApprDto> settlementnolistAll(String code) throws Exception;
+
+	public ArrayList<ApprDto> settlementinglistAll(String code) throws Exception;
+
+	public ArrayList<ApprDto> settlementoklistAll(String code) throws Exception;
+
+	public ArrayList<ApprDto> oksettlementlistAll(String code) throws Exception;
+
+	public ArrayList<ApprDto> nosettlementlistAll(String code) throws Exception;
+
+	public ArrayList<ApprDto> cooperationoklistAll(String code) throws Exception;
+
+	public ArrayList<ApprDto> cooperationnolistAll(String code) throws Exception;
 	
-	public ArrayList<ApprDto> oksettlementlistAll() throws Exception;
+	public ArrayList<ApprDto> insertgian(String code) throws Exception;
+
+	public ArrayList<ApprDto> samplegian(ApprDto ApprDto) throws Exception;
 	
-	public ArrayList<ApprDto> nosettlementlistAll() throws Exception;
 }
-
