@@ -28,7 +28,7 @@
 
 	<bean id="uploadTemp" class="org.springframework.core.io.FileSystemResource">
 		<constructor-arg>
-			<value>D:/JavaData/workspace/finalproject/fpgwtest/WebContent/img/temp</value>
+			<value>D:/JavaData/workspace/finalproject/fpgw/WebContent/img/temp</value>
 		</constructor-arg>
 	</bean>
 	
