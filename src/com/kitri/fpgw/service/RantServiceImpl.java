@@ -1,12 +1,14 @@
 package com.kitri.fpgw.service;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kitri.fpgw.dao.RantDao;
+import com.kitri.fpgw.model.CodeManageDto;
 import com.kitri.fpgw.model.RantDetailDto;
 import com.kitri.fpgw.model.RantMainDto;
 
@@ -29,7 +31,7 @@ public class RantServiceImpl implements RantService {
 	}
 
 	@Override
-	public ArrayList<RantMainDto> CodeManageSelect() {
+	public ArrayList<RantMainDto> CodeManageSelect()  throws Exception{
 		// TODO Auto-generated method stub			
 		return RantDao.CodeManageSelect();
 	}
@@ -41,10 +43,50 @@ public class RantServiceImpl implements RantService {
 	}
 
 	@Override
-	public ArrayList<RantMainDto> selectTimeCheck(RantMainDto rantMainDto ) {
+	public ArrayList<RantMainDto> selectTimeCheck(RantMainDto rantMainDto )  throws Exception{
 		// TODO Auto-generated method stub
 		
 		return RantDao.selectTimeCheck(rantMainDto);
+	}
+
+	@Override
+	public ArrayList<RantMainDto> selectMyReserve(String strRMReqUser)  throws Exception{
+		// TODO Auto-generated method stub				
+		return RantDao.selectMyReserve(strRMReqUser);
+	}
+
+	@Override
+	public void approvalOk(RantDetailDto rantDetailDto)  throws Exception{
+		// TODO Auto-generated method stub
+		RantDao.approvalOk(rantDetailDto);
+	}
+
+	@Override
+	public void returnRequest(RantDetailDto rantDetailDto)  throws Exception{
+		// TODO Auto-generated method stub
+		RantDao.returnRequest(rantDetailDto);
+	}
+
+	@Override
+	public void returnProd(RantDetailDto rantDetailDto) throws Exception {
+		// TODO Auto-generated method stub
+		RantDao.returnProd(rantDetailDto);
+	}
+
+	@Override
+	public int modelCheck(String strName, String strBCode) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("strName", strName);
+		map.put("strBCode", strBCode);
+		
+		return RantDao.modelCheck(map);
+	}
+
+	@Override
+	public void regasset(CodeManageDto codeManageDto) {
+		// TODO Auto-generated method stub
+		RantDao.regasset(codeManageDto);
 	}
 
 }

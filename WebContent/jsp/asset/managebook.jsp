@@ -8,32 +8,45 @@
 <!-- start: content -->
 <div id="content">
 	<div class="panel">
-
 		<div class="panel-body">
 			<div class="col-md-6 col-sm-12">
-				<h3 class="animated fadeInLeft">DC16th Team No.2 GroupWare
-					Project</h3>
-			</div>
+				<h3 class="animated fadeInLeft">${sessionScope.coInfo[6].strName }</h3>
+				<p class="animated fadeInDown">
+					<span class="fa  fa-map-marker"></span> 자산관리>>도서관리
+				</p>
 
-			<div class="col-md-6 col-sm-12 text-right">
-				<h5 id="addr" style="color: #DDDDDE;">
-					<span class="fa  fa-map-marker"></span>
-				</h5>
+
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<div class="col-md-6 col-sm-6 text-right"
+					style="padding-left: 10px;">
+					<h5 id="addr" style="color: #DDDDDE;">
+						<span class="fa  fa-map-marker"></span>
+					</h5>
+					<h1 style="margin-top: -10px; color: #ddd;"></h1>
+				</div>
+				<div class="col-md-6 col-sm-6">
+					<div class="wheather">
+						<div class="sun animated pulse infinite">
+							<div class="suny"></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
+	</div>
 
+	<div class="panel-heading bg-white border-none"
+		style="margin-bottom: 20px;">
+		<h4>
+			<span class="icon-book-open icons"></span> 도서관리
+		</h4>
 	</div>
 	<div>
-		<!-- 실제 화면 구동부분 -->
-		<div class="col-md-12 top-20 padding-0">
+		<!-- start : 메뉴 디자인 구성하는 위치 -->
+		<div class="col-md-12">
 			<div class="col-md-12">
-				<div class="panel">
-					<div class="panel-heading">
-						<h3 class="animated fadeInLeft">도서관리</h3>
-						<p class="animated fadeInDown">
-							자산관리 <span class="fa-angle-right fa"></span> 도서관리
-						</p>
-					</div>
+				<div class="panel-heading bg-white border-none">
 					<div class="panel-body">
 						<div class="responsive-table">
 							<table id="datatables-example"
@@ -51,10 +64,11 @@
 										<th>등록자</th>
 									</tr>
 								</thead>
-								<tbody>									
+								<tbody>
 									<c:forEach var="comList" items="${list}">
-										
-										<c:if test="${comList.strBCode eq 750 && comList.intUse_Flag eq 1}">
+
+										<c:if
+											test="${comList.strBCode eq 750 && comList.intUse_Flag eq 1}">
 											<tr>
 												<td>${comList.intSort}</td>
 												<td>${comList.datGet_Date}</td>
@@ -65,9 +79,9 @@
 												<td>${comList.strValue3}</td>
 												<td>${comList.strGet_User_Cd}</td>
 											</tr>
-										</c:if>										
-										
-									</c:forEach>									
+										</c:if>
+
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -75,7 +89,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- 실제 화면 구동부분 끝 -->
+		<!-- end : 메뉴 디자인 구성하는 위치 -->
 	</div>
 </div>
 <!-- end: content -->

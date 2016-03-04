@@ -357,7 +357,7 @@ function timecheck(data, bcode){
 	<div class="panel-heading bg-white border-none"
 		style="margin-bottom: 20px;">
 		<h4>
-			<span class="icon-notebook icons"></span> 예약하기
+			<span class="icon-clock icons"></span> 예약하기
 		</h4>
 	</div>
 

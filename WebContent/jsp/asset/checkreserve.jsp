@@ -4,6 +4,34 @@
 <c:set var="root" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html lang="en">
+<script type="text/javascript">
+function approvalOk(date, sttime, edtime, prod){
+	var str = '${root}/asset/approvalok.html?';
+	var urlarr = ['strRDYmd=','&strRDStartTime=','&strRDEndTime=','&strRDRantProd='];
+	var paramarr = [date,sttime,edtime,prod];
+	
+	for(i=0;i<urlarr.length;i++){
+		str += urlarr[i]+paramarr[i];
+	}
+	
+	location.href = str;
+}
+
+function returnRequest(date, sttime, edtime, prod){
+	var str = '${root}/asset/returnrequest.html?';
+	var urlarr = ['strRDYmd=','&strRDStartTime=','&strRDEndTime=','&strRDRantProd='];
+	var paramarr = [date,sttime,edtime,prod];
+	
+	for(i=0;i<urlarr.length;i++){
+		str += urlarr[i]+paramarr[i];
+	}
+	
+	location.href = str;
+}
+
+</script>
+
+
 <!-- start: content -->
 <div id="content">
 	<div class="panel">
@@ -58,7 +86,7 @@
 									<th>예약품목</th>
 									<th>신청자</th>
 									<th>진행상황</th>
-									<th>상세내용확인</th>
+									<th>요청확인</th>
 								</tr>
 							</thead>
 							<tbody>									
@@ -71,15 +99,11 @@
 											<td><a href="#" data-toggle="tooltip" data-placement="right" title="${checkList.strRMReqMemo}">${checkList.strCMName}</a></td>
 											<td>${checkList.strRMReqUserNM}&nbsp;${checkList.strUMPositionNM}</td>
 											<td>${checkList.strCMNameRK}</td>
-											<td>
-												
-				                          			<span><input type="submit" class="btn btn-3d" value="승인"/></span>
-				                          			<span><input type="reset" class="btn btn-3d" value="반려"/></span>
-				                          			<span><input type="reset" class="btn btn-3d" value="상세"/></span>
-			                          			
+											<td>											
+				                          		<span><input type="button" class="btn btn-3d" value="승인" onclick="approvalOk('${checkList.strRMYmd}','${checkList.strRMStartTime}','${checkList.strRMEndTime}','${checkList.strRMRantProd}')"/></span>
+				                          		<span><input type="button" class="btn btn-3d" value="반납요청" onclick="returnRequest('${checkList.strRMYmd}','${checkList.strRMStartTime}','${checkList.strRMEndTime}','${checkList.strRMRantProd}')"/></span>				                          			                          			
 											</td>
-										</tr>
-																	
+										</tr>																	
 								</c:forEach>									
 							</tbody>
 						</table>

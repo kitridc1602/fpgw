@@ -4,6 +4,19 @@
 <c:set var="root" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html lang="en">
+<script type="text/javascript">
+function returnProd(date, sttime, edtime, prod){
+	var str = '${root}/asset/returnprod.html?';
+	var urlarr = ['strRDYmd=','&strRDStartTime=','&strRDEndTime=','&strRDRantProd='];
+	var paramarr = [date,sttime,edtime,prod];
+	
+	for(i=0;i<urlarr.length;i++){
+		str += urlarr[i]+paramarr[i];
+	}
+	
+	location.href = str;
+}
+</script>
 <!-- start: content -->
 <div id="content">
 	<div class="panel">
@@ -11,7 +24,7 @@
 			<div class="col-md-6 col-sm-12">
 				<h3 class="animated fadeInLeft">${sessionScope.coInfo[6].strName }</h3>
 				<p class="animated fadeInDown">
-					<span class="fa  fa-map-marker"></span> 자산관리>>예약신청확인
+					<span class="fa  fa-map-marker"></span> 자산관리>>내 예약확인
 				</p>
 
 
@@ -38,7 +51,7 @@
 	<div class="panel-heading bg-white border-none"
 		style="margin-bottom: 20px;">
 		<h4>
-			<span class="icon-notebook icons"></span> 예약신청확인
+			<span class="icon-calendar icons"></span> 내 예약확인
 		</h4>
 	</div>
 
@@ -58,17 +71,24 @@
 									<th>예약품목</th>
 									<th>담당자</th>
 									<th>진행상황</th>
-									
+									<th>요청확인</th>
 								</tr>
 							</thead>
 							<tbody>									
-									<td>${sessionScope.userInfo.strName}</td>
-									<td>예약날짜</td>
-									<td>시작시간</td>
-									<td>종료시간</td>
-									<td>예약품목</td>
-									<td>담당자</td>
-									<td>진행상황</td>						
+								<c:forEach var="myList" items="${list}" varStatus="status">
+									<tr>
+										<td>${status.count}</td>
+										<td>${myList.strRMYmd}</td>
+										<td>${myList.strRMStartTime}:00</td>
+										<td>${myList.strRMEndTime}:00</td>
+										<td>${myList.strCMName}</td>
+										<td>${myList.strUMApprName}</td>
+										<td>${myList.strCMNameRK }</td>
+										<td>
+											<span><input type="button" class="btn btn-3d" value="반납하기" onclick="returnProd('${myList.strRMYmd}','${myList.strRMStartTime}','${myList.strRMEndTime}','${myList.strRMRantProd}')"/></span>
+										</td>
+									</tr>
+								</c:forEach>					
 							</tbody>
 						</table>
 					</div>

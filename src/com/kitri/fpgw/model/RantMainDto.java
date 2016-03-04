@@ -30,6 +30,8 @@ public class RantMainDto {
 	private String strStartValue;
 	private String strEndValue;
 	
+	private String strUMApprName;
+	
 	
 	public RantMainDto() {
 		
@@ -94,6 +96,38 @@ public class RantMainDto {
 		this.strRMReqMemo = strRMReqMemo;
 		this.strRMMemo = strRMMemo;
 	}
+	
+	public RantMainDto(String strRMYmd, String strRMGetUser, Date datRMGetDate, String strRMEditUser,
+			Date datRMEditDate, String strRMStartTime, String strRMEndTime, String strRMRantProd, String strRMRantBcode,
+			String strRMReqUserCD, String strRMApproUser, String strRMReqMemo, String strRMMemo, String strCMName,
+			String strUMPositionCD, String strUMPositionNM, String strRMReqUserNM, String strCMNameRK,
+			RantDetailDto rantDetailDto, String strStartValue, String strEndValue, String strUMApprName) {
+
+		this.strRMYmd = strRMYmd;
+		this.strRMGetUser = strRMGetUser;
+		this.datRMGetDate = datRMGetDate;
+		this.strRMEditUser = strRMEditUser;
+		this.datRMEditDate = datRMEditDate;
+		this.strRMStartTime = strRMStartTime;
+		this.strRMEndTime = strRMEndTime;
+		this.strRMRantProd = strRMRantProd;
+		this.strRMRantBcode = strRMRantBcode;
+		this.strRMReqUserCD = strRMReqUserCD;
+		this.strRMApproUser = strRMApproUser;
+		this.strRMReqMemo = strRMReqMemo;
+		this.strRMMemo = strRMMemo;
+		this.strCMName = strCMName;
+		this.strUMPositionCD = strUMPositionCD;
+		this.strUMPositionNM = strUMPositionNM;
+		this.strRMReqUserNM = strRMReqUserNM;
+		this.strCMNameRK = strCMNameRK;
+		this.rantDetailDto = rantDetailDto;
+		this.strStartValue = strStartValue;
+		this.strEndValue = strEndValue;
+		this.strUMApprName = strUMApprName;
+	}
+
+
 
 	public String getStrRMYmd() {
 		return strRMYmd;
@@ -268,4 +302,18 @@ public class RantMainDto {
 	public void setStrEndValue(String strEndValue) {
 		this.strEndValue = strEndValue;
 	}
+
+
+
+	public String getStrUMApprName() {
+		return strUMApprName;
+	}
+
+
+
+	public void setStrUMApprName(String strUMApprName) {
+		this.strUMApprName = strUMApprName;
+	}
+	
+	
 }

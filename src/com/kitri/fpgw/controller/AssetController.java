@@ -1,9 +1,6 @@
 package com.kitri.fpgw.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -96,7 +93,7 @@ public class AssetController {
 	}
 	
 	@RequestMapping(value="/checkreserve.html")
-	public ModelAndView checkReserve(){
+	public ModelAndView checkReserve() throws Exception{
 		
 		ArrayList<RantMainDto> list = RantService.CodeManageSelect();
 		
@@ -125,7 +122,7 @@ public class AssetController {
 	}
 	
 	@RequestMapping(value="/timecheck.html")
-	public @ResponseBody String selectReserveTime(@RequestParam("strRMYmd")String strRMYmd, @RequestParam("strRMRantBcode")String strRMRantBcode, @RequestParam("strRMRantProd")String strRMRantProd){
+	public @ResponseBody String selectReserveTime(@RequestParam("strRMYmd")String strRMYmd, @RequestParam("strRMRantBcode")String strRMRantBcode, @RequestParam("strRMRantProd")String strRMRantProd) throws Exception{
 		
 		RantMainDto rantMainDto = new RantMainDto();
 		rantMainDto.setStrRMYmd(strRMYmd);		
@@ -158,11 +155,81 @@ public class AssetController {
 	@RequestMapping(value="/detailasset.html")
 	public ModelAndView selectMyReserve(HttpSession session) throws Exception{
 				
-		
-	
+		UserMainDto userInfo = (UserMainDto) session.getAttribute("userInfo");
+		String strRMReqUser = userInfo.getStrCode();		
+		ArrayList<RantMainDto> list = RantService.selectMyReserve(strRMReqUser);
+				
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
 		mav.setViewName("jsp/asset/detailasset");
 		return mav;
+	}
+	
+	@RequestMapping(value="/approvalok.html")
+	public ModelAndView approvalOk(String strRDYmd, String strRDStartTime, String strRDEndTime, String strRDRantProd) throws Exception{
+					
+		RantDetailDto rantDetailDto = new RantDetailDto();
+		rantDetailDto.setStrRDYmd(strRDYmd);
+		rantDetailDto.setStrRDStartTime(strRDStartTime);
+		rantDetailDto.setStrRDEndTime(strRDEndTime);
+		rantDetailDto.setStrRDRantProd(strRDRantProd);
+		
+		RantService.approvalOk(rantDetailDto);
+		
+		return checkReserve();
+	}
+	
+	@RequestMapping(value="/returnrequest.html")
+	public ModelAndView returnRequest(String strRDYmd, String strRDStartTime, String strRDEndTime, String strRDRantProd) throws Exception{
+		
+		RantDetailDto rantDetailDto = new RantDetailDto();
+		rantDetailDto.setStrRDYmd(strRDYmd);
+		rantDetailDto.setStrRDStartTime(strRDStartTime);
+		rantDetailDto.setStrRDEndTime(strRDEndTime);
+		rantDetailDto.setStrRDRantProd(strRDRantProd);
+		
+		RantService.returnRequest(rantDetailDto);
+		
+		return checkReserve();
+	}
+	
+	@RequestMapping(value="/returnprod.html")
+	public ModelAndView returnProd(String strRDYmd, String strRDStartTime, String strRDEndTime, String strRDRantProd, HttpSession session) throws Exception{
+		
+		RantDetailDto rantDetailDto = new RantDetailDto();
+		rantDetailDto.setStrRDYmd(strRDYmd);
+		rantDetailDto.setStrRDStartTime(strRDStartTime);
+		rantDetailDto.setStrRDEndTime(strRDEndTime);
+		rantDetailDto.setStrRDRantProd(strRDRantProd);
+		
+		RantService.returnProd(rantDetailDto);
+		
+		return selectMyReserve(session);
+	}
+	
+	@RequestMapping(value="/addasset.html", method=RequestMethod.GET)
+	public String addasset(){
+		
+		return "jsp/asset/addasset";
+		
+	}
+	
+	@RequestMapping(value="/addasset.html", method=RequestMethod.POST)
+	public String regasset(CodeManageDto codeManageDto){		
+		
+		RantService.regasset(codeManageDto);
+
+		return addasset();
+		
+	}
+	
+	@RequestMapping(value="/modelcheck.html")
+	public @ResponseBody String modelCheck(@RequestParam("strName")String strName, @RequestParam("strBCode")String strBCode){
+		int cnt = RantService.modelCheck(strName, strBCode);
+		JSONObject json = new JSONObject();
+		json.put("modelCnt", cnt);
+		
+		return json.toJSONString();		
 	}
 }
 

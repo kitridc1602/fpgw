@@ -11,7 +11,7 @@
 
 		SELECT 	RM_YMD STRRMYMD, 
 				RM_START_TIME STRRMSTARTTIME, RM_END_TIME STRRMENDTIME, 
-				CM.CM_NAME STRCMNAME, 
+				CM.CM_NAME STRCMNAME, 			RM_RANT_PROD STRRMRANTPROD,
 				RM_REQUEST_USER STRRMREQUSERCD, UM.UM_NAME STRRMREQUSERNM, 
 				UM.UM_POSITION STRUMPOSITIONCD, CM_PO.CM_NAME STRUMPOSITIONNM,
 				RD.RD_RANT_KIND_BCODE STRRDRKBCODE, RD.RD_RANT_KIND STRRDRK,
@@ -40,14 +40,47 @@
 			   RM_END_TIME STRRMENDTIME,	CM_ST.CM_VALUE1 STRSTARTVALUE,
 			   CM_ED.CM_VALUE1 STRENDVALUE
 		FROM CODE_MANAGE CM_ST
-			   JOIN RANT_MAIN RM ON CM_ST.CM_NAME = RM.RM_START_TIME
-			   JOIN CODE_MANAGE CM_ED ON CM_ED.CM_NAME = RM.RM_END_TIME
+			   LEFT OUTER JOIN RANT_MAIN RM ON CM_ST.CM_NAME = RM.RM_START_TIME
+			   LEFT OUTER JOIN CODE_MANAGE CM_ED ON CM_ED.CM_NAME = RM.RM_END_TIME
 			   WHERE (RM.RM_YMD = #{strRMYmd}) 
 			   AND (RM.RM_RANT_BCODE = #{strRMRantBcode}) 
 			   AND (RM.RM_RANT_PROD = #{strRMRantProd})
 	
 	</select>
 	
+	<select id="modelCheck" parameterType="java.util.Map" resultType="int">
+	
+		SELECT COUNT(CM_NAME) FROM CODE_MANAGE
+		WHERE CM_NAME = #{strName} AND CM_BCODE = #{strBCode}
+	
+	</select>
+	
+	<select id="selectMyReserve" parameterType="String" resultType="com.kitri.fpgw.model.RantMainDto">
+		SELECT 	RM_YMD STRRMYMD, 
+				RM_START_TIME STRRMSTARTTIME, RM_END_TIME STRRMENDTIME, 
+				CM.CM_NAME STRCMNAME, 			RM_RANT_PROD STRRMRANTPROD,
+				RM_REQUEST_USER STRRMREQUSERCD, UM.UM_NAME STRRMREQUSERNM, 
+				UM.UM_POSITION STRUMPOSITIONCD, CM_PO.CM_NAME STRUMPOSITIONNM,
+				RD.RD_RANT_KIND_BCODE STRRDRKBCODE, RD.RD_RANT_KIND STRRDRK,
+				CM_KI.CM_NAME STRCMNAMERK, RM.RM_REQUEST_MEMO STRRMREQMEMO,
+				RM_APPROVAL_USER STRRMAPPROUSER, UM_AP.UM_NAME STRUMAPPRNAME
+				
+		FROM 	RANT_MAIN RM
+				LEFT OUTER JOIN CODE_MANAGE CM 		ON 	RM.RM_RANT_BCODE = CM.CM_BCODE
+													AND RM.RM_RANT_PROD = CM.CM_SCODE
+				LEFT OUTER JOIN USER_MAIN UM 		ON 	RM.RM_REQUEST_USER = UM.UM_CODE
+				LEFT OUTER JOIN CODE_MANAGE CM_PO 	ON 	(UM.UM_POSITION_BCODE = CM_PO.CM_BCODE)
+													AND (UM.UM_POSITION = CM_PO.CM_SCODE)
+				LEFT OUTER JOIN RANT_DETAIL RD		ON  RM.RM_YMD = RD.RD_RM_YMD
+													AND RM.RM_START_TIME = RD.RD_RM_START_TIME
+													AND RM.RM_END_TIME = RD.RD_RM_END_TIME
+													AND RM.RM_RANT_PROD = RD.RD_RM_RANT_PROD
+				LEFT OUTER JOIN CODE_MANAGE CM_KI   ON  RD.RD_RANT_KIND_BCODE = CM_KI.CM_BCODE
+													AND RD.RD_RANT_KIND = CM_KI.CM_SCODE
+				LEFT OUTER JOIN USER_MAIN UM_AP		ON	RM.RM_APPROVAL_USER = UM_AP.UM_CODE		
+		WHERE RM_REQUEST_USER = #{strRMRequser}
+	
+	</select>	
 	
 	<insert id="insertReserve" parameterType="com.kitri.fpgw.model.RantMainDto">
 	
@@ -87,4 +120,64 @@
 		)
 	
 	</insert>
+	
+	<insert id="insertCodeManage" parameterType="com.kitri.fpgw.model.CodeManageDto">
+	
+		INSERT INTO CODE_MANAGE(
+									CM_BCODE,			CM_SCODE,
+									CM_BNAME,			CM_NAME,
+									CM_VALUE1,			CM_VALUE2,
+									CM_VALUE3,			CM_VALUE4,
+									CM_SORT,			CM_USE_FLAG						
+								)
+		VALUES(
+				#{strBCode},
+				(SELECT SUBSTR('000' || TO_CHAR(NVL(MAX(CM_SCODE), 0) + 1), -3) 
+				FROM CODE_MANAGE WHERE CM_BCODE = #{strBCode}),
+				#{strBName},			#{strName},
+				#{strValue1},			#{strValue2},
+				#{strValue3},			#{strValue4},
+				(SELECT DECODE(MAX(CM_SORT), NULL, 1, MAX(CM_SORT)+1) 
+				FROM CODE_MANAGE WHERE CM_BCODE = #{strBCode}),
+				#{intUse_Flag}
+		)
+	
+	</insert>
+	
+	<update id="approvalOk" parameterType="com.kitri.fpgw.model.RantDetailDto">
+		
+		UPDATE RANT_DETAIL SET
+		RD_RANT_KIND_BCODE = '760',
+		RD_RANT_KIND = '002'
+		WHERE RD_RM_YMD = #{strRDYmd}
+		AND RD_RM_START_TIME = #{strRDStartTime}
+		AND RD_RM_END_TIME = #{strRDEndTime}
+		AND RD_RM_RANT_PROD = #{strRDRantProd}
+		
+	</update>
+	
+	<update id="returnRequest" parameterType="com.kitri.fpgw.model.RantDetailDto">
+	
+		UPDATE RANT_DETAIL SET
+		RD_RANT_KIND_BCODE = '760',
+		RD_RANT_KIND = '003'
+		WHERE RD_RM_YMD = #{strRDYmd}
+		AND RD_RM_START_TIME = #{strRDStartTime}
+		AND RD_RM_END_TIME = #{strRDEndTime}
+		AND RD_RM_RANT_PROD = #{strRDRantProd}
+	
+	</update>
+	
+	<update id="returnProd" parameterType="com.kitri.fpgw.model.RantDetailDto">
+	
+		UPDATE RANT_DETAIL SET
+		RD_RANT_KIND_BCODE = '760',
+		RD_RANT_KIND = '004'
+		WHERE RD_RM_YMD = #{strRDYmd}
+		AND RD_RM_START_TIME = #{strRDStartTime}
+		AND RD_RM_END_TIME = #{strRDEndTime}
+		AND RD_RM_RANT_PROD = #{strRDRantProd}
+	
+	</update>
+	
 </mapper>
