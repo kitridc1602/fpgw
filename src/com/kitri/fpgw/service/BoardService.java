@@ -14,11 +14,11 @@ public interface BoardService {
 	//기본게시판목록
 	public ArrayList<BoardMainDto> getSelectBasicList(BoardMainDto boardMainDto) throws Exception;	
 	//글쓰기
-	public int addArticle(BoardMainDto boardMainDto) throws Exception;
+	public void addArticle(BoardMainDto boardMainDto) throws Exception;
 	//첨부파일 추가
 	public void addFile(BoardMainDto boardMainDto) throws Exception;
 	//글수정
-	public void modifyArticle(BoardMainDto boardMainDto) throws Exception;
+	public void modifyArticle(BoardMainDto boardMainDto) throws Exception;	
 	//글 삭제
 	public void deleteArticle(int intSeq) throws Exception;
 	//조회수 증가

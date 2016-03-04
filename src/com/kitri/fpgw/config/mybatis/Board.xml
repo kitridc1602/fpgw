@@ -4,7 +4,57 @@
 
 	<select id="SelectBoardList" parameterType="com.kitri.fpgw.model.BoardMainDto" resultType="com.kitri.fpgw.model.BoardMainDto" >
 		
-		SELECT	ROWNUM INTNUM, BM_SEQ,
+		SELECT  
+				ROWNUM						INTNUM, 						
+											RN, 
+				BM.BM_SEQ 					INTSEQ, 
+				BM.BM_PSEQ 					INTPSEQ, 
+				BM.BM_GET_USER 				STRWRITERCODE,
+				UM.UM_NAME  				STRNAME,
+				BM.BM_GET_DATE 				DATGET_DATE,
+				BM.BM_EDIT_DATE				DATEDIT_DATE,
+				NVL(CNT.BV_CNT, 0) 			INTHIT,
+				BM.BM_DETAIL_COMMENT		STRDETAILCOMMENT,
+		
+			CASE 
+		
+  				WHEN 	BM_TITLE IS NULL 		THEN 	'KIND'
+  				ELSE 	BM_TITLE
+			END 							STRTITLE		
+														  
+		
+		FROM
+			(
+				SELECT 		ROWNUM RN, 
+							R.*
+				FROM   
+							(
+							SELECT 		*
+							FROM  	 	BOARD_MAIN
+							ORDER BY 	BM_SEQ DESC
+							) R
+							
+				START WITH 				BM_PSEQ = 0
+				CONNECT BY PRIOR 		BM_SEQ = BM_PSEQ
+			) BM
+	
+			LEFT OUTER JOIN USER_MAIN UM	ON (BM.BM_GET_USER = UM.UM_CODE)
+			LEFT OUTER JOIN BOARD_VIEW BV	ON (BM.BM_SEQ = BV.BV_BM_SEQ)
+			LEFT OUTER JOIN
+						(
+							SELECT 		BV_BM_SEQ, COUNT(*) BV_CNT
+							FROM 		BOARD_VIEW
+							GROUP BY 	BV_BM_SEQ
+						) CNT 	  			ON (BM.BM_SEQ = CNT.BV_BM_SEQ)	
+	
+	
+		WHERE			BM.BM_GROUP_BCODE = '400'
+ 				AND		BM.BM_GROUP = '001'
+ 				AND 	BM.BM_KIND_BCODE = '401'
+ 				AND 	BM.BM_KIND = '002'
+				
+		<!-- 
+		SELECT	ROWNUM INTNUM, BM_SEQ INTSEQ,
 				BM_TITLE STRTITLE, 
 	  		  	UM.UM_NAME STRNAME, 
 	   		  	BM_GET_DATE DATGET_DATE,
@@ -18,12 +68,101 @@
 									FROM 		BOARD_VIEW
 									GROUP BY 	BV_BM_SEQ
 								) 
-												CNT ON (BM.BM_SEQ = CNT.BV_BM_SEQ)
- 		WHERE			BM.BM_GROUP = '001'
- 				AND 	BM.BM_KIND_BCODE='401'
- 				AND 	BM.BM_KIND='004'
+											CNT 	ON (BM.BM_SEQ = CNT.BV_BM_SEQ)
+
+ 		WHERE			BM.BM_GROUP_BCODE = '400'
+ 				AND		BM.BM_GROUP = '001'
+ 				AND 	BM.BM_KIND_BCODE = '401'
+ 				AND 	BM.BM_KIND = '002' -->
  				 				
-<!--  		WHERE			BM.BM_GROUP = #{strGroup}
+<!--  		WHERE		BM.BM_GROUP = #{strGroup}
  				AND 	BM.BM_KIND = #{strKind} ; 	 -->							
 	</select>
+	
+	<select id="SelectDetailView" parameterType="Integer" resultType="com.kitri.fpgw.model.BoardMainDto">
+		
+		SELECT  ROWNUM INTNUM,
+				BM_SEQ INTSEQ, 
+				BM_GET_USER STRWRITERCODE,
+				UM.UM_NAME STRNAME,
+				BM_TITLE STRTITLE,
+				BM_GET_DATE DATGET_DATE,
+				NVL(CNT.BV_CNT, 0) INTHIT,
+				BM_DETAIL_COMMENT STRDETAILCOMMENT
+				
+		FROM 	BOARD_MAIN BM
+				LEFT OUTER JOIN USER_MAIN UM 	ON(BM.BM_GET_USER = UM.UM_CODE)		
+				LEFT OUTER JOIN BOARD_VIEW BV	ON (BM.BM_SEQ = BV.BV_BM_SEQ)
+				LEFT OUTER JOIN
+								(
+									SELECT 		BV_BM_SEQ, COUNT(*) BV_CNT
+									FROM 		BOARD_VIEW
+									GROUP BY 	BV_BM_SEQ
+								) 
+										CNT 	ON (BM.BM_SEQ = CNT.BV_BM_SEQ)
+												
+		WHERE BM_SEQ = #{intSeq }
+		
+	</select>
+	
+	<select id="SelectCommentView" parameterType="Integer" resultType="com.kitri.fpgw.model.BoardCommentDto" >
+		
+		SELECT  BM_SEQ INTSEQ,
+				BM_GET_USER STRCOMMENTERCODE,
+				UM.UM_NAME STRNAME,
+				UM.UM_ID STRID,
+				BM_GET_DATE  DATCOMMENT_DATE,
+				BM_DETAIL_COMMENT STRCOMMENT
+		FROM 	BOARD_MAIN BM
+				LEFT OUTER JOIN USER_MAIN UM	ON (BM.BM_GET_USER = UM.UM_GET_USER)		
+
+		WHERE 			BM.BM_GROUP_BCODE = '400'
+				AND 	BM.BM_GROUP = '003'
+				AND 	BM.BM_KIND_BCODE = '401'
+				AND 	BM.BM_KIND = '001'
+				AND 	BM.BM_PSEQ = '1'
+				AND 	BM_SEQ = #{intSeq}
+
+		ORDER BY DATCOMMENT_DATE		
+	</select>
+	
+	<insert id="ArticleInsert" parameterType="com.kitri.fpgw.model.BoardMainDto" >
+		INSERT INTO BOARD_MAIN
+			SELECT 
+ 					MAX(BM_SEQ)+1,		0,
+					#{strGroupCode},	#{strGroup},
+ 					#{strKindCode},		#{strKind},
+ 					#{strTitle},		#{strDetailComment},
+ 					#{strWriterCode},	SYSDATE,
+ 					#{strWriterCode},	SYSDATE
+			FROM 	
+					BOARD_MAIN
+			
+			<!-- WHERE	
+							BM_GROUP_BCODE = '400'
+ 					AND		BM_GROUP = '001'
+ 					AND 	BM_KIND_BCODE = '401'
+ 					AND 	BM_KIND = '002'	 -->
+	</insert>
+	
+	<update id="ArticleUpdate" parameterType="com.kitri.fpgw.model.BoardMainDto" >
+		UPDATE 		BOARD_MAIN
+		
+		SET			BM_TITLE = #{strTitle},
+					BM_DETAIL_COMMENT = #{strDetailComment},
+					BM_EDIT_DATE = SYSDATE 
+
+		WHERE 		BM_SEQ = #{intSeq}   
+	</update>
+	
+	<delete id="ArticleDelete" parameterType="Integer">
+		
+		DELETE FROM BOARD_MAIN
+		
+		WHERE BM_SEQ= #{intSeq}	
+		
+	</delete>
+	<insert id="">
+		
+	</insert>		
 </mapper>

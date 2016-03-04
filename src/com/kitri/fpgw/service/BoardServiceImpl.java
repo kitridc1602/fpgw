@@ -15,33 +15,53 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardDao boardDao;
 	
+	//기본게시판리스트목록
 	@Override
 	public ArrayList<BoardMainDto> getSelectBasicList(BoardMainDto boardMainDto) throws Exception {
 		
 		return boardDao.SelectBoardList(boardMainDto);
 	}
 
+	//글쓰기
 	@Override
-	public int addArticle(BoardMainDto boardMainDto) throws Exception {
+	public void addArticle(BoardMainDto boardMainDto) throws Exception {
 
-		return 0;
+		boardDao.ArticleInsert(boardMainDto);
 	}
 
+	//첨부파일 추가
 	@Override
 	public void addFile(BoardMainDto boardMainDto) throws Exception {
-		
+		boardDao.InsertAttachFile(boardMainDto);
 		
 	}
 
+	//게시글 상세보기
+	@Override
+	public BoardMainDto getArticle(int intSeq) throws Exception {
+		
+		return boardDao.SelectDetailView(intSeq);
+	}
+	
+	//댓글리스트
+	@Override
+	public ArrayList<BoardCommentDto> getCommentList(int intSeq) throws Exception {
+		
+		return boardDao.SelectCommentView(intSeq);
+	}
+
+	//게시글 수정 하기
 	@Override
 	public void modifyArticle(BoardMainDto boardMainDto) throws Exception {
-	
 		
+		boardDao.ArticleModify(boardMainDto);		
 	}
 
+	//게시글 삭제하기
 	@Override
 	public void deleteArticle(int intSeq) throws Exception {
-	
+		
+		boardDao.ArticleDelete(intSeq);
 		
 	}
 
@@ -49,12 +69,6 @@ public class BoardServiceImpl implements BoardService {
 	public void increaseHit(int intSeq) throws Exception {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public BoardMainDto getArticle(int intSeq) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -105,11 +119,7 @@ public class BoardServiceImpl implements BoardService {
 		
 	}
 
-	@Override
-	public ArrayList<BoardCommentDto> getCommentList(int intSeq) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
 }

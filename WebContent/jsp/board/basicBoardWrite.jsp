@@ -3,8 +3,30 @@
 <c:set var="root" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="stylesheet" type="text/css" href="asset/css/plugins/summernote.css"/>
-  <link rel="stylesheet"hidden-sm type="text/css" href="asset/css/plugins/animate.min.css"/>
+ 
+<!-- <script type="text/javascript">
+function notehtml() {
+	
+	$(function() {
+		 	 
+	    $('#btnSave').on('click', function(){
+	    	
+	    	var strTitle = document.getElementById('title').value;
+	    	var strComment = $('#summernote').eq(0).summernote('code');
+	    	var strWriter = ${sessionScope.userInfo.strCode};
+	    	
+	    	var sForm = document.getElementById('write');
+	    	sForm.attr('strTitle', strTitle);
+	    	sForm.attr('strComment', strComment);
+	    	sForm.attr('strWriter', strWriter);
+	    	sForm.submit();	    		    	
+	    });
+	});
+	
+}
+
+</script>
+ -->
 
           <!-- start: content -->
             <div id="content">
@@ -32,43 +54,59 @@
                   </div>                    
                 </div>
                 
-                <div class="panel-heading bg-white border-none" style="margin-bottom: 20px;">
+                <div class="panel-heading bg-white border-none" style="margin-bottom: 10px;">
                    	<h4><span class="icon-notebook icons"></span> 글쓰기</h4>
                 </div>
 
 					<!-- start : 메뉴 디자인 구성하는 위치 -->
-				<div class="panel-body" style="padding-bottom:30px;">	
-					<div class="col-md-12">
-                    	<div class="form-group form-animate-text" style="margin-top:40px !important;">
-                          <input type="text" class="form-text" required>
-                          <span class="bar"></span>
-                          <label>제목 </label>
-                        </div>
-                    </div>	
-                </div> 
-                <hr>
-                <div id="content">
-           <div class="panel box-shadow-none content-header">
-                  <div class="panel-body">
-                    <div class="col-md-12">
-                        <h3 class="animated fadeInLeft">Text Editor</h3>
-                        <p class="animated fadeInDown">
-                          Ui Element <span class="fa-angle-right fa"></span>Text Editor
-                        </p>
-                    </div>
-                  </div>
-              </div>
-          <div class="col-md-12">
-              <div class="panel">
-                  <div class="panel-body">
-                    <div id="summernote">Hello Summernote</div>
-                  </div>
-              </div>
-          </div>
-        </div>   
-
+			<div style="background-color: white">	
+				<form action="${root }/board/basicBoardWrite.html" id="write" method="post">
+						<div class="col-md-1" >
+						</div>
+						
+						<div class="col-md-10">							
+		                     <div class="form-group form-animate-text" style="margin-top:10px !important;">
+		                     	 <input type="text" id="strTitle" name="strTitle" class="form-text" required>
+		                       		 <span class="bar"></span>
+		                       		 <label>제목 </label>
+		                       		 
+		                       		<!--  히든값들 입력!! -->
+		                       		 <input type="hidden" id="strWriterCode"  name="strWriterCode" value="${sessionScope.userInfo.strCode }">
+		                     		 <input type="hidden" id="strGroupCode" name="strGroupCode" value="400">
+		                     		 <input type="hidden" id="strGroup" name="strGroup" value="001">
+		                     		 <input type="hidden" id="strKindCode" name="strKindCode" value="401">
+		                     		 <input type="hidden" id="strKind" name="strKind" value="002">
+		                                                
+		                     </div>
+		                </div>	
+		                
+		                <div class="col-md-1" >
+						</div>
+		                 
+		            <div class="col-md-1" >
+					</div>
+		          	
+		          	<div class="col-md-10">
+		            	<div class="panel">
+		                	<div class="panel-body">
+		                    	<textarea id="strDetailComment" name="strDetailComment" rows="20" cols="" class="form-control" placeholder="내용을 작성하시오...">${strDetailComment }</textarea>
+		                  	</div>
+		              	</div>
+		            </div>
+		              
+		            <div class="col-md-1" >
+					</div>
+					
+	          		<div class="col-md-12" style="padding-top: 10px;">
+						<span > 
+							<input type="button" class="btn btn-3d" value="취소" /> 
+							<input type="submit" id="btnSave" class="btn btn-3d" value="저장"/>
+						</span>
+					</div>
+				</form>
 					<!-- end : 메뉴 디자인 구성하는 위치 -->
 					
            </div>
+          </div> 
           <!-- end: content -->
 </html>
