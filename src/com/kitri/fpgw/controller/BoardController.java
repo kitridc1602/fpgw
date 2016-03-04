@@ -21,6 +21,8 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
+	
+	//게시글 리스트
 	@RequestMapping(value="basicboardList.html")
 	public ModelAndView basicboardList(String strGroup, String strKind ,String workkind, String subworkkind) throws Exception{
 		
@@ -63,23 +65,17 @@ public class BoardController {
 		
 	}
 		
-	
+	//글쓰기 버튼 누르면~~
+		@RequestMapping(value="/writego.html")
+		public String writeGo(){
+
+			return "jsp/board/basicBoardWrite"; 
+		}
+		
+	//게시판 일반글쓰기
 	@RequestMapping(value="basicBoardWrite.html", method=RequestMethod.POST)
-	public ModelAndView insert(String strTitle, String strDetailComment, 
-		String strWriterCode,String strGroupCode, String strGroup,
-		String strKindCode, String strKind) throws Exception {
-		
-		
-		
-		BoardMainDto boardMainDto = new BoardMainDto();
-		boardMainDto.setStrDetailComment(strDetailComment);
-		boardMainDto.setStrTitle(strTitle);
-		boardMainDto.setStrWriterCode(strWriterCode);
-		boardMainDto.setStrGroupCode(strGroupCode);
-		boardMainDto.setStrGroup(strGroup);
-		boardMainDto.setStrKindCode(strKindCode);
-		boardMainDto.setStrKind(strKind);
-		
+	public ModelAndView insert(BoardMainDto boardMainDto) throws Exception {
+				
 		boardService.addArticle(boardMainDto);
 		
 		ModelAndView mav= new ModelAndView();
@@ -92,12 +88,23 @@ public class BoardController {
 		
 	}
 	
-	//글쓰기 
-	@RequestMapping(value="/writego.html")
-	public String writeGo(){
-
-		return "jsp/board/basicBoardWrite"; 
+	//답글쓰기 버튼 누르면~~	
+	@RequestMapping (value="/rewritego.html")
+	public String reWriteGo(@RequestParam(value="num") int intSeq ) throws Exception{
+		
+		return "jsp/board/basicBoardWrite";
 	}
+	
+	//답글쓰기
+	@RequestMapping(value="/rewrite.html")
+	public ModelAndView replyInsert(BoardMainDto boardMainDto) throws Exception {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		return mav;
+	}
+	
+	
 	
 	//글 수정컨트롤
 			@RequestMapping(value="/modifygo.html")
@@ -106,8 +113,7 @@ public class BoardController {
 				ModelAndView mav =new ModelAndView();
 				
 				BoardMainDto boardMainDto = boardService.getArticle(intSeq);		
-				mav.addObject("read", boardMainDto);
-				
+				mav.addObject("read", boardMainDto);				
 				mav.setViewName("jsp/board/basicboardModify");
 				
 				return mav; 

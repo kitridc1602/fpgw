@@ -55,7 +55,7 @@
 				</div>
 			
             	<div class="col-md-12">
-            		<div class="col-md-9">${read.strTitle } </div>
+            		<div class="col-md-9">제목 : ${read.strTitle } </div>
             		<div class="col-md-3">${read.datGet_Date } </div>
             	</div>
 				
@@ -103,7 +103,8 @@
 	                      	<input type="button" class="btn btn-3d" value="수정" onclick="location.href='${root }/board/modifygo.html?workkind=001&subworkkind=001&num=${read.intSeq }'"  />
 	                      	<input type="button" class="btn btn-3d" value="삭제" onclick="location.href='${root }/board/delete.html?num=${read.intSeq }'"/>
                       	 </c:if>
-                   
+                      	 
+                   		<input type="button" class="btn btn-3d" value="답글쓰기" onclick="location.href='${root }/board/rewritego.html?num=${read.intSeq }'">
                       	<input type="button" class="btn btn-3d" value="글쓰기" onclick="location.href='${root }/board/writego.html'">
                       	<input type="button" class="btn btn-3d" value="목록보기" onclick="location.href='${root }/board/basicboardList.html'">
 					  </span>
