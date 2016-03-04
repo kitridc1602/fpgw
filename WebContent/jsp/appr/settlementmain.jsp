@@ -1,8 +1,11 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath }" />
+
 <!DOCTYPE html>
+
 <html lang="en">
 <!-- start: content -->
 <div id="content">
@@ -24,7 +27,8 @@
 	</div>
 	<div>
 		<!-- 실제 화면 구동부분 -->
-		<p>전자결제 메인</p>
+		<p>${sessionScope.userInfo.strName }님의 전자결제 메인</p>
+	
 		
 			<table border="1">
 				<tr>
@@ -79,7 +83,7 @@
 						<p style="width: 216px">결제할 문서함 ▶ 미결제문서</p>
 					</td>
 					<td><input name="Button1" type="button" value="더보기"
-						onclick="parent.location.href='settlementno.jsp'" /></td>
+						onclick="parent.location.href='${root}/appr/settlementno.html'" /></td>
 				</tr>
 			</table>
 			<table border="1">
@@ -112,7 +116,7 @@
 						<p style="width: 216px">개인문서함 ▶ 상신문서</p>
 					</td>
 					<td><input name="Button1" type="button" value="더보기"
-						onclick="parent.location.href='settlementing.jsp'" /></td>
+						onclick="parent.location.href='${root}/appr/settlementing.html'" /></td>
 				</tr>
 			</table>
 			<table border="2" style="width: 1115px">
@@ -159,6 +163,7 @@
 
 
 			</table>
+			
 	</div>
 </div>
 <!-- end: content -->

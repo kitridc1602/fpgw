@@ -16,83 +16,104 @@ public class ApprDaoImpl implements ApprDao {
 	private SqlSessionTemplate SqlSessionTemplate;
 	
 	@Override
-	public int settlementnocnt() {
+	public int settlementnocnt(String code) {
 		// TODO Auto-generated method stub
-		return SqlSessionTemplate.selectOne("settlementnocnt");
+		return SqlSessionTemplate.selectOne("settlementnocnt",code);
 	}
 
 	@Override
-	public int settlementingcnt() {
+	public int settlementingcnt(String code) {
 		// TODO Auto-generated method stub
-		return SqlSessionTemplate.selectOne("settlementingcnt");
+		return SqlSessionTemplate.selectOne("settlementingcnt",code);
 	}
 
 	@Override
-	public int nosettlementcnt() {
+	public int nosettlementcnt(String code) {
 		// TODO Auto-generated method stub
-		return SqlSessionTemplate.selectOne("nosettlementcnt");
+		return SqlSessionTemplate.selectOne("nosettlementcnt",code);
 	}
 
 	@Override
-	public int oksettlementcnt() {
+	public int oksettlementcnt(String code) {
 		// TODO Auto-generated method stub
-		return SqlSessionTemplate.selectOne("oksettlementcnt");
+		return SqlSessionTemplate.selectOne("oksettlementcnt",code);
 	}
 
 	@Override
-	public int settlementokcnt() {
+	public int settlementokcnt(String code) {
 		// TODO Auto-generated method stub
-		return SqlSessionTemplate.selectOne("settlementokcnt");
+		return SqlSessionTemplate.selectOne("settlementokcnt",code);
 	}
 
 	@Override
-	public ArrayList<ApprDto> settlementnolistAll() throws Exception {
+	public ArrayList<ApprDto> settlementnolistAll(String code) throws Exception {
 		// TODO Auto-generated method stub
-		List<ApprDto> list=SqlSessionTemplate.selectList("settlementnolistAll");
+		List<ApprDto> list=SqlSessionTemplate.selectList("settlementnolistAll",code);
 		
 		return (ArrayList<ApprDto>) list;
 	}
 
 	@Override
-	public ArrayList<ApprDto> settlementinglistAll() throws Exception {
+	public ArrayList<ApprDto> settlementinglistAll(String code) throws Exception {
 		
-		List<ApprDto> list=SqlSessionTemplate.selectList("settlementinglistAll");
+		List<ApprDto> list=SqlSessionTemplate.selectList("settlementinglistAll",code);
 		
 		return (ArrayList<ApprDto>) list;
 	}
 
+
+
 	@Override
-	public ArrayList<ApprDto> settlementnolistAll2() throws Exception {
+	public ArrayList<ApprDto> settlementoklistAll(String code) throws Exception {
 		// TODO Auto-generated method stub
-		List<ApprDto> list=SqlSessionTemplate.selectList("settlementnolistAll2");
+		List<ApprDto> list=SqlSessionTemplate.selectList("settlementoklistAll",code);
 		
 		return (ArrayList<ApprDto>) list;
 	}
 
 	@Override
-	public ArrayList<ApprDto> settlementoklistAll() throws Exception {
+	public ArrayList<ApprDto> oksettlementlistAll(String code) throws Exception {
+		List<ApprDto> list=SqlSessionTemplate.selectList("oksettlementlistAll",code);
+		
+		return (ArrayList<ApprDto>) list;
+	}
+
+	@Override
+	public ArrayList<ApprDto> nosettlementlistAll(String code) throws Exception {
 		// TODO Auto-generated method stub
-		List<ApprDto> list=SqlSessionTemplate.selectList("settlementoklistAll");
+		List<ApprDto> list=SqlSessionTemplate.selectList("nosettlementlistAll",code);
 		
 		return (ArrayList<ApprDto>) list;
 	}
 
 	@Override
-	public ArrayList<ApprDto> oksettlementlistAll() throws Exception {
-		List<ApprDto> list=SqlSessionTemplate.selectList("oksettlementlistAll");
-		
-		return (ArrayList<ApprDto>) list;
-	}
-
-	@Override
-	public ArrayList<ApprDto> nosettlementlistAll() throws Exception {
+	public ArrayList<ApprDto> cooperationoklistAll(String code) throws Exception {
 		// TODO Auto-generated method stub
-		List<ApprDto> list=SqlSessionTemplate.selectList("nosettlementlistAll");
+		List<ApprDto> list=SqlSessionTemplate.selectList("cooperationoklistAll",code);
+		
+		return (ArrayList<ApprDto>) list;
+	}
+
+	@Override
+	public ArrayList<ApprDto> cooperationnolistAll(String code) throws Exception {
+		// TODO Auto-generated method stub
+		List<ApprDto> list=SqlSessionTemplate.selectList("cooperationnolistAll",code);
+		
+		return (ArrayList<ApprDto>) list;
+	}
+
+	@Override
+	public ArrayList<ApprDto> insertgian(String code) throws Exception {
+		// TODO Auto-generated method stub
+		List<ApprDto> list=SqlSessionTemplate.selectList("insertgian",code);
 		
 		return (ArrayList<ApprDto>) list;
 	}
 	
 	
-	
+	public ArrayList<ApprDto> samplegian(ApprDto ApprDto) throws Exception{
+		List<ApprDto> list=SqlSessionTemplate.selectList("samplegian",ApprDto);
+		return (ArrayList<ApprDto>) list;
+	}
 
 }

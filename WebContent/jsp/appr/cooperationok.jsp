@@ -23,7 +23,7 @@
                 	     	<table>
 	<tr>
 		<td>
-		<p style="width: 239px">개인 문서함 ▶ 결제완료문서</p>
+		<p style="width: 239px">협조 결재완료 문서함</p>
 		</td>
 		
 	</tr>
