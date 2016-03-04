@@ -7,7 +7,7 @@
 		SELECT  
 				ROWNUM						INTNUM, 						
 											RN, 
-				BM.BM_SEQ 					INTSEQ, 
+				BM.BM_SEQ					INTSEQ, 
 				BM.BM_PSEQ 					INTPSEQ, 
 				BM.BM_GET_USER 				STRWRITERCODE,
 				UM.UM_NAME  				STRNAME,
@@ -129,7 +129,7 @@
 	<insert id="ArticleInsert" parameterType="com.kitri.fpgw.model.BoardMainDto" >
 		INSERT INTO BOARD_MAIN
 			SELECT 
- 					MAX(BM_SEQ)+1,		0,
+ 					NVL(MAX(BM_SEQ), 0) + 1, 	0,
 					#{strGroupCode},	#{strGroup},
  					#{strKindCode},		#{strKind},
  					#{strTitle},		#{strDetailComment},
