@@ -42,10 +42,10 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
 		if(sqlSessionTemplate.insert("ScheduleTempInsert", scheduleModifyDto) > 0){
 			
-			/*ProcedureParameterKeyDto procedureParameterKeyDto = new ProcedureParameterKeyDto(
+			ProcedureParameterKeyDto procedureParameterKeyDto = new ProcedureParameterKeyDto(
 																	scheduleModifyDto.getStrWorkID(),
 																	scheduleModifyDto.getStrWork_User());
-			sqlSessionTemplate.update("ScheduleModify", procedureParameterKeyDto);*/
+			sqlSessionTemplate.update("ScheduleModify", procedureParameterKeyDto);
 		}
 	}
 

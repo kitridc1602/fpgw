@@ -120,7 +120,9 @@
 	</insert>
 	
 	<update id="ScheduleModify" parameterType="com.kitri.fpgw.model.ProcedureParameterKeyDto" statementType="CALLABLE">
-	
+		{
+			CALL PROC_SCHEDULE_UPDATE(#{strWork_ID}, #{strWork_User})
+		}
 	</update>
 	
 	<delete id="ScheduleDelete" parameterType="com.kitri.fpgw.model.ScheduleDto">
