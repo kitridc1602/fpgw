@@ -24,7 +24,7 @@ public class BoardController {
 	private BoardService boardService;
 
 	
-	//게시글 리스트
+	//寃뚯떆湲� 由ъ뒪�듃
 	@RequestMapping(value="basicboardList.html")
 	public ModelAndView basicboardList(String strGroup, String strKind ,String workkind, String subworkkind) throws Exception{
 		
@@ -36,26 +36,26 @@ public class BoardController {
 				
 		ArrayList<BoardMainDto> list = boardService.getSelectBasicList(boardMainDto);
 		
-		//메인리스트
+		//硫붿씤由ъ뒪�듃
 		mav.addObject("list", list);
 		
-		//상단 카테고리루트 자동변경    그룹 카인트 코드로 나중에 바꾸기
+		//�긽�떒 移댄뀒怨좊━猷⑦듃 �옄�룞蹂�寃�    洹몃９ 移댁씤�듃 肄붾뱶濡� �굹以묒뿉 諛붽씀湲�
 		if("001".equals(workkind)){
-			mav.addObject("workKind", "게시판 >> 공지사항");
+			mav.addObject("workKind", "寃뚯떆�뙋 >> 怨듭��궗�빆");
 		} else if("002".equals(workkind)) {
-			mav.addObject("workKind", "게시판 >> 부서별게시판");	
+			mav.addObject("workKind", "寃뚯떆�뙋 >> 遺��꽌蹂꾧쾶�떆�뙋");	
 		} else if("003".equals(workkind)) {
-			mav.addObject("workKind", "게시판 >> 자유게시판");	
+			mav.addObject("workKind", "寃뚯떆�뙋 >> �옄�쑀寃뚯떆�뙋");	
 		} else if("004".equals(workkind)) {
-			mav.addObject("workKind", "게시판 >> KITRI STORY");	
+			mav.addObject("workKind", "寃뚯떆�뙋 >> KITRI STORY");	
 		}
-		//중간부분자동변경
+		//以묎컙遺�遺꾩옄�룞蹂�寃�
 		if("001".equals(subworkkind)){
-			mav.addObject("subworkkind","공지사항");
+			mav.addObject("subworkkind","怨듭��궗�빆");
 		}else if("002".equals(subworkkind)){
-			mav.addObject("subworkkind","부서별게시판");
+			mav.addObject("subworkkind","遺��꽌蹂꾧쾶�떆�뙋");
 		}else if("003".equals(subworkkind)){
-			mav.addObject("subworkkind","자유게시판");
+			mav.addObject("subworkkind","�옄�쑀寃뚯떆�뙋");
 		}else if("004".equals(subworkkind)){
 			mav.addObject("subworkkind","KITRI STORY");
 		}
@@ -67,14 +67,14 @@ public class BoardController {
 		
 	}
 		
-	//글쓰기 버튼 누르면~~
+	//湲��벐湲� 踰꾪듉 �늻瑜대㈃~~
 		@RequestMapping(value="/writego.html")
 		public String writeGo(){
 
 			return "jsp/board/basicBoardWrite"; 
 		}
 		
-	//게시판 일반글쓰기
+	//寃뚯떆�뙋 �씪諛섍��벐湲�
 	@RequestMapping(value="basicBoardWrite.html", method=RequestMethod.POST)
 	public ModelAndView insert(BoardMainDto boardMainDto) throws Exception {
 				
@@ -90,7 +90,7 @@ public class BoardController {
 		
 	}
 	
-	//답글버튼 클릭시 이동~~	
+	//�떟湲�踰꾪듉 �겢由��떆 �씠�룞~~	
 	@RequestMapping (value="/rewritego.html")
 	public ModelAndView reWriteGo(@RequestParam(value="num") int intSeq ) throws Exception{
 		
@@ -102,7 +102,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	//답글쓰기
+	//�떟湲��벐湲�
 	@RequestMapping(value="/rewrite.html")
 	public ModelAndView replyInsert(BoardMainDto boardMainDto) throws Exception {
 		
@@ -116,11 +116,11 @@ public class BoardController {
 		return mav;
 	}
 	
-	//댓글입력
+	//�뙎湲��엯�젰
 	@RequestMapping(value="/addComment.html")
 	public @ResponseBody String addComment(BoardMainDto boardMainDto) throws Exception{
 		
-		//입력
+		//�엯�젰
 		
 		boardService.addComment(boardMainDto);
 		
@@ -130,7 +130,7 @@ public class BoardController {
 		return json.toJSONString();
 	}
 	
-	//댓글 삭제하기
+	//�뙎湲� �궘�젣�븯湲�
 			@RequestMapping(value="/deletecomment.html")
 			public ModelAndView deleteComment(@RequestParam(value="num") int intSeq, BoardMainDto boardMainDto) throws Exception{
 				boardService.deleteArticle(intSeq);
@@ -147,7 +147,7 @@ public class BoardController {
 			}
 	
 	
-	//글 수정컨트롤
+	//湲� �닔�젙而⑦듃濡�
 			@RequestMapping(value="/modifygo.html")
 			public ModelAndView modifyGo(@RequestParam(value="num") int intSeq )throws Exception{
 				
@@ -160,7 +160,7 @@ public class BoardController {
 				return mav; 
 			}
 	
-	//글 수정 하기
+	//湲� �닔�젙 �븯湲�
 	@RequestMapping(value="/modify.html")
 	public ModelAndView update(BoardMainDto boardMainDto)throws Exception{
 		
@@ -181,7 +181,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	//글 삭제하기
+	//湲� �궘�젣�븯湲�
 	@RequestMapping(value="/delete.html")
 	public ModelAndView deleteGo(@RequestParam(value="num") int intSeq) throws Exception{
 		boardService.deleteArticle(intSeq);
@@ -199,7 +199,7 @@ public class BoardController {
 		 
 	}
 	
-	//글 상세보기 플러스 댓글리스트,
+	//湲� �긽�꽭蹂닿린 �뵆�윭�뒪 �뙎湲�由ъ뒪�듃,
 	@RequestMapping(value="/read.html")
 	public ModelAndView detailView(@RequestParam(value="num") int intSeq)throws Exception{
 		
