@@ -44,11 +44,11 @@ public class BoardDaoImpl implements BoardDao {
 	
 	//댓글 리스트
 	@Override
-	public ArrayList<BoardCommentDto> SelectCommentView(int intSeq) throws Exception {
+	public ArrayList<BoardMainDto> SelectCommentView(int intSeq) throws Exception {
 
-		List<BoardCommentDto> commentList = SqlSessionTemplate.selectList("SelectCommentView", intSeq);	
+		List<BoardMainDto> commentList = SqlSessionTemplate.selectList("SelectCommentView", intSeq);	
 		
-		return (ArrayList<BoardCommentDto>) commentList;
+		return (ArrayList<BoardMainDto>) commentList;
 	}
 	
 	//게시글 수정하기
@@ -65,6 +65,20 @@ public class BoardDaoImpl implements BoardDao {
 		SqlSessionTemplate.delete("ArticleDelete", intSeq);
 			
 		}
+	
+	//답글 쓰기
+	@Override
+	public void InsertReply(BoardMainDto boardMainDto) throws Exception {
+		SqlSessionTemplate.insert("InsertReply", boardMainDto);
+	}
+	
+	//댓글 쓰기
+	@Override
+	public void CommentInsert(BoardMainDto boardMainDto) throws Exception {
+
+		SqlSessionTemplate.insert("InsertComment", boardMainDto);
+		
+	}
 
 	@Override
 	public ArrayList<BoardMainDto> SelectSearchList() throws Exception {
@@ -81,11 +95,7 @@ public class BoardDaoImpl implements BoardDao {
 		
 	}
 
-	@Override
-	public void CommentInsert(BoardCommentDto boardCommentDto) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	
 
@@ -102,6 +112,7 @@ public class BoardDaoImpl implements BoardDao {
 		
 	}
 
+	
 	
 	
 

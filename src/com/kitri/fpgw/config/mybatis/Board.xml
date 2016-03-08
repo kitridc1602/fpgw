@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Board">
 
+
+<!-- 게시판 기본 리스트 -->
 	<select id="SelectBoardList" parameterType="com.kitri.fpgw.model.BoardMainDto" resultType="com.kitri.fpgw.model.BoardMainDto" >
 		
 		SELECT  
@@ -15,14 +17,17 @@
 				BM.BM_EDIT_DATE				DATEDIT_DATE,
 				NVL(CNT.BV_CNT, 0) 			INTHIT,
 				BM.BM_DETAIL_COMMENT		STRDETAILCOMMENT,
-		
+				DAT.CNT  					INTCOMMENTCOUNT,
+
 			CASE 
 		
-  				WHEN 	BM_TITLE IS NULL 		THEN 	'KIND'
-  				ELSE 	BM_TITLE
-			END 							STRTITLE		
-														  
-		
+  				WHEN 	 BM.BM_TITLE IS NULL 		AND  DAT.CNT > 0		THEN 	BMP.BM_TITLE || '  ' || '[' || DAT.CNT ||']'
+				WHEN	 BM.BM_TITLE IS NOT NULL  	AND	 DAT.CNT > 0		THEN	BM.BM_TITLE || '  ' || '[' || DAT.CNT || ']'
+				WHEN 	 BM.BM_TITLE IS NULL 		AND  DAT.CNT = 0		THEN 	BMP.BM_TITLE 
+				WHEN	 BM.BM_TITLE IS NOT NULL  	AND	 DAT.CNT = 0		THEN	BM.BM_TITLE
+  				ELSE 	 BM.BM_TITLE
+			END 							STRTITLE	
+				
 		FROM
 			(
 				SELECT 		ROWNUM RN, 
@@ -40,12 +45,22 @@
 	
 			LEFT OUTER JOIN USER_MAIN UM	ON (BM.BM_GET_USER = UM.UM_CODE)
 			LEFT OUTER JOIN BOARD_VIEW BV	ON (BM.BM_SEQ = BV.BV_BM_SEQ)
+			LEFT OUTER JOIN BOARD_MAIN BMP  ON (BM.BM_PSEQ = BMP.BM_SEQ)
 			LEFT OUTER JOIN
 						(
 							SELECT 		BV_BM_SEQ, COUNT(*) BV_CNT
 							FROM 		BOARD_VIEW
 							GROUP BY 	BV_BM_SEQ
 						) CNT 	  			ON (BM.BM_SEQ = CNT.BV_BM_SEQ)	
+			LEFT OUTER JOIN
+						(
+							SELECT 		BM_PSEQ 	PSEQ, 
+										COUNT(BM_SEQ) 	CNT
+ 							FROM 		BOARD_MAIN
+ 							WHERE 		BM_PSEQ > 0
+ 							AND 		BM_GROUP = '003'
+ 							GROUP BY 	BM_PSEQ
+ 		) 								DAT 	ON 	(BM.BM_SEQ = DAT.PSEQ)			
 	
 	
 		WHERE			BM.BM_GROUP_BCODE = '400'
@@ -79,6 +94,8 @@
  				AND 	BM.BM_KIND = #{strKind} ; 	 -->							
 	</select>
 	
+	
+<!-- 게시판 상세 글보기	 -->
 	<select id="SelectDetailView" parameterType="Integer" resultType="com.kitri.fpgw.model.BoardMainDto">
 		
 		SELECT  ROWNUM INTNUM,
@@ -104,28 +121,31 @@
 		WHERE BM_SEQ = #{intSeq }
 		
 	</select>
-	
-	<select id="SelectCommentView" parameterType="Integer" resultType="com.kitri.fpgw.model.BoardCommentDto" >
+
+<!-- 게시판 내부 코멘트보기 -->	
+	<select id="SelectCommentView" parameterType="Integer" resultType="com.kitri.fpgw.model.BoardMainDto" >
 		
-		SELECT  BM_SEQ INTSEQ,
-				BM_GET_USER STRCOMMENTERCODE,
-				UM.UM_NAME STRNAME,
-				UM.UM_ID STRID,
-				BM_GET_DATE  DATCOMMENT_DATE,
-				BM_DETAIL_COMMENT STRCOMMENT
+		SELECT  BM.BM_SEQ 				INTSEQ,
+				BM.BM_GET_USER 			STRCOMMENTERCODE,
+				UM.UM_NAME 				STRNAME,
+				UM.UM_ID 				STRID,
+				BM.BM_GET_DATE  		DATCOMMENT_DATE,
+				BM.BM_DETAIL_COMMENT 	STRCOMMENT
+				
 		FROM 	BOARD_MAIN BM
-				LEFT OUTER JOIN USER_MAIN UM	ON (BM.BM_GET_USER = UM.UM_GET_USER)		
+				LEFT OUTER JOIN USER_MAIN UM	ON (BM.BM_GET_USER = UM.UM_CODE)
+				LEFT OUTER JOIN BOARD_MAIN BMP  ON (BM.BM_PSEQ = BMP.BM_SEQ)		
 
 		WHERE 			BM.BM_GROUP_BCODE = '400'
 				AND 	BM.BM_GROUP = '003'
 				AND 	BM.BM_KIND_BCODE = '401'
-				AND 	BM.BM_KIND = '001'
-				AND 	BM.BM_PSEQ = '1'
+				AND 	BM.BM_KIND = '002'
 				AND 	BM_SEQ = #{intSeq}
 
 		ORDER BY DATCOMMENT_DATE		
 	</select>
 	
+<!-- 메인 게시글 쓰기 -->
 	<insert id="ArticleInsert" parameterType="com.kitri.fpgw.model.BoardMainDto" >
 		INSERT INTO BOARD_MAIN
 			SELECT 
@@ -135,6 +155,44 @@
  					#{strTitle},		#{strDetailComment},
  					#{strWriterCode},	SYSDATE,
  					#{strWriterCode},	SYSDATE
+			FROM 	
+					BOARD_MAIN
+			
+			<!-- WHERE	
+							BM_GROUP_BCODE = '400'
+ 					AND		BM_GROUP = '001'
+ 					AND 	BM_KIND_BCODE = '401'
+ 					AND 	BM_KIND = '002'	 -->
+	</insert>
+
+
+<!-- 댓글 쓰기 -->	
+	<insert id="InsertComment" parameterType="com.kitri.fpgw.model.BoardMainDto">
+		
+		INSERT INTO BOARD_MAIN
+			SELECT 
+ 					NVL(MAX(BM_SEQ), 0) + 1, 	#{intSeq},
+					#{strGroupCode},			#{strGroup},
+ 					#{strKindCode},				#{strKind},
+ 					null	,					#{strDetailComment},
+ 					#{strWriterCode},			SYSDATE,
+ 					#{strWriterCode},			SYSDATE
+			FROM 	
+					BOARD_MAIN
+	
+	</insert>
+	
+
+<!-- 게시글 답글 쓰기 -->
+	<insert id="InsertReply" parameterType="com.kitri.fpgw.model.BoardMainDto" >
+		INSERT INTO BOARD_MAIN
+			SELECT 
+ 					NVL(MAX(BM_SEQ), 0) + 1, 	#{intSeq},
+					#{strGroupCode},			#{strGroup},
+ 					#{strKindCode},				#{strKind},
+ 					#{strTitle},				#{strDetailComment},
+ 					#{strWriterCode},			SYSDATE,
+ 					#{strWriterCode},			SYSDATE
 			FROM 	
 					BOARD_MAIN
 			
@@ -155,7 +213,7 @@
 		WHERE 		BM_SEQ = #{intSeq}   
 	</update>
 	
-	<delete id="ArticleDelete" parameterType="Integer">
+	<delete id="ArticleDelete" parameterType="Integer" >
 		
 		DELETE FROM BOARD_MAIN
 		

@@ -21,10 +21,17 @@ public interface BoardService {
 	public void modifyArticle(BoardMainDto boardMainDto) throws Exception;	
 	//글 삭제
 	public void deleteArticle(int intSeq) throws Exception;
+	//답글쓰기
+	public void addReply(BoardMainDto boardMainDto)throws Exception;
 	//조회수 증가
 	public void increaseHit(int intSeq) throws Exception;
 	//상세보기
 	public BoardMainDto getArticle(int intSeq) throws Exception;
+	//상세보기 내부 댓글리스트
+	public ArrayList<BoardMainDto> getCommentList(int intseq) throws Exception;
+	//댓글 쓰기
+	public void addComment(BoardMainDto boardMainDto) throws Exception;
+	
 	//다음글
 	public BoardMainDto getNextArticle(int intSeq, String strKindCode, String searchWord) throws Exception;
 	//이전글
@@ -35,14 +42,11 @@ public interface BoardService {
 	public void deleteFile(int intBf_Seq) throws Exception;
 	//게시판 제목
 	public String getBoardName(String strBoardKind) throws Exception;
-	//댓글 쓰기
-	public void addComment(BoardCommentDto boardComentDto) throws Exception;
+	
 	//댓글 수정
 	public void modifyComment(BoardCommentDto boardComentDto) throws Exception;
 	//댓글 삭제
 	public void deleteComment(int intSeq) throws Exception;
-	//댓글리스트
-	public ArrayList<BoardCommentDto> getCommentList(int intSeq) throws Exception;
 	//
 	//페이징관련 나중에
 	

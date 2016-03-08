@@ -43,12 +43,20 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.SelectDetailView(intSeq);
 	}
 	
-	//댓글리스트
+	//게시글 내부 댓글 리스트
 	@Override
-	public ArrayList<BoardCommentDto> getCommentList(int intSeq) throws Exception {
-		
+	public ArrayList<BoardMainDto> getCommentList(int intSeq) throws Exception {
 		return boardDao.SelectCommentView(intSeq);
+		
+		}
+
+	//내부 댓글 쓰기
+	@Override
+	public void addComment(BoardMainDto boardMainDto) throws Exception {
+		boardDao.CommentInsert(boardMainDto);
+		
 	}
+
 
 	//게시글 수정 하기
 	@Override
@@ -64,6 +72,15 @@ public class BoardServiceImpl implements BoardService {
 		boardDao.ArticleDelete(intSeq);
 		
 	}
+
+	//답글쓰기
+	@Override
+	public void addReply(BoardMainDto boardMainDto) throws Exception {
+		
+		boardDao.InsertReply(boardMainDto);
+		
+	}
+
 
 	@Override
 	public void increaseHit(int intSeq) throws Exception {
@@ -101,11 +118,7 @@ public class BoardServiceImpl implements BoardService {
 		return null;
 	}
 
-	@Override
-	public void addComment(BoardCommentDto boardComentDto) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void modifyComment(BoardCommentDto boardComentDto) throws Exception {
@@ -118,8 +131,6 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 
 
 }

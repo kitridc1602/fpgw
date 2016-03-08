@@ -124,8 +124,25 @@ function mouseOutOnCell() {
 									<td><input width="5%" type="checkbox" class="icheck"
 										name="checkbox1" style="text-align: center;" /></td>
 									<td width="10%" style="text-align: center;"><h6>${basicList.intNum }</h6></td>
-									<td width="50%" style="text-align: center;"><h6>
-											<a href="${root}/board/read.html?workkind=001&subworkkind=001&num=${basicList.intSeq }" >${basicList.strTitle }</a></h6></td>
+									
+										<c:choose>
+											<c:when  test="${basicList.intPseq ne '0' }">
+												<td width="50%" style="text-align: left;">
+													<h6>
+														<a href="${root}/board/read.html?workkind=001&subworkkind=001&num=${basicList.intSeq }" >
+														&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; RE <i class="fa fa-angle-double-right"></i>&nbsp; &nbsp; ${basicList.strTitle}</a>
+													</h6>
+												</td>
+											</c:when>
+											<c:otherwise>
+												<td width="50%" style="text-align: left;">
+													<h6>
+														<a href="${root}/board/read.html?workkind=001&subworkkind=001&num=${basicList.intSeq }" > &nbsp;
+														${basicList.strTitle }</a>
+													</h6>
+												</td>
+											</c:otherwise>
+										</c:choose>
 									<td width="10%" style="text-align: center;"><h6>${basicList.strName }</h6></td>
 									<td width="15%" style="text-align: center;"><h6>${basicList.datGet_Date }</h6></td>
 									<td width="10%" style="text-align: center;"><h6>${basicList.intHit }</h6></td>

@@ -12,15 +12,20 @@ public interface BoardDao {
 	//게시글 상세보기
 	public BoardMainDto SelectDetailView(int intSeq) throws Exception;
 	//댓글리스트
-	public ArrayList<BoardCommentDto> SelectCommentView(int intSeq) throws Exception;
+	public ArrayList<BoardMainDto> SelectCommentView(int intSeq) throws Exception;
 	//게시글 검색
 	public ArrayList<BoardMainDto> SelectSearchList () throws Exception;
 	//메인 게시글쓰기
 	public void ArticleInsert(BoardMainDto boardMainDto) throws Exception;
+	//답글쓰기
+	public void InsertReply(BoardMainDto boardMainDto) throws Exception;
+	//댓글 쓰기
+	public void CommentInsert(BoardMainDto boardMainDto) throws Exception;
+	
+	
 	//첨부파일 추가
 	public void InsertAttachFile(BoardMainDto boardMainDto)throws Exception;
-	//댓글 쓰기
-	public void CommentInsert(BoardCommentDto boardCommentDto) throws Exception;
+	
 	//게시글 수정
 	public void ArticleModify(BoardMainDto boardMainDto) throws Exception;
 	//댓글 수정

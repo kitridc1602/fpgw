@@ -2,11 +2,13 @@ package com.kitri.fpgw.controller;
 
 import java.util.ArrayList;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kitri.fpgw.model.BoardCommentDto;
@@ -88,22 +90,61 @@ public class BoardController {
 		
 	}
 	
-	//답글쓰기 버튼 누르면~~	
+	//답글버튼 클릭시 이동~~	
 	@RequestMapping (value="/rewritego.html")
-	public String reWriteGo(@RequestParam(value="num") int intSeq ) throws Exception{
+	public ModelAndView reWriteGo(@RequestParam(value="num") int intSeq ) throws Exception{
 		
-		return "jsp/board/basicBoardWrite";
+		ModelAndView mav =new ModelAndView();
+		BoardMainDto boardMainDto = boardService.getArticle(intSeq);
+		mav.addObject("reply", boardMainDto);
+		mav.setViewName("jsp/board/replyWrite");
+		
+		return mav;
 	}
 	
 	//답글쓰기
 	@RequestMapping(value="/rewrite.html")
 	public ModelAndView replyInsert(BoardMainDto boardMainDto) throws Exception {
 		
+		boardService.addReply(boardMainDto);
 		ModelAndView mav = new ModelAndView();
+		
+		ArrayList<BoardMainDto> list = boardService.getSelectBasicList(boardMainDto);
+		mav.addObject("list", list);
+		mav.setViewName("jsp/board/basicboardList");
 		
 		return mav;
 	}
 	
+	//댓글입력
+	@RequestMapping(value="/addComment.html")
+	public @ResponseBody String addComment(BoardMainDto boardMainDto) throws Exception{
+		
+		//입력
+		
+		boardService.addComment(boardMainDto);
+		
+		JSONObject json = new JSONObject();
+		json.put("result", "sucess");
+		
+		return json.toJSONString();
+	}
+	
+	//댓글 삭제하기
+			@RequestMapping(value="/deletecomment.html")
+			public ModelAndView deleteComment(@RequestParam(value="num") int intSeq, BoardMainDto boardMainDto) throws Exception{
+				boardService.deleteArticle(intSeq);
+				
+				System.out.println(intSeq);
+				
+				ModelAndView mav= new ModelAndView();
+				ArrayList<BoardMainDto> list = boardService.getSelectBasicList(boardMainDto);
+				mav.addObject("list", list);
+				mav.setViewName("jsp/board/basicboardList");
+				
+				return mav;
+				 
+			}
 	
 	
 	//글 수정컨트롤
@@ -158,7 +199,7 @@ public class BoardController {
 		 
 	}
 	
-	//글 상세보기
+	//글 상세보기 플러스 댓글리스트,
 	@RequestMapping(value="/read.html")
 	public ModelAndView detailView(@RequestParam(value="num") int intSeq)throws Exception{
 		
@@ -167,13 +208,14 @@ public class BoardController {
 		BoardMainDto boardMainDto = boardService.getArticle(intSeq);		
 		mav.addObject("read", boardMainDto);
 		
-		/*ArrayList <BoardCommentDto> commentList = boardService.getCommentList(intSeq);
-		mav.addObject("readComment",commentList );
-		*/
+		ArrayList<BoardMainDto> commentList = boardService.getCommentList(intSeq);
+		mav.addObject("commentList",commentList );
+		
 		mav.setViewName("jsp/board/basicboardView");
 				
 		return mav;
 	}
+	
 	
 	
 }
