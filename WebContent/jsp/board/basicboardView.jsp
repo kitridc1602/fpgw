@@ -12,7 +12,7 @@ function commentInsert(){
 	
 	alert("commentInsert in");
 	
-	var root = ${root};
+	var root = ${root };
 	/* var commentWrite = document.getElementById("commentWrite"); */
 	
 	alert("commentInsert start");
