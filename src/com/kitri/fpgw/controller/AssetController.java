@@ -231,5 +231,55 @@ public class AssetController {
 		
 		return json.toJSONString();		
 	}
+	
+	@RequestMapping(value="/viewAllcalendar.html")
+	public ModelAndView viewAllCalendar(){
+		ArrayList<RantDetailDto> vclist = RantService.selectCalendar();
+		
+		JSONObject jsonvc = new JSONObject();
+		JSONArray jarrayvc = new JSONArray();
+		for(RantDetailDto list : vclist){
+			
+			JSONObject obj = new JSONObject();			
+			obj.put("title", list.getTitle());
+			obj.put("start", list.getStrStart());
+			obj.put("end", list.getStrEnd());
+			jarrayvc.add(obj);
+		}
+		
+		jsonvc.put("vclist", jarrayvc);
+		System.out.println(jsonvc.toJSONString());
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("jsonvc", jsonvc);
+		mav.setViewName("jsp/asset/calendar");
+		return mav;
+	}
+	
+	@RequestMapping(value="/viewMycalendar.html")
+	public ModelAndView viewMyCalendar(HttpSession session){
+		
+		UserMainDto userInfo = (UserMainDto) session.getAttribute("userInfo");
+		String strRDGetUser = userInfo.getStrCode();
+		
+		ArrayList<RantDetailDto> vclist = RantService.selectMyCalendar(strRDGetUser);
+		
+		JSONObject jsonvc = new JSONObject();
+		JSONArray jarrayvc = new JSONArray();
+		for(RantDetailDto list : vclist){
+			
+			JSONObject obj = new JSONObject();			
+			obj.put("title", list.getTitle());
+			obj.put("start", list.getStrStart());
+			obj.put("end", list.getStrEnd());
+			jarrayvc.add(obj);
+		}
+		
+		jsonvc.put("vclist", jarrayvc);
+		System.out.println(jsonvc.toJSONString());
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("jsonvc", jsonvc);
+		mav.setViewName("jsp/asset/mycalendar");
+		return mav;
+	}
 }
 

@@ -20,5 +20,7 @@ public interface RantDao {
 	public void returnProd(RantDetailDto rantDetailDto) throws Exception;
 	public int modelCheck(Map<String, String> map);
 	public void regasset(CodeManageDto codeManageDto);
+	public ArrayList<RantDetailDto> selectCalendar();
+	public ArrayList<RantDetailDto> selectMyCalendar(String strRDGetUser);
 	
 }

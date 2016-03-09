@@ -18,5 +18,7 @@ public interface RantService {
 	public void returnProd(RantDetailDto rantDetailDto) throws Exception;
 	public int modelCheck(String strName, String strBCode);
 	public void regasset(CodeManageDto codeManageDto);
+	public ArrayList<RantDetailDto> selectCalendar();
+	public ArrayList<RantDetailDto> selectMyCalendar(String strRDGetUser);
 
 }

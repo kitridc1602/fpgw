@@ -52,6 +52,8 @@ function returnProd(date, sttime, edtime, prod){
 		style="margin-bottom: 20px;">
 		<h4>
 			<span class="icon-calendar icons"></span> 내 예약확인
+			<span><input type="button" class="btn btn-3d" value="전체예약일정" onclick="location.href='${root}/asset/viewAllcalendar.html'"/></span>
+			<span><input type="button" class="btn btn-3d" value="내 예약일정" onclick="location.href='${root}/asset/viewMycalendar.html'"/></span>
 		</h4>
 	</div>
 

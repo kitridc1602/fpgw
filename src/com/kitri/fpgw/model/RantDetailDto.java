@@ -16,6 +16,10 @@ public class RantDetailDto {
 	private String strRDRK;			//대여진행
 	private String strRDMemo;			//메모
 	
+	private String strStart;
+	private String strEnd;
+	private String title;
+	
 	public RantDetailDto(){
 		
 	}
@@ -26,6 +30,12 @@ public class RantDetailDto {
 	}
 	
 	
+	public RantDetailDto(String strStart, String strEnd, String title) {
+
+		this.strStart = strStart;
+		this.strEnd = strEnd;
+		this.title = title;
+	}
 
 	public RantDetailDto(String strRDYmd, String strRDGetUser, String strRDStartTime, String strRDEndTime,
 			String strRDRantProd, String strRDChkUser, String strRDRKBcode, String strRDRK,
@@ -146,6 +156,30 @@ public class RantDetailDto {
 	public void setStrRDMemo(String strRDMemo) {
 		this.strRDMemo = strRDMemo;
 	}
-	
+
+	public String getStrStart() {
+		return strStart;
+	}
+
+	public void setStrStart(String strStart) {
+		this.strStart = strStart;
+	}
+
+	public String getStrEnd() {
+		return strEnd;
+	}
+
+	public void setStrEnd(String strEnd) {
+		this.strEnd = strEnd;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	
 }

@@ -80,7 +80,36 @@
 				LEFT OUTER JOIN USER_MAIN UM_AP		ON	RM.RM_APPROVAL_USER = UM_AP.UM_CODE		
 		WHERE RM_REQUEST_USER = #{strRMRequser}
 	
-	</select>	
+	</select>
+	
+	<select id="viewCalendar" resultType="com.kitri.fpgw.model.RantDetailDto">
+		SELECT SUBSTR(RD_RM_YMD, 1, 4)||'-'||SUBSTR(RD_RM_YMD, 5, 2)||'-'||SUBSTR(RD_RM_YMD, 7, 2)||'T'||LPAD(RD_RM_START_TIME, '2', '0')||':00:00' STRSTART,
+			   SUBSTR(RD_RM_YMD, 1, 4)||'-'||SUBSTR(RD_RM_YMD, 5, 2)||'-'||SUBSTR(RD_RM_YMD, 7, 2)||'T'||LPAD(RD_RM_END_TIME, '2', '0')||':00:00' STREND,
+			   CM_NAME TITLE
+			   FROM RANT_DETAIL RD
+			   LEFT OUTER JOIN RANT_MAIN RM ON RM.RM_YMD = RD.RD_RM_YMD 
+			   								AND RM.RM_START_TIME = RD.RD_RM_START_TIME 
+			   								AND RM.RM_END_TIME = RD.RD_RM_END_TIME 
+			   								AND RM.RM_RANT_PROD = RD.RD_RM_RANT_PROD
+			   LEFT OUTER JOIN CODE_MANAGE CM ON CM.CM_SCODE = RM.RM_RANT_PROD 
+			   								AND CM.CM_BCODE = RM.RM_RANT_BCODE	
+	</select>
+	
+	<select id="viewMyCalendar" parameterType="String" resultType="com.kitri.fpgw.model.RantDetailDto">
+		SELECT SUBSTR(RD_RM_YMD, 1, 4)||'-'||SUBSTR(RD_RM_YMD, 5, 2)||'-'||SUBSTR(RD_RM_YMD, 7, 2)||'T'||LPAD(RD_RM_START_TIME, '2', '0')||':00:00' STRSTART,
+			   SUBSTR(RD_RM_YMD, 1, 4)||'-'||SUBSTR(RD_RM_YMD, 5, 2)||'-'||SUBSTR(RD_RM_YMD, 7, 2)||'T'||LPAD(RD_RM_END_TIME, '2', '0')||':00:00' STREND,
+			   CM_NAME TITLE
+			   FROM RANT_DETAIL RD
+			   LEFT OUTER JOIN RANT_MAIN RM ON RM.RM_YMD = RD.RD_RM_YMD 
+			   								AND RM.RM_START_TIME = RD.RD_RM_START_TIME 
+			   								AND RM.RM_END_TIME = RD.RD_RM_END_TIME 
+			   								AND RM.RM_RANT_PROD = RD.RD_RM_RANT_PROD
+			   LEFT OUTER JOIN CODE_MANAGE CM ON CM.CM_SCODE = RM.RM_RANT_PROD 
+			   								AND CM.CM_BCODE = RM.RM_RANT_BCODE
+			   WHERE RD_GET_USER_CD = #{strRDGetUser}	
+	
+	</select>
+		
 	
 	<insert id="insertReserve" parameterType="com.kitri.fpgw.model.RantMainDto">
 	
