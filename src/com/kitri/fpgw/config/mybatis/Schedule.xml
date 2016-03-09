@@ -4,14 +4,14 @@
 
 	<select id="ScheduleSelect" parameterType="com.kitri.fpgw.model.ScheduleDto" resultType="com.kitri.fpgw.model.ScheduleDto">
 		SELECT 	SC_USER STRUSER, 
-				SC_YY STRYY, 					SC_MM STRDD,
-				SC_DD STRDD, 					SC_SEQ STRSEQ,
-				SC_TITLE STRTITLE, 				SC_DETAIL_COMMENT,
+				SC_YY STRYY, 					SC_MM STRMM,
+				SC_DD STRDD, 					SC_SEQ INTSEQ,
+				SC_TITLE STRTITLE, 				SC_DETAIL_COMMENT STRDETAIL_COMMENT,
 				SC_START_HOUR STRSTART_HOUR, 	SC_START_MINUTE STRSTART_MINUTE,
 				SC_END_HOUR STREND_HOUR, 		SC_END_MINUTE STREND_MINUTE,
 				SC_TERM_HOUR STRTERM_HOUR, 		SC_TERM_MINUTE STRTERM_MINUTE,
 				SC_SCH_KIND STRSCH_KIND_CD, 	CM_SCH.CM_NAME STRSCH_KIND_NM,
-				SC_WORK_KIND STRSCH_KIND_CD, 	CM_WORK.CM_NAME STRWORK_KIND_NM,
+				SC_WORK_KIND STRWORK_KIND_CD, 	CM_WORK.CM_NAME STRWORK_KIND_NM,
 				SC_DISCLOSURE STRDISCLOSURE_CD, CM_DISCLOSURE.CM_NAME STRDISCLOSURE_NM
 		FROM 	SCHEDULE SC
 				LEFT OUTER JOIN CODE_MANAGE CM_SCH 			ON 	(SC.SC_SCH_KIND_BCODE = CM_SCH.CM_BCODE)
@@ -20,24 +20,118 @@
 															AND (SC.SC_WORK_KIND = CM_WORK.CM_SCODE)
 				LEFT OUTER JOIN CODE_MANAGE CM_DISCLOSURE 	ON 	(SC.SC_DISCLOSURE_BCODE = CM_DISCLOSURE.CM_BCODE)
 															AND (SC.SC_DISCLOSURE = CM_DISCLOSURE.CM_SCODE)
-		WHERE 	(SC_USER = '')
-		AND		(SC_YY = '')
-		AND		(SC_MM = '')
-		AND		(SC_DD = '')
-		AND		(SC_SEQ = )
-		ORDER BY SC_USER, SC_YY, SC_MM, SC_DD, SC_SEQ
+		WHERE 	(SC_USER = #{strUser})
+		AND		(SC_YY = #{strYY})
+		AND		(SC_MM = #{strMM})
+		AND		(SC_DD = #{strDD})
+		AND		(SC_SEQ = #{intSeq})
+		ORDER BY SC_USER, SC_YY, SC_MM, SC_DD, SC_SCH_KIND, SC_SEQ
 	
 	</select>
 	
-<!-- 	<select id="ScheduleSelectAll" parameterType="com.kitri.fpgw.model.ScheduleDto" resultType="com.kitri.fpgw.model.ScheduleDto">
+	<select id="ScheduleSelectAll" parameterType="com.kitri.fpgw.model.ScheduleDto" resultType="com.kitri.fpgw.model.ScheduleDto">
+		SELECT 	SC_USER STRUSER, 
+				SC_YY STRYY, 					SC_MM STRMM,
+				SC_DD STRDD, 					SC_SEQ INTSEQ,
+				SC_TITLE STRTITLE, 				SC_DETAIL_COMMENT STRDETAIL_COMMENT,
+				SC_START_HOUR STRSTART_HOUR, 	SC_START_MINUTE STRSTART_MINUTE,
+				SC_END_HOUR STREND_HOUR, 		SC_END_MINUTE STREND_MINUTE,
+				SC_TERM_HOUR STRTERM_HOUR, 		SC_TERM_MINUTE STRTERM_MINUTE,
+				SC_SCH_KIND STRSCH_KIND_CD, 	CM_SCH.CM_NAME STRSCH_KIND_NM,
+				SC_WORK_KIND STRWORK_KIND_CD, 	CM_WORK.CM_NAME STRWORK_KIND_NM,
+				SC_DISCLOSURE STRDISCLOSURE_CD, CM_DISCLOSURE.CM_NAME STRDISCLOSURE_NM
+		FROM 	SCHEDULE SC
+				LEFT OUTER JOIN CODE_MANAGE CM_SCH 			ON 	(SC.SC_SCH_KIND_BCODE = CM_SCH.CM_BCODE)
+															AND (SC.SC_SCH_KIND = CM_SCH.CM_SCODE)
+				LEFT OUTER JOIN CODE_MANAGE CM_WORK 		ON 	(SC.SC_WORK_KIND_BCODE = CM_WORK.CM_BCODE)
+															AND (SC.SC_WORK_KIND = CM_WORK.CM_SCODE)
+				LEFT OUTER JOIN CODE_MANAGE CM_DISCLOSURE 	ON 	(SC.SC_DISCLOSURE_BCODE = CM_DISCLOSURE.CM_BCODE)
+															AND (SC.SC_DISCLOSURE = CM_DISCLOSURE.CM_SCODE)
+		WHERE 	(SC_USER = #{strUser})
+		AND		((SC_YY || SC_MM || SC_DD) BETWEEN #{strSearchStartDate} AND #{strSearchEndDate})
+		ORDER BY SC_USER, SC_YY, SC_MM, SC_DD, SC_START_HOUR, SC_START_MINUTE, SC_SCH_KIND, SC_SEQ
 	
 	</select>
 	
-	<update id="ScheduleModify" parameterType="com.kitri.fpgw.model.ScheduleDto">
+	<insert id="ScheduleInsert">
+		INSERT INTO SCHEDULE
+		  (
+		    SC_USER,
+		    SC_YY,                SC_MM,              SC_DD,
+		    SC_SEQ,
+		    SC_TITLE,             SC_DETAIL_COMMENT,
+		    SC_START_HOUR,        SC_START_MINUTE,
+		    SC_END_HOUR,          SC_END_MINUTE,
+		    SC_TERM_HOUR,         SC_TERM_MINUTE,
+		    SC_SCH_KIND_BCODE,    SC_SCH_KIND, 
+		    SC_WORK_KIND_BCODE,   SC_WORK_KIND,
+		    SC_DISCLOSURE_BCODE,  SC_DISCLOSURE,
+		    SC_GET_USER,          SC_GET_DATE
+		  )
+		SELECT  #{strUser},
+		        #{strYY},         		#{strMM},             #{strDD},
+		        (NVL(MAX(SC_SEQ), 0) + 1) SC_SEQ,
+		        #{strTitle},      		#{strDetail_Comment},
+		        #{strStart_Hour}, 		#{strStart_Minute},
+		        #{strEnd_Hour},   		#{strEnd_Minute},
+		        #{strTerm_Hour},  		#{strTerm_Minute},
+		        '301',            		#{strSch_Kind_Cd},
+		        '300',            		#{strWork_Kind_Cd},
+		        '203',            		#{strDisclosure_Cd},
+		        #{strGet_User_Cd}, 		SYSDATE
+		FROM    SCHEDULE
+		WHERE   (SC_USER = #{strUser})
+		AND     (SC_YY = #{strYY})
+		AND     (SC_MM = #{strMM})
+		AND     (SC_DD = #{strDD})	
+	</insert>
 	
+	<!-- <select id="ScheduleSelectAll" parameterType="com.kitri.fpgw.model.ScheduleDto" resultType="com.kitri.fpgw.model.ScheduleDto">
+	
+	</select> -->
+	
+	<insert id="ScheduleTempInsert" parameterType="com.kitri.fpgw.model.ScheduleModifyDto">
+		INSERT INTO TEMP_SCHEDULE
+		  (
+		    TS_WORK_ID,           TS_WORK_USER,
+		    TS_PREV_YY,           TS_PREV_MM,         TS_PREV_DD,   TS_PREV_SEQ,
+		    TS_USER,              TS_YY,              TS_MM,        TS_DD,
+		    TS_TITLE,             TS_DETAIL_COMMENT,
+		    TS_START_HOUR,        TS_START_MINUTE,
+		    TS_END_HOUR,          TS_END_MINUTE,
+		    TS_SCH_KIND_BCODE,    TS_SCH_KIND,
+		    TS_WORK_KIND_BCODE,   TS_WORK_KIND,
+		    TS_DISCLOSURE_BCODE,  TS_DISCLOSURE,
+		    TS_GET_USER,		  TS_EDIT_USER
+		  )
+		VALUES
+		  (
+		    #{strWorkID}, 			#{strWork_User},
+		    #{strPrevYY}, 			#{strPrevMM}, 			#{strPrevDD}, 	#{intSeq},
+		    #{strUser}, 			#{strYY}, 				#{strMM}, 		#{strDD},
+		    #{strTitle}, 			#{strDetail_Comment},
+		    #{strStart_Hour}, 		#{strStart_Minute},
+		    #{strEnd_Hour}, 		#{strEnd_Minute},
+		    '301', 					#{strSch_Kind_Cd},
+		    '300', 					#{strWork_Kind_Cd},
+		    '203', 					#{strDisclosure_Cd},
+		    #{strGet_User_Cd}, 		#{strEdit_User_Cd}
+		  )		
+	</insert>
+	
+	<update id="ScheduleModify" parameterType="com.kitri.fpgw.model.ProcedureParameterKeyDto" statementType="CALLABLE">
+		{
+			CALL PROC_SCHEDULE_UPDATE(#{strWork_ID}, #{strWork_User})
+		}
 	</update>
 	
 	<delete id="ScheduleDelete" parameterType="com.kitri.fpgw.model.ScheduleDto">
-	
-	</delete> -->
+	    DELETE
+	    FROM SCHEDULE	
+		WHERE 	(SC_USER = #{strUser})
+		AND		(SC_YY = #{strYY})
+		AND		(SC_MM = #{strMM})
+		AND		(SC_DD = #{strDD})
+		AND		(SC_SEQ = #{intSeq})
+	</delete>
 </mapper>

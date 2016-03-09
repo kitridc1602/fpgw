@@ -118,36 +118,17 @@
 				                        </tr>
                       				</thead>
                       				<tbody>
-                      					<tr>
-                          					<td style="text-align: right;">5</td>
-                          					<td>열심히 Spring 공부하고 있습니다...(^.^);;</td>
-                          					<td>사원 이명훈</td>
-                          					<td style="text-align: right;">1</td>
-                        				</tr>
-                        				<tr>
-                          					<td style="text-align: right;">4</td>
-                          					<td>오늘도 바쁨. 은영기획 김대리와 저녁에 회의 있음.</td>
-                          					<td>대리 심응규</td>
-                          					<td style="text-align: right;">12</td>
-                        				</tr>
-                        				<tr>
-                          					<td style="text-align: right;">3</td>
-                          					<td>뭐여..?(@.@) 코딩이 왜이려??</td>
-                          					<td>대리 양돈의</td>
-                          					<td style="text-align: right;">4</td>
-                        				</tr>
-                        				<tr>
-                          					<td style="text-align: right;">2</td>
-                          					<td>이 게시판은 내꺼임...!!!!!</td>
-                          					<td>과장 김미희</td>
-                          					<td style="text-align: right;">123</td>
-                        				</tr>
-                        				<tr>
-                          					<td style="text-align: right;">1</td>
-                          					<td>재미있게 코딩놀이 해보자구~~~(^_^)/</td>
-                          					<td>팀장 박대성</td>
-                          					<td style="text-align: right;">0</td>
-                        				</tr>
+                      				
+                      					<c:forEach var="board" items="${listBoard }">
+                      					
+                      						<tr>
+	                          					<td style="text-align: right;">${board.intSeq }</td>
+	                          					<td>${board.strTitle }</td>
+	                          					<td>기본 사용자</td>
+	                          					<td style="text-align: right;">${board.intCommentCount }</td>
+                        					</tr>
+                      					
+                      					</c:forEach>
                       				</tbody>
                    				</table>
 	                            
@@ -170,88 +151,33 @@
                             	<h4><span class="icons icon-paper-clip"></span> 오늘의 일정</h4>
                             </div>
 	                      <ul class="mini-timeline">
-	
-	                        <li class="mini-timeline-highlight">
-	                           <div class="mini-timeline-panel">
-	                            <h5 class="time">05:00</h5>
-	                            <p>Make tea</p>
-	                          </div>
-	                        </li>
-	
-	                        <li class="mini-timeline-highlight">
-	                          <div class="mini-timeline-panel">
-	                            <h5 class="time">06:00</h5>
-	                            <p>Go to market</p>
-	                          </div>
-	                        </li>
-	
-	                        <li class="mini-timeline-highlight">
-	                         <div class="mini-timeline-panel">
-	                            <h5 class="time">07:00</h5>
-	                            <p>Coding!!</p>
-	                          </div>
-	                        </li>
-	
-	                        <li class="mini-timeline-highlight">
-	                           <div class="mini-timeline-panel">
-	                            <h5 class="time">09:00</h5>
-	                            <p>Playing The Games</p>
-	                          </div>
-	                        </li>
-	                        <li class="mini-timeline-highlight">
-	                           <div class="mini-timeline-panel">
-	                            <h5 class="time">12:00</h5>
-	                            <p>Meeting with <a href="#">Clients</a></p>
-	                          </div>
-	                        </li>
-	                        <li class="mini-timeline-highlight mini-timeline-warning">
-	                          <div class="mini-timeline-panel">
-	                            <h5 class="time">15:00</h5>
-	                            <p>Breakdown the Personal PC</p>
-	                          </div>
-	                        </li>
-	                        <li class="mini-timeline-highlight mini-timeline-info">
-	                          <div class="mini-timeline-panel">
-	                            <h5 class="time">15:00</h5>
-	                            <p>Checking Server!</p>
-	                          </div>
-	                        </li>
-	                        <li class="mini-timeline-highlight mini-timeline-success">
-	                          <div class="mini-timeline-panel">
-	                            <h5 class="time">16:01</h5>
-	                            <p>Hacking The public wifi</p>
-	                          </div>
-	                        </li>
-	                        <li class="mini-timeline-highlight mini-timeline-danger">
-	                          <div class="mini-timeline-panel">
-	                            <h5 class="time">21:00</h5>
-	                            <p>Sleep!</p>
-	                          </div>
-	                        </li>
-	                        <li class="mini-timeline-highlight mini-timeline-danger">
-	                          <div class="mini-timeline-panel">
-	                            <h5 class="time">22:00</h5>
-	                            <p>Sleep!</p>
-	                          </div>
-	                        </li>
-	                        <li class="mini-timeline-highlight mini-timeline-danger">
-	                          <div class="mini-timeline-panel">
-	                            <h5 class="time">23:00</h5>
-	                            <p>Sleep!</p>
-	                          </div>
-	                        </li>
-	                        <li class="mini-timeline-highlight mini-timeline-danger">
-	                          <div class="mini-timeline-panel">
-	                            <h5 class="time">24:00</h5>
-	                            <p>Sleep!</p>
-	                          </div>
-	                        </li>
-	                        <li class="mini-timeline-highlight mini-timeline-danger">
-	                          <div class="mini-timeline-panel">
-	                            <h5 class="time">01:00</h5>
-	                            <p>Sleep!</p>
-	                          </div>
-	                        </li>
+
+	                      	<c:forEach var="schedule" items="${ToDaySchedule }">
+	                      		<c:choose>
+	                      			<c:when test="${schedule.strSch_Kind_Cd eq '001' }">
+	                      				<li class="mini-timeline-highlight">
+	                      			</c:when>
+	                      		
+	                      			<c:otherwise>
+	                      				<li class="mini-timeline-highlight mini-timeline-info">
+	                      			</c:otherwise>
+	                      		</c:choose>
+	                      		
+		                      		<div class="mini-timeline-panel">
+		                      			<c:choose>
+		                      				<c:when test="${schedule.strStart_Hour eq 00}">
+		                      					<h5 class="time">일일</h5>
+		                      				</c:when>
+		                      				
+		                      				<c:otherwise>
+		                      					<h5 class="time">${schedule.strStart_Hour }:${schedule.strStart_Minute }</h5>		
+		                      				</c:otherwise>
+		                      			</c:choose>
+		                            
+		                            <p><a href="${root }/schedule/select.html?strUser=${schedule.strUser }&strYY=${schedule.strYY }&strMM=${schedule.strMM }&strDD=${schedule.strDD }&intSeq=${schedule.intSeq }">${schedule.strTitle }</a></p>
+		                          </div>
+		                        </li>
+	                      	</c:forEach>
 	                      </ul>
 	                    </div>
 	                  </div>            

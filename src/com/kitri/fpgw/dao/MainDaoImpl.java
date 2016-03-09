@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kitri.fpgw.model.BoardMainDto;
 import com.kitri.fpgw.model.CodeManageDto;
 import com.kitri.fpgw.model.DepartDto;
 import com.kitri.fpgw.model.LogHistoryDto;
@@ -120,6 +121,14 @@ public class MainDaoImpl implements MainDao {
 		List<DepartDto> list = SqlSessionTemplate.selectList("DepartListAll");
 		
 		return (ArrayList<DepartDto>) list;
+	}
+
+	@Override
+	public ArrayList<BoardMainDto> BoardListAll() throws Exception {
+		
+		List<BoardMainDto> list = SqlSessionTemplate.selectList("MainBoardView");
+		
+		return (ArrayList<BoardMainDto>) list;
 	}
 
 	

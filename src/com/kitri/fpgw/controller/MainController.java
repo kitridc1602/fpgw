@@ -9,17 +9,20 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kitri.fpgw.model.BoardMainDto;
 import com.kitri.fpgw.model.CodeManageDto;
 import com.kitri.fpgw.model.DepartDto;
 import com.kitri.fpgw.model.LogHistoryDto;
 import com.kitri.fpgw.model.MenuDto;
-import com.kitri.fpgw.model.UserBFDto;
+import com.kitri.fpgw.model.ScheduleDto;
 import com.kitri.fpgw.model.UserDetaileDto;
 import com.kitri.fpgw.model.UserDto;
 import com.kitri.fpgw.model.UserImageDto;
 import com.kitri.fpgw.model.UserMainDto;
 import com.kitri.fpgw.service.MainService;
+import com.kitri.fpgw.service.ScheduleService;
 
 @Controller
 @RequestMapping(value="/main")
@@ -28,6 +31,10 @@ public class MainController {
 	@Autowired
 	private MainService MainService;
 
+	@Autowired
+	private ScheduleService ScheduleService;
+	
+	
 	@RequestMapping(value="/index.html")
 	public String Index(){
 		
@@ -35,14 +42,31 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/default.html")
-	public String Default(){
+	public ModelAndView Default(HttpSession session) throws Exception{
 		
-		return "jsp/main/default";
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jsp/main/default");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
+		String ymd = sdf.format(date);
+		
+		UserMainDto userMainDto = (UserMainDto) session.getAttribute("userInfo");
+		
+		if(userMainDto.getStrCode() != null){
+			
+			mav = MainSelectInfomation(userMainDto.getStrCode(), ymd, "jsp/main/default");
+		}
+		
+		
+		return mav;
 	}
 	
 	@RequestMapping(value="/login.html")
-	public String Login(String id, String pwd, HttpSession session) throws Exception {
-				
+	public ModelAndView Login(String id, String pwd, HttpSession session) throws Exception {
+		
+		ModelAndView mav = new ModelAndView();
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Date date = new Date();
 		String ymd = sdf.format(date);
@@ -52,13 +76,12 @@ public class MainController {
 		userIn.setStrPWD(pwd);
 				
 		UserMainDto userOut = MainService.LogIn(userIn);
-		
-		String strMovePage = "";
+				
 		
 		if(userOut == null){
 			
 			session.setAttribute("success", "failed");
-			strMovePage = "index";
+			mav.setViewName("index");
 		} else {
 			
 			session.setMaxInactiveInterval(84500);
@@ -111,10 +134,10 @@ public class MainController {
 			session.setAttribute("menu", listMenu);
 			
 			
-			strMovePage = "jsp/main/default";
+			mav = MainSelectInfomation(userOut.getStrCode(), ymd, "jsp/main/default");
 		}
 		
-		return strMovePage;
+		return mav;
 	}
 	
 	@RequestMapping(value="logout.html")
@@ -156,4 +179,24 @@ public class MainController {
 		return "index";
 	}
 	
+	private ModelAndView MainSelectInfomation(String strUserCode, String strToDay, String strPath) throws Exception{
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(strPath);
+		
+		//오늘 일정
+		ScheduleDto scheduleDto = new ScheduleDto();
+		scheduleDto.setStrUser(strUserCode);
+		scheduleDto.setStrSearchStartDate(strToDay);
+		scheduleDto.setStrSearchEndDate(strToDay);
+		ArrayList<ScheduleDto> ToDaySchedule = ScheduleService.ScheduleSelectAll(scheduleDto);
+		
+		mav.addObject("ToDaySchedule", ToDaySchedule);
+		
+		//게시판 정보
+		ArrayList<BoardMainDto> listBoard = MainService.BoardListAll();
+		mav.addObject("listBoard", listBoard);
+		
+		return mav;
+	}
 }

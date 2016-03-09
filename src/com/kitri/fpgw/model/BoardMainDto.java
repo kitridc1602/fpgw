@@ -7,6 +7,7 @@ public class BoardMainDto {
 	private int intSeq; //글번호
 	private int intNum; //해당게시판글번호 rownum
 	private int intPseq; // 부모글번호
+	private int intCommentCount; //게시글 댓글 갯수
 	private String strGroup; //게시판 그룹
 	private String strGroupCode; //게시판 그룹 코드
 	private String strKind; // 게시판 종류
@@ -46,7 +47,7 @@ public class BoardMainDto {
 			String strViewerCode, String strFilerCode, String strName, String strId, String strComment,
 			String strCommenterCode, String strFaceName, Date datComment_Date, Date datGet_Date, Date datEdit_Date,
 			Date datView_Date, Date datFile_Date, String attachFileNo, int intBf_Bm_Seq, int intBf_Seq,
-			String strBf_OriginalName, String strBf_SaveName, String strBf_Path, int intHit, String strSearch) {
+			String strBf_OriginalName, String strBf_SaveName, String strBf_Path, int intHit, String strSearch,int intCommentCount) {
 		super();
 		this.intSeq = intSeq;
 		this.intNum = intNum;
@@ -79,6 +80,17 @@ public class BoardMainDto {
 		this.strBf_Path = strBf_Path;
 		this.intHit = intHit;
 		this.strSearch = strSearch;
+		this.intCommentCount = intCommentCount;
+		
+	}
+
+	
+	public int getIntCommentCount() {
+		return intCommentCount;
+	}
+
+	public void setIntCommentCount(int intCommentCount) {
+		this.intCommentCount = intCommentCount;
 	}
 
 	public int getIntSeq() {
