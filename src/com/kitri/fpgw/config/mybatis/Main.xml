@@ -223,7 +223,29 @@
 			)	
 	</update>
 	
-	
+	<select id="MainBoardView" resultType="com.kitri.fpgw.model.BoardMainDto">
+		SELECT  ROWNUM INTNUM, 
+		        BM.BM_SEQ INTSEQ, 				BM_TITLE STRTITLE, 
+		        BM_GET_USER STRWRITECODE, 		GET_USER.UM_NAME STRWRITENAME,
+		        NVL(BV.CNT, 0) INTCOMMENTCOUNT
+		FROM
+		        (
+		          SELECT  *
+		          FROM    BOARD_MAIN
+		          WHERE   (BM_GROUP = '001')
+		          AND     (BM_KIND = '001')
+		          AND     (BM_PSEQ = 0)
+		          ORDER BY BM_SEQ DESC
+		        ) BM
+		        LEFT OUTER JOIN 
+		                        (
+		                          SELECT  BV_BM_SEQ, COUNT(DISTINCT BV_SEQ) CNT
+		                          FROM    BOARD_VIEW
+		                          GROUP BY BV_BM_SEQ
+		                        ) BV ON (BM.BM_SEQ = BV.BV_BM_SEQ)
+		        LEFT OUTER JOIN USER_MAIN GET_USER ON (BM.BM_GET_USER = GET_USER.UM_CODE)
+		WHERE ROWNUM BETWEEN 1 AND 5
+	</select>
 	
 	
 	

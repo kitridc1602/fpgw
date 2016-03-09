@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kitri.fpgw.dao.MainDao;
+import com.kitri.fpgw.model.BoardMainDto;
 import com.kitri.fpgw.model.CodeManageDto;
 import com.kitri.fpgw.model.DepartDto;
 import com.kitri.fpgw.model.LogHistoryDto;
@@ -103,6 +104,13 @@ public class MainServiceImpl implements MainService {
 	public ArrayList<DepartDto> DepartListAll() throws Exception {
 
 		return MainDao.DepartListAll();
+	}
+
+
+	@Override
+	public ArrayList<BoardMainDto> BoardListAll() throws Exception {
+		
+		return MainDao.BoardListAll();
 	}
 
 	

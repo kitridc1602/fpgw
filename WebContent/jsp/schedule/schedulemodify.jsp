@@ -105,7 +105,17 @@
 	                   							<td style="width: 10%; text-align: center;">제목</td>
 	                   							<td style="width: 90%;" colspan="3">
 	                   								<input type="text" id="strTitle" name="strTitle" class="form-control" style="width: 100%;" value="${schedule.strTitle }">
-	                   								<input type="hidden" id="intSeq" name="intSeq" value="${schedule.intSeq }">
+	                   								<c:choose>
+	                   									<c:when test="${schedule.intSeq ne null}">
+	                   										<input type="hidden" id="intSeq" name="intSeq" value="${schedule.intSeq }">	
+	                   									</c:when>
+	                   									
+	                   									<c:otherwise>
+	                   										<input type="hidden" id="intSeq" name="intSeq" value="0">
+	                   									</c:otherwise>
+	                   								
+	                   								</c:choose>
+	                   								
 	                   								<input type="hidden" id="strPrevYY" name="strPrevYY" value="${schedule.strYY }">
 	                   								<input type="hidden" id="strPrevMM" name="strPrevMM" value="${schedule.strMM }">
 	                   								<input type="hidden" id="strPrevDD" name="strPrevDD" value="${schedule.strDD }">

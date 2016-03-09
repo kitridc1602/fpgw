@@ -2,6 +2,7 @@ package com.kitri.fpgw.service;
 
 import java.util.ArrayList;
 
+import com.kitri.fpgw.model.BoardMainDto;
 import com.kitri.fpgw.model.CodeManageDto;
 import com.kitri.fpgw.model.DepartDto;
 import com.kitri.fpgw.model.LogHistoryDto;
@@ -25,4 +26,5 @@ public interface MainService {
 	public ArrayList<CodeManageDto> CodeManageBCodeGroupSelectAll() throws Exception;
 	public ArrayList<UserDto> UserListAll(String strCode, int intKind) throws Exception;
 	public ArrayList<DepartDto> DepartListAll() throws Exception;
+	public ArrayList<BoardMainDto> BoardListAll() throws Exception;
 }
