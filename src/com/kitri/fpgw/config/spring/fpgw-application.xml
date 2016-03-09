@@ -30,6 +30,7 @@
 				<value>classpath:com/kitri/fpgw/config/mybatis/Board.xml</value>
 				<value>classpath:com/kitri/fpgw/config/mybatis/Rant.xml</value>
 				<value>classpath:com/kitri/fpgw/config/mybatis/Appr.xml</value>
+				<value>classpath:com/kitri/fpgw/config/mybatis/Option.xml</value>
 			</list>
 		</property>
 		
@@ -41,6 +42,7 @@
 				<value>com.kitri.fpgw.dao.BoardDao</value>
 				<value>com.kitri.fpgw.dao.RantDao</value>
 				<value>com.kitri.fpgw.dao.ApprDao</value>
+				<value>com.kitri.fpgw.dao.OptionDao</value>
 			</list>
 		</property>
 	</bean>

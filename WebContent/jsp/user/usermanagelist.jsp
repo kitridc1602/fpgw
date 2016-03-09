@@ -37,7 +37,7 @@
 					<div class="col-md-12">
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
-							<table id="datatables-example" class="table table-striped table-bordered" width="100%" cellspacing="0">
+							<table id="" class="table table-striped table-bordered" width="100%" cellspacing="0">
 								<tbody>
 									<tr>
 										<td style="text-align: right;">
@@ -67,7 +67,7 @@
 	                          					<th style="text-align: center;">부서</th>
 	                          					<th style="text-align: center;">직통 전화</th>
 	                          					<th style="text-align: center;">핸드폰</th>
-	                          					<th style="text-align: center;">아이디</th>
+	                          					<th style="text-align: center;">ID</th>
 	                          					<th style="text-align: center;">입사일</th>
 	                          					<th style="text-align: center;">수정</th>
 	                          					<th style="text-align: center;">삭제</th>
@@ -76,16 +76,16 @@
 	                      				<tbody>
 	                      					<c:forEach var="user" items="${userDto }">
 		                      					<tr>
-		                      						<td width="80px" style="text-align: center;"><h6>${user.strCode }</h6></td>
-		                      						<td width="90px"><h6>${user.strName }</h6></td>
-		                      						<td width="90px"><h6>${user.strPosition_Nm }</h6></td>
-		                      						<td width="150px"><h6>${user.strDepart_Nm }</h6></td>
-		                      						<td width="150px"><h6>${user.strCo_Tel1 }-${user.strCo_Tel2 }-${user.strCo_Tel3 }(${user.strCo_Tel_InLine })</h6></td>
-		                      						<td width="120px"><h6>${user.strMobile1 }-${user.strMobile2 }-${user.strMobile3 }</h6></td>
+		                      						<td style="text-align: center;"><h6>${user.strCode }</h6></td>
+		                      						<td><h6>${user.strName }</h6></td>
+		                      						<td><h6>${user.strPosition_Nm }</h6></td>
+		                      						<td><h6>${user.strDepart_Nm }</h6></td>
+		                      						<td><h6>${user.strCo_Tel1 }-${user.strCo_Tel2 }-${user.strCo_Tel3 }(${user.strCo_Tel_InLine })</h6></td>
+		                      						<td><h6>${user.strMobile1 }-${user.strMobile2 }-${user.strMobile3 }</h6></td>
 		                      						<td><h6>${user.strID }</h6></td>
-		                      						<td width="90px"><h6>${user.strHire_YYYY }.${user.strHire_MM }.${user.strHire_DD }</h6></td>
-		                      						<td width="90px"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="useredit" name="useredit" value="수정" onclick="location.href='${root }/user/select.html?strCode=${user.strCode }'"></td>
-		                      						<td width="90px"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="userdelete" name="userdelete" value="삭제" onclick="location.href='${root }/user/delete.html?strCode=${user.strCode }'"></td>
+		                      						<td><h6>${user.strHire_YYYY }.${user.strHire_MM }.${user.strHire_DD }</h6></td>
+		                      						<td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="useredit" name="useredit" value="수정" onclick="location.href='${root }/user/select.html?strCode=${user.strCode }'"></td>
+		                      						<td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="userdelete" name="userdelete" value="삭제" onclick="location.href='${root }/user/delete.html?strCode=${user.strCode }'"></td>
 		                      					</tr>
 	                      					</c:forEach>
 	                      				</tbody>
