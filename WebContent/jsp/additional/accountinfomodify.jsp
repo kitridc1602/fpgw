@@ -3,6 +3,43 @@
 <c:set var="root" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html lang="en">
+
+<script type="text/javascript">
+
+	/* 입력사항 체크 */
+	function checkInfomation(kind){
+	
+		var resulet = true;
+		
+		return resulet;
+	}
+	
+	
+	function userSubmit(kind){
+		
+		if(checkInfomation(kind)){
+			
+			var userModify = document.getElementById('accountInfoModify');
+			
+			if(kind == 'insert'){
+				
+				userModify.action = '${root }/option/accountinfoinsert.html';
+				
+			} else {
+				
+				userModify.action = '${root }/option/accountinfomodify.html';
+				
+			}
+			
+			userModify.method = 'POST';
+			userModify.submit();
+		}
+		
+		
+	}
+	
+</script>
+
           <!-- start: content -->
             <div id="content">
                 <div class="panel">
@@ -44,18 +81,23 @@
 	                   					<tbody>
 	                   						<tr>
 	                   							<td style="width: 10%; text-align: right;">거래처명</td>
-	                   							<td colspan="3"><input type="text" class="form-control" id="" name=""  value=""></td>
+	                   							<td colspan="3">
+	                   								<input type="hidden" class="form-control" id="strCode" name="strCode"  value="${accountInfo.strCode }">
+	                   								<input type="text" class="form-control" id="strVender_Name" name="strVender_Name"  value="${accountInfo.strVender_Name }">
+                   								</td>
 	                   						</tr>
 	                   						<tr>
 	                   							<td style="text-align: right;">성명</td>
-	                   							<td style="width: 50%;"><input type="text" class="form-control" id="" name=""  value=""></td>
+	                   							<td style="width: 50%;">
+	                   								<input type="text" class="form-control" id="strPerson_Name" name="strPerson_Name"  value="${accountInfo.strPerson_Name }">
+	                   							</td>
 	                   							<td style="width: 10%; text-align: right;">직급</td>
 	                   							<td>
-	                   								<select class="form-control" id="" name="">
+	                   								<select class="form-control" id="strPosition_Cd" name="strPosition_Cd">
 	                   									<option value="000">선택</option>
 			                              					<c:forEach var="po" items="${position }">
 			                              						<c:choose>
-			                              							<c:when test="${po.strSCode eq userModify.strPosition_Cd }">
+			                              							<c:when test="${po.strSCode eq accountInfo.strPosition_Cd }">
 			                              								<c:if test="${po.strSCode ne '000' }">
 			                              									<option value="${po.strSCode }" selected="selected">${po.strName }</option>
 			                              								</c:if>
@@ -74,62 +116,62 @@
 	                   						<tr>
 	                   							<td style="text-align: right;">주소</td>
 	                   							<td colspan="3">
-	                   								<input type="text" id="strZip1" name="strZip1" style="text-align: center; width: 15%;" readonly="readonly" value="${userModify.strZip1 }">
+	                   								<input type="text" id="strZip1" name="strZip1" style="text-align: center; width: 15%;" readonly="readonly" value="${accountInfo.strZip1 }">
 	                   								<span>-</span>
-	                   								<input type="text" id="strZip2" name="strZip2" style="text-align: center; width: 15%;" readonly="readonly" value="${userModify.strZip2 }">
+	                   								<input type="text" id="strZip2" name="strZip2" style="text-align: center; width: 15%;" readonly="readonly" value="${accountInfo.strZip2 }">
 	                   								<input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" value="우편번호 검색" onclick="addrSearch()"/>
-	                   								<input type="text" class="form-control" id="strAddr1" name="strAddr1" style="margin-top: 10px;" readonly="readonly" value="${userModify.strAddr1 }">
-	                   								<input type="text" class="form-control" id="strAddr2" name="strAddr2" style="margin-top: 10px;" value="${userModify.strAddr2 }">
+	                   								<input type="text" class="form-control" id="strAddr1" name="strAddr1" style="margin-top: 10px;" readonly="readonly" value="${accountInfo.strAddr1 }">
+	                   								<input type="text" class="form-control" id="strAddr2" name="strAddr2" style="margin-top: 10px;" value="${accountInfo.strAddr2 }">
 	                   							</td>
 	                   						</tr>
 	                   						<tr>
 	                   							<td style="text-align: right;">전화번호</td>
 	                   							<td colspan="3">
-	                   								<input type="text" id="strCo_Tel1" name="strCo_Tel1" style="text-align: center; width: 100px;" value="${userModify.strCo_Tel1 }">
+	                   								<input type="text" id="strTel1" name="strTel1" style="text-align: center; width: 100px;" value="${accountInfo.strTel1 }">
 	                   								<span>-</span>
-	                   								<input type="text" id="strCo_Tel2" name="strCo_Tel2" style="text-align: center; width: 100px;" value="${userModify.strCo_Tel2 }">
+	                   								<input type="text" id="strTel2" name="strTel2" style="text-align: center; width: 100px;" value="${accountInfo.strTel2 }">
 	                   								<span>-</span>
-	                   								<input type="text" id="strCo_Tel3" name="strCo_Tel3" style="text-align: center; width: 100px;" value="${userModify.strCo_Tel3 }">
+	                   								<input type="text" id="strTel3" name="strTel3" style="text-align: center; width: 100px;" value="${accountInfo.strTel3 }">
 	                   								(내선)
-	                   								<input type="text" id="strCo_Tel_InLine" name="strCo_Tel_InLine" style="text-align: center; width: 100px;" value="${userModify.strCo_Tel_InLine }">
+	                   								<input type="text" id="strInLine" name="strInLine" style="text-align: center; width: 100px;" value="${accountInfo.strInLine }">
 	                   							</td>
 	                   						</tr>
 	                   						<tr>
 	                   							<td style="text-align: right;">팩스번호</td>
 	                   							<td colspan="3">
-	                   								<input type="text" id="strCo_Tel1" name="strCo_Tel1" style="text-align: center; width: 100px;" value="${userModify.strCo_Tel1 }">
+	                   								<input type="text" id="strFax1" name="strFax1" style="text-align: center; width: 100px;" value="${accountInfo.strFax1 }">
 	                   								<span>-</span>
-	                   								<input type="text" id="strCo_Tel2" name="strCo_Tel2" style="text-align: center; width: 100px;" value="${userModify.strCo_Tel2 }">
+	                   								<input type="text" id="strFax2" name="strFax2" style="text-align: center; width: 100px;" value="${accountInfo.strFax2 }">
 	                   								<span>-</span>
-	                   								<input type="text" id="strCo_Tel3" name="strCo_Tel3" style="text-align: center; width: 100px;" value="${userModify.strCo_Tel3 }">
+	                   								<input type="text" id="strFax3" name="strFax3" style="text-align: center; width: 100px;" value="${accountInfo.strFax3 }">
 	                   							</td>
 	                   						</tr>
 	                   						<tr>
 	                   							<td style="text-align: right;">핸드폰</td>
 	                   							<td colspan="3">
-	                   								<input type="text" id="strCo_Tel1" name="strCo_Tel1" style="text-align: center; width: 100px;" value="${userModify.strCo_Tel1 }">
+	                   								<input type="text" id="strMobile1" name="strMobile1" style="text-align: center; width: 100px;" value="${accountInfo.strMobile1 }">
 	                   								<span>-</span>
-	                   								<input type="text" id="strCo_Tel2" name="strCo_Tel2" style="text-align: center; width: 100px;" value="${userModify.strCo_Tel2 }">
+	                   								<input type="text" id="strMobile2" name="strMobile2" style="text-align: center; width: 100px;" value="${accountInfo.strMobile2 }">
 	                   								<span>-</span>
-	                   								<input type="text" id="strCo_Tel3" name="strCo_Tel3" style="text-align: center; width: 100px;" value="${userModify.strCo_Tel3 }">
+	                   								<input type="text" id="strMobile3" name="strMobile3" style="text-align: center; width: 100px;" value="${accountInfo.strMobile3 }">
 	                   							</td>
 	                   						</tr>
 	                   						<tr>
 	                   							<td style="text-align: right;">이메일</td>
 	                   							<td colspan="3">
-	                   								<input type="text" id="strHome_Page" name="strHome_Page" class="form-control" value="${userModify.strHome_Page }">
+	                   								<input type="text" id="strEmail" name="strEmail" class="form-control" value="${accountInfo.strEmail }">
 	                   							</td>
 	                   						</tr>
 	                   						<tr>
 	                   							<td style="text-align: right;">홈페이지</td>
 	                   							<td colspan="3">
-	                   								<input type="text" id="strHome_Page" name="strHome_Page" class="form-control" value="${userModify.strHome_Page }">
+	                   								<input type="text" id="strHomePage" name="strHomePage" class="form-control" value="${accountInfo.strHomePage }">
 	                   							</td>
 	                   						</tr>
 	                   						<tr>
 	                   							<td style="text-align: right;">메모</td>
 	                   							<td colspan="3">
-	                   								<textarea id="strResume" name="strResume" rows="7" cols="" class="form-control">${userModify.strResume }</textarea>
+	                   								<textarea id="strMemo" name="strMemo" rows="7" cols="" class="form-control">${accountInfo.strMemo }</textarea>
 	                   							</td>
 	                   						</tr>
 										</tbody>
@@ -137,7 +179,7 @@
 									
 									<div style="margin-top: 30px; margin-bottom: 10px; text-align: right;">
 										<c:choose>
-											<c:when test="${!empty userModify.strCode }">
+											<c:when test="${!empty accountInfo.strCode }">
 	                   							<input type="button" id="btnModify" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" value="수정" onclick="userSubmit('modify')"/>
 	                   						</c:when>
 	                   						
@@ -145,7 +187,7 @@
 	                   							<input type="button" id="btnInsert" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" value="입력" onclick="userSubmit('insert')"/>
 	                   						</c:otherwise>
 	                   					</c:choose>
-	                   					<input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" value="종료" onclick="location.href='${root}/user/selectall.html'"/>
+	                   					<input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" value="종료" onclick="location.href='${root}/option/accountinfoall.html'"/>
 	                   					<input type="hidden" id="strGet_User_Cd" name="strGet_User_Cd" value="${sessionScope.userInfo.strCode }">
 	                   					<input type="hidden" id="strEdit_User_Cd" name="strEdit_User_Cd" value="${sessionScope.userInfo.strCode }">
 	                   				</div>

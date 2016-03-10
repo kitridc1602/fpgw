@@ -20,10 +20,16 @@ public class OptionController {
 	@RequestMapping(value="/accountinfoall.html")
 	public ModelAndView AccountInfoSelectAll() throws Exception {
 
-		return AccountSelectAll();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("jsp/additional/accountinfolist");
+				
+		ArrayList<AccountInfoDto> list = optionService.AccountInfoSelectAll();
+		mav.addObject("accountInfo", list);
+		
+		return mav;
 	}
 		
-	@RequestMapping(value="/accountinfoSelect.html")
+	@RequestMapping(value="/accountinfoselect.html")
 	public ModelAndView AccountInfoSelect(String strCode) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
@@ -31,28 +37,53 @@ public class OptionController {
 		
 		if(strCode != null){
 			
+			AccountInfoDto accountInfo = optionService.AccountInfoSelect(strCode);
 			
-			mav.addObject("workKind", "¼öÁ¤");
+			mav.addObject("accountInfo", accountInfo);
+			
+			mav.addObject("workKind", "ìˆ˜ì •");
 		} else {
 			
-			mav.addObject("workKind", "ÀÔ·Â");
+			mav.addObject("workKind", "ìž…ë ¥");
 		}
 		
 		
 		return mav;
 	}
 	
+	@RequestMapping(value="/accountinfoinsert.html")
+	public ModelAndView AccountInfoInsert(AccountInfoDto accountDto) throws Exception {
+		
+		optionService.AccountInfoInsert(accountDto);
+		
+		return AccountSelectAll();
+	}
 	
+	@RequestMapping(value="/accountinfomodify.html")
+	public ModelAndView AccoutInfoModify(AccountInfoDto accountDto) throws Exception {
+		
+		optionService.AccountInfoModify(accountDto);
+		
+		return AccountSelectAll();
+	}
 	
+	@RequestMapping(value="/accountinfodelete.html")
+	public ModelAndView AccountInfoDelete(String strCode) throws Exception {
+		
+		optionService.AccountInfoDelete(strCode);
+		
+		return AccountSelectAll();
+	}
 	
 	
 	private ModelAndView AccountSelectAll() throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("jsp/additional/accountinfolist");
+		/*mav.setViewName("jsp/additional/accountinfolist");*/
+		mav.setViewName("redirect:/option/accountinfoall.html");
 		
-		/*ArrayList<AccountInfoDto> list = optionService.AccountInfoSelectAll();
-		mav.addObject("accountInfo", list);*/
+		ArrayList<AccountInfoDto> list = optionService.AccountInfoSelectAll();
+		mav.addObject("accountInfo", list);
 		
 		return mav;
 	}

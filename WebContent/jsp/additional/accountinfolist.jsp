@@ -42,7 +42,7 @@
 								<tr>
 									<td style="text-align: right;">
 										<input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="조회" onclick="location.href='${root }/option/accountinfoall.html'">
-										<input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="신규등록" onclick="location.href='${root }/option/accountinfoSelect.html'">			
+										<input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="신규등록" onclick="location.href='${root }/option/accountinfoselect.html'">			
 									</td>
 								</tr>
 						
@@ -64,7 +64,7 @@
 			                          <th style="text-align: center;">거래처명</th>
 			                          <th style="text-align: center;">성명</th>
 			                          <th style="text-align: center;">전화번호</th>
-			                          <th style="text-align: center;">내선번호</th>
+			                          <th style="text-align: center;">내선</th>
 			                          <th style="text-align: center;">핸드폰</th>
 			                          <th style="text-align: center;">주소</th>
 			                          <th style="text-align: center;">팩스번호</th>
@@ -73,18 +73,32 @@
 			                        </tr>
 	                      		</thead>
 	                      		<tbody>
-			                        <tr>
-			                          <td style="vertical-align: middle;">아름다운 우리나라 만만세</td>
-			                          <td style="vertical-align: middle;">홍길동 과장</td>
-			                          <td style="vertical-align: middle;">070-8585-5858</td>
-			                          <td style="vertical-align: middle;">85582</td>
-			                          <td style="vertical-align: middle;">070-8585-5858</td>
-			                          <td style="vertical-align: middle;">전라남도 광주군 동면읍 목정리 어쩌구 저쩌구</td>
-			                          <td style="vertical-align: middle;">070-8585-5858</td>
-			                          <td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="수정" onclick=""></td>
-			                		  <td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="삭제" onclick=""></td>
-			                        </tr>
-	                        
+	                      		
+	                      			<c:forEach var="list" items="${accountInfo }">
+				                        <tr>
+				                          <td style="vertical-align: middle;">
+				                          
+				                          	<c:choose>
+				                          		<c:when test="${list.strHomePage ne null}">
+				                          			<a href="http://${list.strHomePage }" target="_blink">${list.strVender_Name}</a>
+				                          		</c:when>
+				                          		
+				                          		<c:otherwise>
+				                          			${list.strVender_Name}
+				                          		</c:otherwise>
+				                          		
+				                          	</c:choose>
+				                          </td>
+				                          <td style="vertical-align: middle;">${list.strPerson_Name} ${list.strPosition_Nm }</td>
+				                          <td style="vertical-align: middle;">${list.strTel1}-${list.strTel2}-${list.strTel3}</td>
+				                          <td style="vertical-align: middle;">${list.strInLine}</td>
+				                          <td style="vertical-align: middle;">${list.strMobile1}-${list.strMobile2}-${list.strMobile3}</td>
+				                          <td style="vertical-align: middle;">(${list.strZip1}-${list.strZip2}) ${list.strAddr1} ${list.strAddr2}</td>
+				                          <td style="vertical-align: middle;">${list.strFax1}-${list.strFax2}-${list.strFax3}</td>
+				                          <td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="수정" onclick="location.href='${root }/option/accountinfoselect.html?strCode=${list.strCode }'"></td>
+				                		  <td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="삭제" onclick="location.href='${root }/option/accountinfodelete.html?strCode=${list.strCode }'"></td>
+				                        </tr>
+	                        		</c:forEach>
 	                      		</tbody>
 	                        </table>
 	                      </div>

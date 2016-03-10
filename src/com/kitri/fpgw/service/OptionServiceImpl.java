@@ -2,41 +2,46 @@ package com.kitri.fpgw.service;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kitri.fpgw.dao.OptionDao;
 import com.kitri.fpgw.model.AccountInfoDto;
 
 @Service
 public class OptionServiceImpl implements OptionService {
 
+	@Autowired
+	OptionDao optionDao;
+	
 	@Override
 	public ArrayList<AccountInfoDto> AccountInfoSelectAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+
+		return optionDao.AccountInfoSelectAll();
 	}
 
 	@Override
 	public AccountInfoDto AccountInfoSelect(String strCode) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+
+		return optionDao.AccountInfoSelect(strCode);
 	}
 
 	@Override
 	public void AccountInfoInsert(AccountInfoDto accountDto) throws Exception {
-		// TODO Auto-generated method stub
-		
+
+		optionDao.AccountInfoInsert(accountDto);
 	}
 
 	@Override
 	public void AccountInfoModify(AccountInfoDto accountDto) throws Exception {
-		// TODO Auto-generated method stub
-		
+
+		optionDao.AccountInfoModify(accountDto);
 	}
 
 	@Override
-	public void AccountInfoDelete(AccountInfoDto accoutnDto) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void AccountInfoDelete(String strCode) throws Exception {
+
+		optionDao.AccountInfoDelete(strCode);
 	}
 
 	

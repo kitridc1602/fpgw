@@ -2,6 +2,115 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Option">
 
+	<select id="AccountInfoSelectAll" resultType="com.kitri.fpgw.model.AccountInfoDto">
+		SELECT  AI_CODE STRCODE,
+		        AI_VENDER_NAME STRVENDER_NAME,    AI_PERSON_NAME STRPERSON_NAME,
+		        AI_POSITION STRPOSITION_CD,       CM_NAME STRPOSITION_NM,
+		        AI_ZIP1 STRZIP1,                  AI_ZIP2 STRZIP2, 
+		        AI_ADDR1 STRADDR1,                AI_ADDR2 STRADDR2,
+		        AI_TEL1 STRTEL1,                  AI_TEL2 STRTEL2, 
+		        AI_TEL3 STRTEL3,                  AI_INLINE STRINLINE,
+		        AI_FAX1 STRFAX1,                  AI_FAX2 STRFAX2, 
+		        AI_FAX3 STRFAX3,
+		        AI_MOBILE1 STRMOBILE1,            AI_MOBILE2 STRMOBILE2, 
+		        AI_MOBILE3 STRMOBILE3,
+		        AI_EMAIL STREMAIL,                AI_HOMEPAGE STRHOMEPAGE, 
+		        AI_MEMO STRMEMO,
+		        AI_GET_USER STRGET_USER_CD,       GET_USER.UM_NAME STRGET_USER_NAME,
+		        AI_GET_DATE DATGET_DATE, 
+		        AI_EDIT_USER STREDIT_USER_CD,     EDIT_USER.UM_NAME STREDIT_USER_NAME, 
+		        AI_EDIT_DATE DATEDIT_DATE
+		FROM    ACCOUNT_INFO AI
+		        LEFT OUTER JOIN CODE_MANAGE CM      ON  (CM.CM_BCODE = AI.AI_POSITION_BCODE)
+		                                            AND (CM.CM_SCODE = AI.AI_POSITION)
+		        LEFT OUTER JOIN USER_MAIN GET_USER  ON  (GET_USER.UM_CODE = AI.AI_GET_USER)
+		        LEFT OUTER JOIN USER_MAIN EDIT_USER ON  (EDIT_USER.UM_CODE = AI.AI_EDIT_USER)
+		ORDER BY AI_VENDER_NAME, CM_SORT, AI_PERSON_NAME	
+	</select>
 
+	<select id="AccountInfoSelect" parameterType="String" resultType="com.kitri.fpgw.model.AccountInfoDto">
+		SELECT  AI_CODE STRCODE,
+		        AI_VENDER_NAME STRVENDER_NAME,    AI_PERSON_NAME STRPERSON_NAME,
+		        AI_POSITION STRPOSITION_CD,       CM_NAME STRPOSITION_NM,
+		        AI_ZIP1 STRZIP1,                  AI_ZIP2 STRZIP2, 
+		        AI_ADDR1 STRADDR1,                AI_ADDR2 STRADDR2,
+		        AI_TEL1 STRTEL1,                  AI_TEL2 STRTEL2, 
+		        AI_TEL3 STRTEL3,                  AI_INLINE STRINLINE,
+		        AI_FAX1 STRFAX1,                  AI_FAX2 STRFAX2, 
+		        AI_FAX3 STRFAX3,
+		        AI_MOBILE1 STRMOBILE1,            AI_MOBILE2 STRMOBILE2, 
+		        AI_MOBILE3 STRMOBILE3,
+		        AI_EMAIL STREMAIL,                AI_HOMEPAGE STRHOMEPAGE, 
+		        AI_MEMO STRMEMO,
+		        AI_GET_USER STRGET_USER_CD,       GET_USER.UM_NAME STRGET_USER_NAME,
+		        AI_GET_DATE DATGET_DATE, 
+		        AI_EDIT_USER STREDIT_USER_CD,     EDIT_USER.UM_NAME STREDIT_USER_NAME, 
+		        AI_EDIT_DATE DATEDIT_DATE
+		FROM    ACCOUNT_INFO AI
+		        LEFT OUTER JOIN CODE_MANAGE CM      ON  (CM.CM_BCODE = AI.AI_POSITION_BCODE)
+		                                            AND (CM.CM_SCODE = AI.AI_POSITION)
+		        LEFT OUTER JOIN USER_MAIN GET_USER  ON  (GET_USER.UM_CODE = AI.AI_GET_USER)
+		        LEFT OUTER JOIN USER_MAIN EDIT_USER ON  (EDIT_USER.UM_CODE = AI.AI_EDIT_USER)
+		WHERE 	(AI_CODE = #{strCode})	
+	</select>
+	
+	<insert id="AccountInfoInsert" parameterType="com.kitri.fpgw.model.AccountInfoDto">
+		INSERT INTO ACCOUNT_INFO
+		  (
+		    AI_CODE,
+		    AI_VENDER_NAME,     AI_PERSON_NAME,
+		    AI_POSITION_BCODE,  AI_POSITION,
+		    AI_ZIP1,            AI_ZIP2,          AI_ADDR1,       AI_ADDR2,
+		    AI_TEL1,            AI_TEL2,          AI_TEL3,        AI_INLINE,
+		    AI_FAX1,            AI_FAX2,          AI_FAX3,
+		    AI_MOBILE1,         AI_MOBILE2,       AI_MOBILE3,
+		    AI_EMAIL,           AI_HOMEPAGE,      AI_MEMO,
+		    AI_GET_USER,        AI_GET_DATE,      AI_EDIT_USER,   AI_EDIT_DATE
+		  )
+		SELECT SUBSTR('00000' || TO_CHAR(NVL(MAX(AI_CODE), 0) + 1), -5) STRCODE,
+				#{strVender_Name}, 		#{strPerson_Name},
+				'100', 					#{strPosition_Cd},
+				#{strZip1}, 			#{strZip2}, 		#{strAddr1}, 			#{strAddr1},
+				#{strTel1}, 			#{strTel2}, 		#{strTel3}, 			#{strInLine},
+				#{strFax1}, 			#{strFax2}, 		#{strFax3},
+				#{strMobile1}, 			#{strMobile2}, 		#{strMobile3},
+				#{strEmail}, 			#{strHomePage}, 	#{strMemo},
+				#{strGet_User_Cd}, 		SYSDATE, 			#{strEdit_User_Cd}, 	SYSDATE
+		FROM ACCOUNT_INFO	
+	</insert>
+	
+	<update id="AccountInfoUpdate" parameterType="com.kitri.fpgw.model.AccountInfoDto">
+		UPDATE ACCOUNT_INFO
+		SET 
+		    AI_VENDER_NAME = #{strVender_Name},
+		    AI_PERSON_NAME = #{strPerson_Name},
+		    AI_POSITION = #{strPosition_Cd},
+		    AI_ZIP1 = #{strZip1},
+		    AI_ZIP2 = #{strZip2},
+		    AI_ADDR1 = #{strAddr1},
+		    AI_ADDR2 = #{strAddr2},
+		    AI_TEL1 = #{strTel1},
+		    AI_TEL2 = #{strTel2},
+		    AI_TEL3 = #{strTel3},
+		    AI_INLINE = #{strInLine},
+		    AI_FAX1 = #{strFax1},
+		    AI_FAX2 = #{strFax2},
+		    AI_FAX3 = #{strFax3},
+		    AI_MOBILE1 = #{strMobile1},
+		    AI_MOBILE2 = #{strMobile2},
+		    AI_MOBILE3 = #{strMobile3},
+		    AI_EMAIL = #{strEmail},
+		    AI_HOMEPAGE = #{strHomePage},
+		    AI_MEMO = #{strMemo},
+		    AI_EDIT_USER = #{strEdit_User_Cd},
+		    AI_EDIT_DATE = SYSDATE
+		WHERE (AI_CODE = #{strCode})	
+	</update>
+	
+	<delete id="AccountInfoDelete" parameterType="String">
+		DELETE
+		FROM 	ACCOUNT_INFO
+		WHERE 	(AI_CODE = #{strCode})	
+	</delete>
 
 </mapper>

@@ -10,5 +10,5 @@ public interface OptionDao {
 	public AccountInfoDto AccountInfoSelect(String strCode) throws Exception;
 	public void AccountInfoInsert(AccountInfoDto accountDto) throws Exception;
 	public void AccountInfoModify(AccountInfoDto accountDto) throws Exception;
-	public void AccountInfoDelete(AccountInfoDto accoutnDto) throws Exception;
+	public void AccountInfoDelete(String strCode) throws Exception;
 }
