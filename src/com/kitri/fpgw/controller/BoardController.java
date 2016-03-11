@@ -181,6 +181,18 @@ public class BoardController {
 
 		return mav;
 	}
+	
+	//댓글리스트
+	@RequestMapping( value = "/commentlist.html")
+	public ModelAndView cmtList(@RequestParam(value="num") int intSeq) throws Exception{
+		System.out.println(intSeq);
+		ModelAndView mav =new ModelAndView();
+		ArrayList<BoardMainDto> commentList = boardService.getCommentList(intSeq);
+		mav.addObject("commentList", commentList);
+		mav.setViewName("jsp/board/commentList");
+		
+		return mav;
+	}
 
 	// 댓글 입력
 	@RequestMapping(value="/addComment.html", method=RequestMethod.POST)
@@ -192,10 +204,9 @@ public class BoardController {
 			@RequestParam("ccstrGroup") String ccstrGroup, 
 			@RequestParam("ccstrKindCode") String ccstrKindCode, 
 			@RequestParam("ccstrKind") String ccstrKind, 
-			@RequestParam("ccintSeq") int ccintSeq 
+			@RequestParam("ccintSeq") int ccintSeq
 			) throws Exception{
-		
-			
+					
 		BoardMainDto boardMainDto=new BoardMainDto();
 		boardMainDto.setStrDetailComment(ccstrDetailComment);
 		boardMainDto.setStrWriterCode(ccstrWriterCode);
@@ -206,10 +217,9 @@ public class BoardController {
 		boardMainDto.setIntPseq(ccintSeq);
 		boardMainDto.setStrTitle(ccstrTitle);
 		
+		
 		boardService.addComment(boardMainDto);
-		
-		
-		
+			
 		JSONObject json = new JSONObject();
 		/*json.put("ccstrDetailComment", boardMainDto.getStrDetailComment());
 		json.put("ccstrWriterCode", boardMainDto.getStrName());
@@ -218,6 +228,7 @@ public class BoardController {
 /*		json.put("ccstrGroupCode", boardMainDto.getStrGroupCode());
 		json.put("ccstrGroup", boardMainDto.getStrGroup());
 		json.put("ccstrKindCode", value)*/
+		json.put("ccstrName", boardMainDto.getStrName());
 		json.put("ok", "success");
 		return json.toJSONString();
 	}

@@ -3,118 +3,101 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath }" />
+
 <!DOCTYPE html>
 
 <html lang="en">
 
 <script type="text/javascript">
 
-	function comment(kind){
-	
-		var root = "${root}";
+// 댓글 입력 메소드
+	function doCreateCmt(){
+
+		var root = "${root}"; 	
+		var detailcomment = document.getElementById("ccstrDetailComment").value;
+		var writer = document.getElementById("ccstrWriterCode").value;
+		var gcode = document.getElementById("ccstrGroupCode").value;
+		var g = document.getElementById("ccstrGroup").value;
+		var kcode = document.getElementById("ccstrKindCode").value;
+		var k = document.getElementById("ccstrKind").value;
+		var pseq = document.getElementById("ccintSeq").value;
+		var title = document.getElementById("ccstrTitle").value;
+		var name = document.getElementById("ccstrName").value;
+		var ripple = $("#ripple");
 		
-		switch(kind){
-	
-			case 'insert':
-							
-				var detailcomment = document.getElementById("ccstrDetailComment").value;
-				var writer = document.getElementById("ccstrWriterCode").value;
-				var gcode = document.getElementById("ccstrGroupCode").value;
-				var g = document.getElementById("ccstrGroup").value;
-				var kcode = document.getElementById("ccstrKindCode").value;
-				var k = document.getElementById("ccstrKind").value;
-				var pseq = document.getElementById("ccintSeq").value;
-				var title = document.getElementById("ccstrTitle").value;
-				var ripple = $("#ripple");
+		if($('#ccstrDetailComment').val() == ''){
+			alert("댓글 내용입력은 필수 입니다.");
+			$('#ccstrDetailComment').focus();
+			return;
+			}			
+		//버튼 중복 클릭 방지
+		$('#insertbtn').attr('disables','disabled');
+		
+		$.ajax({	
+			
+			type: "POST",
+			dataType: "json",
+			url: root + "/board/addComment.html",
+			data: {
+				"ccstrDetailComment": detailcomment,
+				"ccstrWriterCode": writer,
+				"ccstrGroupCode": gcode,
+				"ccstrGroup": g,
+				"ccstrKindCode": kcode,
+				"ccstrKind": k,
+				"ccintSeq": pseq,
+				"ccstrTitle" : title
 				
-				$.ajax({				
-					type: "POST",
-					dataType: "json",
-					url: root + "/board/addComment.html",
-					data: {
-							"ccstrDetailComment": detailcomment,
-							"ccstrWriterCode": writer,
-							"ccstrGroupCode": gcode,
-							"ccstrGroup": g,
-							"ccstrKindCode": kcode,
-							"ccstrKind": k,
-							"ccintSeq": pseq,
-							"ccstrTitle" : title
-							
-							},
-					success: function(data) {
-						
-						if(data.ok == "success"){
-							var output = '';
-							output += '	<div class="media" >';
-							output += '		<div class="media-left">';
-							output += '			<a href="#"> <img src="asset/img/avatar2.png" width="30px" />&nbsp;</a> '; 
-							output += '			<span class="media-middle"> '; 
-							output += '			<span>'+ writer +'&nbsp;&nbsp;&nbsp;<%= new Date() %>&nbsp;&nbsp;&nbsp;&nbsp; '; 																				
-							output += '				<input type="button" class="btn btn-3d" value="수정"	onclick="location.href=\'${root }/board/modifygo.html?workkind=001&subworkkind=001&num=${list.intSeq }\'" /> ';
-							output += '				<input type="button" class="btn btn-3d" value="삭제"	onclick="location.href=\'${root }/board/deletecomment.html?num=${list.intSeq}\'" /> ';
-							output += '			<br> ';
-							output += '			</span> '; 
-							output += '			<span>'+ detailcomment +'<br></span> '; 
-							output += '			</span> ';
-							output += '		<hr> ';
-							output += '	</div> ';
-							output += '</div> ';
-													
-							ripple.append(output);						
-														}				
 					},
-					error:function(request,status,error){
-					    alert("code:"+request.status+"\n"+"message:"+request.responseText);
-					}				
-				});		
+					
+			success: function(data) {
 				
-				break;
-			
-			case 'modify':
-				
-				var seq = document.getElementById("mmintSeq");
-				var name = document.getElementById("mmstrName");
-				var comm = document.getElementById("mmstrComment");
-				
-				$.ajax({				
-					type: "POST",
-					dataType: "json",
-					url: root + "/board/modifycomment.html",
-					data: {
-							"mmintSeq": seq,
-							"mmstrName": name,
-							"mmstrComment": comm
-													
-							},
-					success: function(data) {
-						
-						if(data.ok == "success"){
-							var output = '';
-						
-													
-							ripple.append(output);						
-														}				
+				if(data.ok == "success"){
+					
+					$('#ccstrDetailComment').val(''); //내용 비우기
+					//다시 클릭 가능하게 만들기
+					$('#insertbtn').attr("disabled",false);
+					
+					var output = '';
+					output += '	<div class="media" >';
+					output += '		<div class="media-left">';
+					output += '			<a href="#"> <img src="${root }${sessionScope.userImageInfo.strFace_Path }${sessionScope.userImageInfo.strFace_Name }" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" width="30px" />&nbsp;</a> '; 
+					output += '			<span class="media-middle"> '; 
+					output += '			<span>${sessionScope.userInfo.strName }&nbsp;&nbsp;&nbsp;<%= new Date() %>&nbsp;&nbsp;&nbsp;&nbsp; '; 																				
+					output += '				<input type="button" class="btn btn-3d" value="수정"	onclick="location.href=\'${root }/board/modifygo.html?workkind=001&subworkkind=001&num=${list.intSeq }\'" /> ';
+					output += '				<input type="button" class="btn btn-3d" value="삭제"	onclick="location.href=\'${root }/board/deletecomment.html?num=${list.intSeq}\'" /> ';
+					output += '			<br> ';
+					output += '			</span> '; 
+					output += '			<span>'+ detailcomment +'<br></span> '; 
+					output += '			</span> ';
+					output += '		<hr> ';
+					output += '	</div> ';
+					output += '</div> ';
+											
+					ripple.append(output);				
+					
+				}				
 					},
-					error:function(request,status,error){
-					    alert("code:"+request.status+"\n"+"message:"+request.responseText);
-					}				
-				});		
-								
-				break;
 			
-			case 'delete':
-			
-				break;
-		}	
-	
+			error: function(request,status,error){
+			    alert("code:"+request.status+"\n"+"message:"+request.responseText);
+					}	
+		}									
+		);	
 }
+
+	//댓글 리스트 가져오는 메서드
+	
+	function commentList(){
+		
+		$('#insertplace').load('${root }/board/commentlist.html?num=${list.intSeq }');
+		alert("list in");
+	}
 
 
 	function modifyViewChange(workKind){
 		
-		//workKind : 수정, 수정취소
-		
+		//workKind : 수정, 수정취소		
 		var rippleParent = $("#rippleParent");
 		var btnRippleDel = $("#btnRippleDel");
 		var btnRippleEdit = $("#btnRippleEdit");
@@ -285,7 +268,7 @@
 			<c:forEach var="list" items="${commentList}">
 				<div class="media" >
 					<div class="media-left" id="rippleParent">
-						<a href="#"> <img src="asset/img/avatar2.png" width="30px" />&nbsp;</a> 
+						<img src="${root }${list.strFaceName }${list.strFacePath }" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/> &nbsp;
 						<span class="media-middle"> 
 							<span>
 								<input type="hidden" id="mmintSeq" name="intSeq" value="${list.intSeq}">
@@ -318,7 +301,7 @@
 					</div>
 				</div>
 			</c:forEach>
-
+			<div id="insertplace"></div>
 		</div>
 	</div>
 
@@ -331,7 +314,7 @@
 		<div class="media" style="height: auto" style="min-height:100px">
 
 			<div class="media-left" style="height: auto; min-height: 100px; float: left" style="width:10%">
-				<a href="#"><img src="asset/img/avatar2.png" width="30px" />&nbsp;</a>
+				<a href="#"><img src="${root }${sessionScope.userImageInfo.strFace_Path }${sessionScope.userImageInfo.strFace_Name }" class="img-circle avatar" alt="user name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" width="30px" />&nbsp;</a>
 			</div>
 
 
@@ -348,13 +331,14 @@
 					<input type="hidden" id="ccstrKind" name="strKind" value="002"> 
 					<input type="hidden" id="ccintSeq" name="intSeq" value="${read.intSeq}">
 					<input type="hidden" id="ccstrTitle" name="strTitle" value="">
+					<input type="hidden" id="ccstrName" name="strName" value="${sessionScope.userInfo.strName }">
 				</div>
 				<div style="height: auto; min-height: 100px; float: left; width: 80%">
 					
 					<!--댓글달기 ajax 사용 안하는거 
 					 <input type="submit" class="btn btn-3d" value="입력"> -->
 					
-					<input type="button"  class="btn btn-3d" value="입력" onclick="comment('insert')">
+					<input type="button"  id="insertbtn" class="btn btn-3d" value="입력" onclick="doCreateCmt()">
 					<!-- <button class="btn btn-3d" value="입력" onclick="commentInsert()"></button> -->
 				</div>
 				
