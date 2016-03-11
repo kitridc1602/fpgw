@@ -23,6 +23,7 @@ public class BoardMainDto {
 	private String strComment; //댓글내용
 	private String strCommenterCode; //댓글 작성자
 	private String strFaceName; //댓글사용자이미지
+	private String strFacePath; //댓글사용자이미지경로
 	private Date datComment_Date; //코멘트 작성시간	
 	private Date datGet_Date; //작성시간
 	private Date datEdit_Date; //수정시간
@@ -45,7 +46,7 @@ public class BoardMainDto {
 	public BoardMainDto(int intSeq, int intNum, int intPseq, String strGroup, String strGroupCode, String strKind,
 			String strKindCode, String strTitle, String strDetailComment, String strWriterCode, String strEditerCode,
 			String strViewerCode, String strFilerCode, String strName, String strId, String strComment,
-			String strCommenterCode, String strFaceName, Date datComment_Date, Date datGet_Date, Date datEdit_Date,
+			String strCommenterCode, String strFaceName,String strFacePath, Date datComment_Date, Date datGet_Date, Date datEdit_Date,
 			Date datView_Date, Date datFile_Date, String attachFileNo, int intBf_Bm_Seq, int intBf_Seq,
 			String strBf_OriginalName, String strBf_SaveName, String strBf_Path, int intHit, String strSearch,int intCommentCount) {
 		super();
@@ -67,6 +68,7 @@ public class BoardMainDto {
 		this.strComment = strComment;
 		this.strCommenterCode = strCommenterCode;
 		this.strFaceName = strFaceName;
+		this.strFacePath = strFacePath;
 		this.datComment_Date = datComment_Date;
 		this.datGet_Date = datGet_Date;
 		this.datEdit_Date = datEdit_Date;
@@ -339,6 +341,14 @@ public class BoardMainDto {
 
 	public void setStrSearch(String strSearch) {
 		this.strSearch = strSearch;
+	}
+
+	public String getStrFacePath() {
+		return strFacePath;
+	}
+
+	public void setStrFacePath(String strFacePath) {
+		this.strFacePath = strFacePath;
 	}
 
 	
