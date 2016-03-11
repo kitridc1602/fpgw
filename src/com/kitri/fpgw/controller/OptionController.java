@@ -75,6 +75,15 @@ public class OptionController {
 		return AccountSelectAll();
 	}
 	
+	@RequestMapping(value="/accountlocation.html")
+	public ModelAndView AccountLocationMapSearch() throws Exception{
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/jspc/addr/map");
+		
+		return mav;
+	}
+	
 	
 	private ModelAndView AccountSelectAll() throws Exception {
 		

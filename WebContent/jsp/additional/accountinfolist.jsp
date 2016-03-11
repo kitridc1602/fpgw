@@ -7,7 +7,10 @@
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=9ec6ce4058e3bebfa9dee609084bbd13&libraries=services"></script>
 <script type="text/javascript">
 
-	function venderSearch(){
+	function venderSearch(id, kind, addr){
+		
+		
+		mapTagModify(id, kind);
 		
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = {
@@ -22,7 +25,7 @@
 		var geocoder = new daum.maps.services.Geocoder();
 
 		// 주소로 좌표를 검색합니다
-		geocoder.addr2coord('제주특별자치도 제주시 첨단로 242', function(status, result) {
+		geocoder.addr2coord(addr, function(status, result) {
 
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === daum.maps.services.Status.OK) {
@@ -45,6 +48,34 @@
 		
 	}
 
+	function mapTagModify(id, kind){
+		
+		
+		var tdID = $(id);
+		
+		if(kind == 'insert'){
+
+			var insertTag = '';			
+			insertTag += ' 			<div id="map" style="width: 500px; height: 400px;"></div> ';
+			insertTag += ' 			<div id="btnRemove" style="width: 500px; text-align: right;"> ';
+			insertTag += ' 				<button id="btnRemove" onclick="mapTagModify(td${list.strCode }, \'delete\')">닫기</button> ';
+			insertTag += ' 			</div> ';
+			
+			
+			tdID.append(insertTag);
+			
+		} else {
+			
+			$('#tbMap').empty();
+			
+		}
+		
+		
+		
+		
+	}
+	
+	
 </script>
 
           <!-- start: content -->
@@ -137,17 +168,19 @@
 				                          <td style="vertical-align: middle;">${list.strTel1}-${list.strTel2}-${list.strTel3}</td>
 				                          <td style="vertical-align: middle;">${list.strInLine}</td>
 				                          <td style="vertical-align: middle;">${list.strMobile1}-${list.strMobile2}-${list.strMobile3}</td>
-				                          <td style="vertical-align: middle;">
+				                          <td style="vertical-align: middle;" id="td${list.strCode }">
 					                          <c:choose>
 					                          		<c:when test="${list.strAddr2 ne null}">
-					                          			<a href="" data-toggle="modal" data-target="#vendermap" onclick="venderSearch()"><span class="icons icon-compass"></span></a>&nbsp;&nbsp;(${list.strZip1}-${list.strZip2}) ${list.strAddr1} ${list.strAddr2}
+					                          			<p><a href="" onclick="window.open('${root}/option/accountlocation.html, '거래처 위치 확인', 'width=500, height=400')"><span class="icons icon-compass"></span></a>&nbsp;&nbsp;(${list.strZip1}-${list.strZip2}) ${list.strAddr1} ${list.strAddr2}</p>
 					                          		</c:when>
 					                          		
 					                          		<c:otherwise>
-					                          			(${list.strZip1}-${list.strZip2}) ${list.strAddr1} ${list.strAddr2}
+					                          			<p>(${list.strZip1}-${list.strZip2}) ${list.strAddr1} ${list.strAddr2}</p>
 					                          		</c:otherwise>
 					                          		
 					                          	</c:choose>
+					                          	
+					                          	
 				                          </td>
 				                          <td style="vertical-align: middle;">${list.strFax1}-${list.strFax2}-${list.strFax3}</td>
 				                          <td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="수정" onclick="location.href='${root }/option/accountinfoselect.html?strCode=${list.strCode }'"></td>
@@ -162,26 +195,6 @@
 	              </div>
 	              <div class="col-md-1"></div>
               </div>
-        <!--start : 거래처 지도 토글 -->      
-		<div class="modal fade" id="vendermap">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">거래처 위치</h4>
-					</div>
-					<div class="modal-body" align="center">
-						<div id="map" style="width: 500px; height: 400px;"></div>
-					</div>
-					<div class="modal-footer">
-						<input type="hidden" id="selectdepartcode" name="selectdepartcode">
-						<label id="selectdepartname"></label>
-						<button type="button" class="btn btn-default" data-dismiss="modal">종료</button>
-					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div>
-	<!--end : 거래처 지도 토글 -->
 					<!-- end : 메뉴 디자인 구성하는 위치 -->
 					
            </div>
