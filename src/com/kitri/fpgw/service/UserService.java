@@ -14,4 +14,5 @@ public interface UserService {
 	public void UserInsert(UserModifyDto userModifyDto, HttpServletRequest request) throws Exception;
 	public void UserModify(UserModifyDto userModifyDto, HttpServletRequest request) throws Exception;
 	public void UserDelete(String strCode) throws Exception;
+	public int UserIdCheck(String strID) throws Exception;
 }

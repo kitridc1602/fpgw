@@ -13,9 +13,108 @@
 <script type="text/javascript">
 
 	/* 입력사항 체크 */
+	
+	function idCheck(){
+		
+		var strID = $("#strID");
+		var cID = $("#strID").val();
+		
+		if(cID != null){
+			
+			if(cID.length > 6){
+				
+				var root = "${root }";
+				
+				$.ajax({
+					
+					url: root + "/user/idcheck.html",
+					type: "POST",
+					dataType: "json",
+					data: {"strID" : cID},
+					success:function(data){
+					
+						if(data.cnt == 0){
+							
+							strID.css('background-color', '#82FC63');
+						} else {
+							
+							strID.css('background-color', '#F75B5B');
+						}
+					},
+					error:function(error){
+						
+						alert("error~~~~~!!");
+					}
+					
+					
+					
+				});
+			} else if (cID.length == 0) {
+				
+				strID.css('background-color', '');
+			} else{
+				
+				strID.css('background-color', '#F75B5B');
+			}
+			
+		}
+		
+	}
+	
+	function passwordCheck(){
+		
+		var firstPWD = $("#strPWD");
+		var secondPWD = $("#restrPWD");
+		
+		var firstValue = $("#strPWD").val();
+		var secondValue = $("#restrPWD").val();
+		
+		if((firstValue.length == 0) && (secondValue.length == 0)){
+			
+			firstPWD.css('background-color', '');
+			secondPWD.css('background-color', '');
+		} else {
+		
+			if((firstValue.length > 6) 
+					&& (secondValue.length > 6)
+					&& (firstValue == secondValue)){
+				
+				firstPWD.css('background-color', '#82FC63');
+				secondPWD.css('background-color', '#82FC63');
+			} else {
+				
+				firstPWD.css('background-color', '#F75B5B');
+				secondPWD.css('background-color', '#F75B5B');
+			}
+		
+		}
+		
+	}
+	
+	
+	
 	function checkInfomation(kind){
 	
 		var resulet = true;
+		
+		var id = $("#strID").css('background-color');
+		var strPWD = $("#strPWD").css('background-color');
+		var restrPWD = $("#restrPWD").css('background-color');
+		
+		if(id != "rgb(130, 252, 99)"){
+			
+			alert("아이디가 올바르지 않습니다.");			
+			result = false;
+			return;
+		}
+		
+		if((strPWD != "rgb(130, 252, 99)")
+				|| (restrPWD != "rgb(130, 252, 99)")){
+			
+			alert("비밀번호가 올바르지 않습니다.");
+			result = false;
+			return;
+		}
 		
 		return resulet;
 	}
@@ -24,7 +123,7 @@
 	function userSubmit(kind){
 		
 		if(checkInfomation(kind)){
-			
+		 
 			var userModify = document.getElementById('userModify');
 			
 			if(kind == 'insert'){
@@ -156,7 +255,15 @@
 	                   								<h6>아이디</h6>
 	                   							</td>
 	                   							<td>
-                   									<input type="text" class="form-control" id="strID" name="strID"  value="${userModify.strID }">
+	                   								<c:choose>
+	                   									<c:when test="${userModify.strID ne null}">
+	                   										<input type="text" class="form-control" id="strID" name="strID" readonly="readonly" value="${userModify.strID }">
+	                   									</c:when>
+	                   									
+	                   									<c:otherwise>
+	                   										<input type="text" class="form-control" id="strID" name="strID" onkeyup="idCheck()" placeholder="7글자 이상">
+	                   									</c:otherwise>
+	                   								</c:choose>
 	                   							</td>
 	                   							
 	                   							<td align="right" style="width: 10%;">
@@ -189,13 +296,13 @@
 	                   								<h6>비밀번호</h6>
 	                   							</td>
 	                   							<td>
-	                   								<input type="password" id="strPWD" name="strPWD"  value="${userModify.strPWD }" class="form-control">
+	                   								<input type="password" id="strPWD" name="strPWD"  value="${userModify.strPWD }" class="form-control" onkeyup="passwordCheck()" placeholder="7글자 이상">
 	                   							</td>
 	                   							<td align="right">
 	                   								<h6>비밀번호 확인</h6>
 	                   							</td>
 	                   							<td>
-	                   								<input type="password" id="restrPWD" name="restrPWD"  value="${userModify.strPWD }" class="form-control">
+	                   								<input type="password" id="restrPWD" name="restrPWD"  value="${userModify.strPWD }" class="form-control" onkeyup="passwordCheck()" placeholder="7글자 이상">
 	                   							</td>
 	                   						</tr>
 	                   						<tr>
@@ -329,11 +436,11 @@
 	                   								<h6>주소</h6>
 	                   							</td>
 	                   							<td colspan="6">
-	                   								<input type="text" id="strZip1" name="strZip1" style="text-align: center; width: 10%;" value="${userModify.strZip1 }">
+	                   								<input type="text" id="strZip1" name="strZip1" style="text-align: center; width: 10%;" readonly="readonly" value="${userModify.strZip1 }">
 	                   								<span>-</span>
-	                   								<input type="text" id="strZip2" name="strZip2" style="text-align: center; width: 10%;" value="${userModify.strZip2 }">
+	                   								<input type="text" id="strZip2" name="strZip2" style="text-align: center; width: 10%;" readonly="readonly" value="${userModify.strZip2 }">
 	                   								<input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" value="우편번호 검색" onclick="addrSearch()"/>
-	                   								<input type="text" class="form-control" id="strAddr1" name="strAddr1" style="margin-top: 10px; width: 70%;" value="${userModify.strAddr1 }">
+	                   								<input type="text" class="form-control" id="strAddr1" name="strAddr1" style="margin-top: 10px; width: 70%;" readonly="readonly" value="${userModify.strAddr1 }">
 	                   								<input type="text" class="form-control" id="strAddr2" name="strAddr2" style="margin-top: 10px; width: 70%;" value="${userModify.strAddr2 }">
 	                   							</td>
 	                   						</tr>

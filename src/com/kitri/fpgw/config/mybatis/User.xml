@@ -150,7 +150,11 @@
 		WHERE (UI_UM_CODE = #{strCode})
 	</update>
 	
-	
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT 	NVL(COUNT(UM_CODE), 0) CNT
+		FROM 	USER_MAIN
+		WHERE 	(UM_ID = #{strID})
+	</select>
 	
 	
 	
