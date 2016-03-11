@@ -76,5 +76,10 @@ public class UserDaoImpl implements UserDao {
 		sqlSessionTemplate.update("userImageModify", userImageDto);
 	}
 
+	@Override
+	public int UserIdCheck(String strID) throws Exception {
+
+		return sqlSessionTemplate.selectOne("idCheck", strID);
+	}
 	
 }

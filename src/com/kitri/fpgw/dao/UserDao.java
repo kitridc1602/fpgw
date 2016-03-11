@@ -15,4 +15,5 @@ public interface UserDao {
 	public void UserDelete(String strCode) throws Exception;
 	public UserImageDto UserImageSelect(String strCode) throws Exception;
 	public void UserImageModify(UserImageDto userImageDto) throws Exception;
+	public int UserIdCheck(String strID) throws Exception;
 }

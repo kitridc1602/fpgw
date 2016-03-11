@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kitri.fpgw.model.UserDto;
@@ -102,8 +104,7 @@ public class UserController {
 				
 		return ModuleSelectAll();
 	}
-	
-	
+		
 	private ModelAndView ModuleSelectAll() throws Exception{
 		
 		ModelAndView mav = new ModelAndView();
@@ -113,6 +114,18 @@ public class UserController {
 		mav.addObject("userDto", userAllDto);
 		
 		return mav;
+	}
+	
+	@RequestMapping(value="/idcheck.html")
+	public @ResponseBody String UserIdCheck(String strID) throws Exception {
+		
+		int iCnt = UserService.UserIdCheck(strID);
+		
+		JSONObject json = new JSONObject();
+		json.put("cnt", iCnt);
+		
+		return json.toJSONString();
+
 	}
 	
 }

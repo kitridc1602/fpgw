@@ -94,5 +94,12 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	}
+
+	@Override
+	public int UserIdCheck(String strID) throws Exception {
+
+		return userDao.UserIdCheck(strID);
+	}
+	
 	
 }
