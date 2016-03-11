@@ -77,6 +77,7 @@ public class BoardDaoImpl implements BoardDao {
 	public void CommentInsert(BoardMainDto boardMainDto) throws Exception {
 
 		SqlSessionTemplate.insert("InsertComment", boardMainDto);
+		System.out.println("s");
 		
 	}
 

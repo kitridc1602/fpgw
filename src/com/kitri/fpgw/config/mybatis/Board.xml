@@ -170,10 +170,10 @@
 		
 		INSERT INTO BOARD_MAIN
 			SELECT 
- 					NVL(MAX(BM_SEQ), 0) + 1, 	#{intSeq},
+ 					NVL(MAX(BM_SEQ), 0) + 1, 	#{intPseq},
 					#{strGroupCode},			#{strGroup},
  					#{strKindCode},				#{strKind},
- 					null	,					#{strDetailComment},
+ 					#{strTitle},				#{strDetailComment},
  					#{strWriterCode},			SYSDATE,
  					#{strWriterCode},			SYSDATE
 			FROM 	

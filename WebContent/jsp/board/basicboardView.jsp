@@ -1,4 +1,5 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@page import="java.util.Date"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath }" />
@@ -8,47 +9,152 @@
 
 <script type="text/javascript">
 
-function commentInsert(){
+	function comment(kind){
 	
-	alert("commentInsert in");
-	
-	var root = ${root };
-	/* var commentWrite = document.getElementById("commentWrite"); */
-	
-	alert("commentInsert start");
-	
-	$.ajax({
-			
+		var root = "${root}";
 		
-			type : 'POST',
-			dataType : 'json',
-			url : root + '/board/addComment.html',
-			/* data : {'boardMainDto':commentWrite}, */
-			success : function(data) {
-			
-			if(data.result == 'sucess'){
+		switch(kind){
+	
+			case 'insert':
+							
+				var detailcomment = document.getElementById("ccstrDetailComment").value;
+				var writer = document.getElementById("ccstrWriterCode").value;
+				var gcode = document.getElementById("ccstrGroupCode").value;
+				var g = document.getElementById("ccstrGroup").value;
+				var kcode = document.getElementById("ccstrKindCode").value;
+				var k = document.getElementById("ccstrKind").value;
+				var pseq = document.getElementById("ccintSeq").value;
+				var title = document.getElementById("ccstrTitle").value;
+				var ripple = $("#ripple");
 				
-				alert("sucess~~~~~~!!!");					
-			
-			} else {
+				$.ajax({				
+					type: "POST",
+					dataType: "json",
+					url: root + "/board/addComment.html",
+					data: {
+							"ccstrDetailComment": detailcomment,
+							"ccstrWriterCode": writer,
+							"ccstrGroupCode": gcode,
+							"ccstrGroup": g,
+							"ccstrKindCode": kcode,
+							"ccstrKind": k,
+							"ccintSeq": pseq,
+							"ccstrTitle" : title
+							
+							},
+					success: function(data) {
+						
+						if(data.ok == "success"){
+							var output = '';
+							output += '	<div class="media" >';
+							output += '		<div class="media-left">';
+							output += '			<a href="#"> <img src="asset/img/avatar2.png" width="30px" />&nbsp;</a> '; 
+							output += '			<span class="media-middle"> '; 
+							output += '			<span>'+ writer +'&nbsp;&nbsp;&nbsp;<%= new Date() %>&nbsp;&nbsp;&nbsp;&nbsp; '; 																				
+							output += '				<input type="button" class="btn btn-3d" value="수정"	onclick="location.href=\'${root }/board/modifygo.html?workkind=001&subworkkind=001&num=${list.intSeq }\'" /> ';
+							output += '				<input type="button" class="btn btn-3d" value="삭제"	onclick="location.href=\'${root }/board/deletecomment.html?num=${list.intSeq}\'" /> ';
+							output += '			<br> ';
+							output += '			</span> '; 
+							output += '			<span>'+ detailcomment +'<br></span> '; 
+							output += '			</span> ';
+							output += '		<hr> ';
+							output += '	</div> ';
+							output += '</div> ';
+													
+							ripple.append(output);						
+														}				
+					},
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText);
+					}				
+				});		
 				
+				break;
+			
+			case 'modify':
 				
-			}
+				var seq = document.getElementById("mmintSeq");
+				var name = document.getElementById("mmstrName");
+				var comm = document.getElementById("mmstrComment");
+				
+				$.ajax({				
+					type: "POST",
+					dataType: "json",
+					url: root + "/board/modifycomment.html",
+					data: {
+							"mmintSeq": seq,
+							"mmstrName": name,
+							"mmstrComment": comm
+													
+							},
+					success: function(data) {
+						
+						if(data.ok == "success"){
+							var output = '';
+						
+													
+							ripple.append(output);						
+														}				
+					},
+					error:function(request,status,error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText);
+					}				
+				});		
+								
+				break;
 			
+			case 'delete':
 			
-		},
-		error:function(e){
-			
-			alert("error~~~~~!!!");
-			
-		}
-		
-		
-	});
+				break;
+		}	
 	
 }
 
 
+	function modifyViewChange(workKind){
+		
+		//workKind : 수정, 수정취소
+		
+		var rippleParent = $("#rippleParent");
+		var btnRippleDel = $("#btnRippleDel");
+		var btnRippleEdit = $("#btnRippleEdit");
+		var editText = $("#editText");
+		var btnEditWrite = $("#btnEditWrite");
+		var lblComment = $("#lblComment");
+		
+		if(workKind == '수정'){
+		
+			//삭제버튼 사라진다.
+			btnRippleDel.css('display', 'none');
+			//수정 -> 수정취소
+			btnRippleEdit.val('수정취소');
+			//입력박스 박스 생성
+			editText.css('display','');
+			//입력박스에 내용입력	
+			//1. 라벨 내용 -> 텍스테 박스에 전달			
+			var strText = lblComment.html();
+			editText.val(strText);			
+			//2. 라벨을 소멸
+			lblComment.css('display','none');			
+			//수정버튼 생성
+			btnEditWrite.css('display','');
+			//라벨 삭제
+						
+		} else {
+			
+			//원복
+			btnRippleDel.css('display', '');
+			btnRippleEdit.val('수정');
+			editText.val('');
+			lblComment.css('display','');
+			editText.css('display','none');	
+			btnEditWrite.css('display','none');
+			
+		}
+		
+	}	
+	
+	
 </script>
 
 <div id="content">
@@ -178,19 +284,35 @@ function commentInsert(){
 
 			<c:forEach var="list" items="${commentList}">
 				<div class="media" >
-					<div class="media-left">
+					<div class="media-left" id="rippleParent">
 						<a href="#"> <img src="asset/img/avatar2.png" width="30px" />&nbsp;</a> 
 						<span class="media-middle"> 
-							<span>${list.strName }&nbsp;&nbsp;&nbsp;${list.datComment_Date }&nbsp;&nbsp;&nbsp;&nbsp; 								
+							<span>
+								<input type="hidden" id="mmintSeq" name="intSeq" value="${list.intSeq}">
+								${list.strName }&nbsp;&nbsp;&nbsp;
+								<input type="hidden" id="mmstrName" name="strName" value="${list.strName }">
+								${list.datComment_Date }&nbsp;&nbsp;&nbsp;&nbsp; 								
 								<c:if test="${sessionScope.userInfo.strCode eq list.strCommenterCode}">
+																		
+									<input id="btnRippleEdit" name="btnRippleEdit" type="button" class="btn btn-3d" value="수정"	onclick="modifyViewChange(this.value)" >
+									<input id="btnRippleDel" name="btnRippleDel" type="button" class="btn btn-3d" value="삭제"	onclick="comment('delete')" >
+									
+									
+									<%-- ajax 사용 안함
 									<input type="button" class="btn btn-3d" value="수정"	onclick="location.href='${root }/board/modifygo.html?workkind=001&subworkkind=001&num=${list.intSeq }'" />
 									<input type="button" class="btn btn-3d" value="삭제"	onclick="location.href='${root }/board/deletecomment.html?num=${list.intSeq}'" />
+									 --%>
+									
 								</c:if> 
 								<br>
 							</span> 
 							
-							<span>${list.strComment }<br></span> 
-							
+							<span>
+							<input type="hidden"  id="mmstrComment" name="mmstrComment" value="${list.strComment }">
+							<label id="lblComment">${list.strComment }</label>
+							<br></span> 
+							<input type="text" id="editText" name="editText" style="display: none;" />
+							<button id="btnEditWrite" name="btnEditWrite" style="display: none;" >수정</button>
 						</span>
 						<hr>
 					</div>
@@ -213,23 +335,32 @@ function commentInsert(){
 			</div>
 
 
-			<form id="commentWrite">
+			<form action="${root }/board/addComment.html" id="commentWrite" method="POST">
+			<%--댓글달기 ajax 사용 안하는거 
+			<form action="${root }/board/addComment.html" id="commentWrite" method="POST"> --%>
 
 				<div style="height: auto; min-height: 100px; float: left" style="width:80%">
-					<textarea style="size: 80%" id="strDetailComment" name="strDetailComment" class="form-control" > ${strDetailComment } </textarea>
-					<input type="hidden" id="strWriterCode" name="strWriterCode" value="${sessionScope.userInfo.strCode }"> 
-					<input type="hidden" id="strGroupCode" name="strGroupCode" value="400">
-					<input type="hidden" id="strGroup" name="strGroup" value="003">
-					<input type="hidden" id="strKindCode" name="strKindCode" value="401"> 
-					<input type="hidden" id="strKind" name="strKind" value="002"> 
-					<input type="hidden" id="intSeq" name="intSeq" value="${read.intSeq}">
+					<textarea style="size: 80%" id="ccstrDetailComment" name="strDetailComment" class="form-control" > ${strDetailComment } </textarea>
+					<input type="hidden" id="ccstrWriterCode" name="strWriterCode" value="${sessionScope.userInfo.strCode }"> 
+					<input type="hidden" id="ccstrGroupCode" name="strGroupCode" value="400">
+					<input type="hidden" id="ccstrGroup" name="strGroup" value="003">
+					<input type="hidden" id="ccstrKindCode" name="strKindCode" value="401"> 
+					<input type="hidden" id="ccstrKind" name="strKind" value="002"> 
+					<input type="hidden" id="ccintSeq" name="intSeq" value="${read.intSeq}">
+					<input type="hidden" id="ccstrTitle" name="strTitle" value="">
 				</div>
+				<div style="height: auto; min-height: 100px; float: left; width: 80%">
+					
+					<!--댓글달기 ajax 사용 안하는거 
+					 <input type="submit" class="btn btn-3d" value="입력"> -->
+					
+					<input type="button"  class="btn btn-3d" value="입력" onclick="comment('insert')">
+					<!-- <button class="btn btn-3d" value="입력" onclick="commentInsert()"></button> -->
+				</div>
+				
 			</form>
 			
-				<div
-					style="height: auto; min-height: 100px; float: left; width: 80%">
-					<button class="btn btn-3d" value="입력" onclick="commentInsert()"/>
-				</div>
+				
 		</div>
 
 	</div>

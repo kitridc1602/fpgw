@@ -54,7 +54,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void addComment(BoardMainDto boardMainDto) throws Exception {
 		boardDao.CommentInsert(boardMainDto);
-		
+			
 	}
 
 
