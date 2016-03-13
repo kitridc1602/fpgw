@@ -7,6 +7,12 @@
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=9ec6ce4058e3bebfa9dee609084bbd13&libraries=services"></script>
 <script type="text/javascript">
 
+	function venderMap(location, venderNm){
+		
+		window.open("${root }/additional/contactcompany.html?location="+location+"&venderNm="+venderNm, "", "menubar=no,resizable=no,scrollbars=no,starus=no,titlebar=no,width=500, height=600");
+		
+	}
+
 	function venderSearch(id, kind, addr){
 		
 		
@@ -148,6 +154,27 @@
 			                        </tr>
 	                      		</thead>
 	                      		<tbody>
+	                      		
+	                      				<tr>
+				                          <td style="vertical-align: middle;">
+				                          
+		                          			<a href="http://ci-one.co.kr" target="_blink">(주)씨아이원</a>
+				                          </td>
+				                          <td style="vertical-align: middle;">성시원 실장</td>
+				                          <td style="vertical-align: middle;">070-8989-5858</td>
+				                          <td style="vertical-align: middle;"></td>
+				                          <td style="vertical-align: middle;">070-8989-5858</td>
+				                          <td style="vertical-align: middle;" id="td0007">
+			                          			<p><a href="" onclick="venderMap('경기도 부천시 원미구 평천로 850번길 133(도당동)', '(주)씨아이원')"><span class="icons icon-compass"></span></a>&nbsp;&nbsp;(420-806) 경기도 부천시 원미구 평천로 850번길 133(도당동)</p>
+					                          	
+				                          </td>
+				                          <td style="vertical-align: middle;"></td>
+				                          <td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="수정" onclick="location.href='${root }/option/accountinfoselect.html?strCode=00007'"></td>
+				                		  <td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="삭제" onclick="location.href='${root }/option/accountinfodelete.html?strCode=00007'"></td>
+				                        </tr>
+				                        
+				                        
+	                      		
 	                      		
 	                      			<c:forEach var="list" items="${accountInfo }">
 				                        <tr>
