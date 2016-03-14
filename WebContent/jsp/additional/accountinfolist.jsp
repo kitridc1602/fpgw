@@ -107,7 +107,7 @@
 				                          <td style="vertical-align: middle;" id="td${list.strCode }">
 					                          <c:choose>
 					                          		<c:when test="${list.strAddr2 ne null}">
-					                          			<p><a href="" onclick="venderMap('${list.strAddr1} ${list.strAddr2}', '${list.strVender_Name}')"><span class="icons icon-compass"></span></a>&nbsp;&nbsp;(${list.strZip1}-${list.strZip2}) ${list.strAddr1} ${list.strAddr2}</p>
+					                          			<p><a href="#" onclick="venderMap('${list.strAddr1} ${list.strAddr2}', '${list.strVender_Name}')"><span class="icons icon-compass"></span></a>&nbsp;&nbsp;(${list.strZip1}-${list.strZip2}) ${list.strAddr1} ${list.strAddr2}</p>
 					                          		</c:when>
 					                          		
 					                          		<c:otherwise>
