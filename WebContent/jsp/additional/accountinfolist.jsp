@@ -9,78 +9,9 @@
 
 	function venderMap(location, venderNm){
 		
-		window.open("${root }/additional/contactcompany.html?location="+location+"&venderNm="+venderNm, "", "menubar=no,resizable=no,scrollbars=no,starus=no,titlebar=no,width=500, height=600");
+		window.open("${root }/additional/contactcompany.html?location="+location+"&venderNm="+venderNm, "", "menubar=no,resizable=no,scrollbars=no,starus=no,titlebar=no,width=530, height=460");
 		
 	}
-
-	function venderSearch(id, kind, addr){
-		
-		
-		mapTagModify(id, kind);
-		
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-	        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
-	    };  
-
-		// 지도를 생성합니다    
-		var map = new daum.maps.Map(mapContainer, mapOption); 
-
-		// 주소-좌표 변환 객체를 생성합니다
-		var geocoder = new daum.maps.services.Geocoder();
-
-		// 주소로 좌표를 검색합니다
-		geocoder.addr2coord(addr, function(status, result) {
-
-		    // 정상적으로 검색이 완료됐으면 
-		     if (status === daum.maps.services.Status.OK) {
-
-		        var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
-
-		        // 결과값으로 받은 위치를 마커로 표시합니다
-		        var marker = new daum.maps.Marker({
-		            map: map,
-		            position: coords
-		        });
-
-		        /* // 인포윈도우로 장소에 대한 설명을 표시합니다
-		        var infowindow = new daum.maps.InfoWindow({
-		            content: '<div style="padding:5px;">우리회사</div>'
-		        });
-		        infowindow.open(map, marker); */
-		    } 
-		});
-		
-	}
-
-	function mapTagModify(id, kind){
-		
-		
-		var tdID = $(id);
-		
-		if(kind == 'insert'){
-
-			var insertTag = '';			
-			insertTag += ' 			<div id="map" style="width: 500px; height: 400px;"></div> ';
-			insertTag += ' 			<div id="btnRemove" style="width: 500px; text-align: right;"> ';
-			insertTag += ' 				<button id="btnRemove" onclick="mapTagModify(td${list.strCode }, \'delete\')">닫기</button> ';
-			insertTag += ' 			</div> ';
-			
-			
-			tdID.append(insertTag);
-			
-		} else {
-			
-			$('#tbMap').empty();
-			
-		}
-		
-		
-		
-		
-	}
-	
 	
 </script>
 
@@ -154,28 +85,6 @@
 			                        </tr>
 	                      		</thead>
 	                      		<tbody>
-	                      		
-	                      				<tr>
-				                          <td style="vertical-align: middle;">
-				                          
-		                          			<a href="http://ci-one.co.kr" target="_blink">(주)씨아이원</a>
-				                          </td>
-				                          <td style="vertical-align: middle;">성시원 실장</td>
-				                          <td style="vertical-align: middle;">070-8989-5858</td>
-				                          <td style="vertical-align: middle;"></td>
-				                          <td style="vertical-align: middle;">070-8989-5858</td>
-				                          <td style="vertical-align: middle;" id="td0007">
-			                          			<p><a href="" onclick="venderMap('경기도 부천시 원미구 평천로 850번길 133(도당동)', '(주)씨아이원')"><span class="icons icon-compass"></span></a>&nbsp;&nbsp;(420-806) 경기도 부천시 원미구 평천로 850번길 133(도당동)</p>
-					                          	
-				                          </td>
-				                          <td style="vertical-align: middle;"></td>
-				                          <td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="수정" onclick="location.href='${root }/option/accountinfoselect.html?strCode=00007'"></td>
-				                		  <td style="text-align: center;"><input type="button" class="btn ripple btn-round btn-3d btn-default" style="width: auto; height: auto;" id="" name="" value="삭제" onclick="location.href='${root }/option/accountinfodelete.html?strCode=00007'"></td>
-				                        </tr>
-				                        
-				                        
-	                      		
-	                      		
 	                      			<c:forEach var="list" items="${accountInfo }">
 				                        <tr>
 				                          <td style="vertical-align: middle;">
@@ -198,7 +107,7 @@
 				                          <td style="vertical-align: middle;" id="td${list.strCode }">
 					                          <c:choose>
 					                          		<c:when test="${list.strAddr2 ne null}">
-					                          			<p><a href="" onclick="window.open('${root}/option/accountlocation.html, '거래처 위치 확인', 'width=500, height=400')"><span class="icons icon-compass"></span></a>&nbsp;&nbsp;(${list.strZip1}-${list.strZip2}) ${list.strAddr1} ${list.strAddr2}</p>
+					                          			<p><a href="" onclick="venderMap('${list.strAddr1} ${list.strAddr2}', '${list.strVender_Name}')"><span class="icons icon-compass"></span></a>&nbsp;&nbsp;(${list.strZip1}-${list.strZip2}) ${list.strAddr1} ${list.strAddr2}</p>
 					                          		</c:when>
 					                          		
 					                          		<c:otherwise>

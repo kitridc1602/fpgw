@@ -5,6 +5,9 @@
 
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="${root }/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${root }/css/plugins/simple-line-icons.css"/>
+<link href="${root }/css/style.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>KITRI</title>
 
